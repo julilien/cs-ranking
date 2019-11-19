@@ -1,0 +1,344 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>csrank.objectranking.cmp_net &mdash; csrank 1.0.0 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../../../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../../../_static/jquery.js"></script>
+        <script type="text/javascript" src="../../../_static/underscore.js"></script>
+        <script type="text/javascript" src="../../../_static/doctools.js"></script>
+        <script type="text/javascript" src="../../../_static/language_data.js"></script>
+        <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+        <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true, "ignoreClass": "document", "processClass": "math|output_area"}})</script>
+    
+    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../../index.html" class="icon icon-home"> csrank
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                1.0
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../intro.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../examples.html">Examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../api.html">API Reference</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">csrank</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../../index.html">Module code</a> &raquo;</li>
+        
+      <li>csrank.objectranking.cmp_net</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for csrank.objectranking.cmp_net</h1><div class="highlight"><pre>
+<span></span><span class="kn">import</span> <span class="nn">logging</span>
+
+<span class="kn">from</span> <span class="nn">keras.optimizers</span> <span class="k">import</span> <span class="n">SGD</span>
+<span class="kn">from</span> <span class="nn">keras.regularizers</span> <span class="k">import</span> <span class="n">l2</span>
+
+<span class="kn">from</span> <span class="nn">csrank.core.cmpnet_core</span> <span class="k">import</span> <span class="n">CmpNetCore</span>
+<span class="kn">from</span> <span class="nn">csrank.dataset_reader.objectranking.util</span> <span class="k">import</span> <span class="n">generate_complete_pairwise_dataset</span>
+<span class="kn">from</span> <span class="nn">csrank.objectranking.object_ranker</span> <span class="k">import</span> <span class="n">ObjectRanker</span>
+
+<span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;CmpNet&#39;</span><span class="p">]</span>
+
+
+<div class="viewcode-block" id="CmpNet"><a class="viewcode-back" href="../../../api/objectranking.html#csrank.objectranking.CmpNet">[docs]</a><span class="k">class</span> <span class="nc">CmpNet</span><span class="p">(</span><span class="n">CmpNetCore</span><span class="p">,</span> <span class="n">ObjectRanker</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">n_object_features</span><span class="p">,</span> <span class="n">n_hidden</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">n_units</span><span class="o">=</span><span class="mi">8</span><span class="p">,</span> <span class="n">loss_function</span><span class="o">=</span><span class="s1">&#39;binary_crossentropy&#39;</span><span class="p">,</span>
+                 <span class="n">batch_normalization</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">kernel_regularizer</span><span class="o">=</span><span class="n">l2</span><span class="p">(</span><span class="n">l</span><span class="o">=</span><span class="mf">1e-4</span><span class="p">),</span> <span class="n">kernel_initializer</span><span class="o">=</span><span class="s1">&#39;lecun_normal&#39;</span><span class="p">,</span>
+                 <span class="n">activation</span><span class="o">=</span><span class="s1">&#39;relu&#39;</span><span class="p">,</span> <span class="n">optimizer</span><span class="o">=</span><span class="n">SGD</span><span class="p">(</span><span class="n">lr</span><span class="o">=</span><span class="mf">1e-4</span><span class="p">,</span> <span class="n">nesterov</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">momentum</span><span class="o">=</span><span class="mf">0.9</span><span class="p">),</span> <span class="n">metrics</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;binary_accuracy&#39;</span><span class="p">],</span>
+                 <span class="n">batch_size</span><span class="o">=</span><span class="mi">256</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">            Create an instance of the :class:`CmpNetCore` architecture for learning a object ranking function.</span>
+<span class="sd">            CmpNet breaks the preferences in form of rankings into pairwise comparisons and learns a pairwise model for</span>
+<span class="sd">            the each pair of object in the underlying set. For prediction list of objects is converted in pair of</span>
+<span class="sd">            objects and the pairwise predicate is evaluated using them. The outputs of the network, i.e.,</span>
+<span class="sd">            :math:`U(x_1,x_2), U(x_2,x_1)`for each pair of objects are evaluated.</span>
+<span class="sd">            :math:`U(x_1,x_2)` is a measure of how favorable it is to choose :math:`x_1` over :math:`x_2`.</span>
+<span class="sd">            The utility score of object :math:`x_i` in query set :math:`Q = \\{ x_1 , \\ldots , x_n \\}` is evaluated as:</span>
+
+<span class="sd">            .. math::</span>
+
+<span class="sd">                U(x_i) = \\left\\{ \\frac{1}{n-1} \\sum_{j \\in [n] \\setminus \\{i\\}} U_1(x_i , x_j)\\right\\}</span>
+
+
+<span class="sd">            The ranking for the given query set :math:`Q` is defined as:</span>
+
+<span class="sd">            .. math::</span>
+
+<span class="sd">                ρ(Q)  = \\operatorname{argsort}_{x \\in Q}  \\; U(x)</span>
+
+
+<span class="sd">           Parameters</span>
+<span class="sd">           ----------</span>
+<span class="sd">           n_object_features : int</span>
+<span class="sd">               Number of features of the object space</span>
+<span class="sd">           n_hidden : int</span>
+<span class="sd">               Number of hidden layers used in the scoring network</span>
+<span class="sd">           n_units : int</span>
+<span class="sd">               Number of hidden units in each layer of the scoring network</span>
+<span class="sd">           loss_function : function or string</span>
+<span class="sd">               Loss function to be used for the binary decision task of the</span>
+<span class="sd">               pairwise comparisons</span>
+<span class="sd">           batch_normalization : bool</span>
+<span class="sd">               Whether to use batch normalization in each hidden layer</span>
+<span class="sd">           kernel_regularizer : function</span>
+<span class="sd">               Regularizer function applied to all the hidden weight matrices.</span>
+<span class="sd">           activation : function or string</span>
+<span class="sd">               Type of activation function to use in each hidden layer</span>
+<span class="sd">           optimizer : function or string</span>
+<span class="sd">               Optimizer to use during stochastic gradient descent</span>
+<span class="sd">           metrics : list</span>
+<span class="sd">               List of metrics to evaluate during training (can be</span>
+<span class="sd">               non-differentiable)</span>
+<span class="sd">           batch_size : int</span>
+<span class="sd">               Batch size to use during training</span>
+<span class="sd">           random_state : int, RandomState instance or None</span>
+<span class="sd">               Seed of the pseudorandom generator or a RandomState instance</span>
+<span class="sd">           **kwargs</span>
+<span class="sd">               Keyword arguments for the algorithms</span>
+
+
+<span class="sd">           References</span>
+<span class="sd">           ----------</span>
+<span class="sd">                [1] Leonardo Rigutini, Tiziano Papini, Marco Maggini, and Franco Scarselli. 2011. SortNet: Learning to Rank by a Neural Preference Function. IEEE Trans. Neural Networks 22, 9 (2011), 1368–1380. https://doi.org/10.1109/TNN.2011.2160875</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">n_object_features</span><span class="o">=</span><span class="n">n_object_features</span><span class="p">,</span> <span class="n">n_hidden</span><span class="o">=</span><span class="n">n_hidden</span><span class="p">,</span> <span class="n">n_units</span><span class="o">=</span><span class="n">n_units</span><span class="p">,</span>
+                         <span class="n">loss_function</span><span class="o">=</span><span class="n">loss_function</span><span class="p">,</span> <span class="n">batch_normalization</span><span class="o">=</span><span class="n">batch_normalization</span><span class="p">,</span>
+                         <span class="n">kernel_regularizer</span><span class="o">=</span><span class="n">kernel_regularizer</span><span class="p">,</span> <span class="n">kernel_initializer</span><span class="o">=</span><span class="n">kernel_initializer</span><span class="p">,</span>
+                         <span class="n">activation</span><span class="o">=</span><span class="n">activation</span><span class="p">,</span> <span class="n">optimizer</span><span class="o">=</span><span class="n">optimizer</span><span class="p">,</span> <span class="n">metrics</span><span class="o">=</span><span class="n">metrics</span><span class="p">,</span> <span class="n">batch_size</span><span class="o">=</span><span class="n">batch_size</span><span class="p">,</span>
+                         <span class="n">random_state</span><span class="o">=</span><span class="n">random_state</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">logger</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="n">CmpNet</span><span class="o">.</span><span class="vm">__name__</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Initializing network with object features </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">n_object_features</span><span class="p">))</span>
+
+    <span class="k">def</span> <span class="nf">_convert_instances_</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">Y</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;Creating the Dataset&#39;</span><span class="p">)</span>
+        <span class="n">garbage</span><span class="p">,</span> <span class="n">x1</span><span class="p">,</span> <span class="n">x2</span><span class="p">,</span> <span class="n">y_double</span><span class="p">,</span> <span class="n">garbage</span> <span class="o">=</span> <span class="n">generate_complete_pairwise_dataset</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">Y</span><span class="p">)</span>
+        <span class="k">del</span> <span class="n">garbage</span>
+        <span class="k">if</span> <span class="n">x1</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">&gt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">threshold_instances</span><span class="p">:</span>
+            <span class="n">indices</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">random_state</span><span class="o">.</span><span class="n">choice</span><span class="p">(</span><span class="n">x1</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="bp">self</span><span class="o">.</span><span class="n">threshold_instances</span><span class="p">,</span> <span class="n">replace</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+            <span class="n">x1</span> <span class="o">=</span> <span class="n">x1</span><span class="p">[</span><span class="n">indices</span><span class="p">,</span> <span class="p">:]</span>
+            <span class="n">x2</span> <span class="o">=</span> <span class="n">x2</span><span class="p">[</span><span class="n">indices</span><span class="p">,</span> <span class="p">:]</span>
+            <span class="n">y_double</span> <span class="o">=</span> <span class="n">y_double</span><span class="p">[</span><span class="n">indices</span><span class="p">,</span> <span class="p">:]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;Finished the Dataset instances </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">x1</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]))</span>
+        <span class="k">return</span> <span class="n">x1</span><span class="p">,</span> <span class="n">x2</span><span class="p">,</span> <span class="n">y_double</span>
+
+<div class="viewcode-block" id="CmpNet.construct_model"><a class="viewcode-back" href="../../../api/objectranking.html#csrank.objectranking.CmpNet.construct_model">[docs]</a>    <span class="k">def</span> <span class="nf">construct_model</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">construct_model</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="CmpNet.fit"><a class="viewcode-back" href="../../../api/objectranking.html#csrank.objectranking.CmpNet.fit">[docs]</a>    <span class="k">def</span> <span class="nf">fit</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">Y</span><span class="p">,</span> <span class="n">epochs</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">callbacks</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">validation_split</span><span class="o">=</span><span class="mf">0.1</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="o">**</span><span class="n">kwd</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">            Fit an object ranking learning CmpNet model on a provided set of queries. The provided queries can be of a</span>
+<span class="sd">            fixed size (numpy arrays). For learning this network the binary cross entropy loss function for a pair of</span>
+<span class="sd">            objects :math:`x_i, x_j \\in Q` is defined as:</span>
+
+<span class="sd">            .. math::</span>
+
+<span class="sd">                C_{ij} =  -\\tilde{P_{ij}}(0)\\cdot \\log(U(x_i,x_j)) - \\tilde{P_{ij}}(1) \\cdot \\log(U(x_j,x_i)) \\ ,</span>
+
+<span class="sd">            where :math:`\\tilde{P_{ij}}` is ground truth probability of the preference of :math:`x_i` over :math:`x_j`.</span>
+<span class="sd">            :math:`\\tilde{P_{ij}} = (1,0)` if :math:`x_i \\succ x_j` else :math:`\\tilde{P_{ij}} = (0,1)`.</span>
+
+<span class="sd">            Parameters</span>
+<span class="sd">            ----------</span>
+<span class="sd">            X : numpy array</span>
+<span class="sd">                (n_instances, n_objects, n_features)</span>
+<span class="sd">                Feature vectors of the objects</span>
+<span class="sd">            Y : numpy array</span>
+<span class="sd">                (n_instances, n_objects)</span>
+<span class="sd">                Rankings of the given objects</span>
+<span class="sd">            epochs : int</span>
+<span class="sd">                Number of epochs to run if training for a fixed query size</span>
+<span class="sd">            callbacks : list</span>
+<span class="sd">                List of callbacks to be called during optimization</span>
+<span class="sd">            validation_split : float</span>
+<span class="sd">                Percentage of instances to split off to validate on</span>
+<span class="sd">            verbose : bool</span>
+<span class="sd">                Print verbose information</span>
+<span class="sd">            **kwd</span>
+<span class="sd">                Keyword arguments for the fit function</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">Y</span><span class="p">,</span> <span class="n">epochs</span><span class="o">=</span><span class="n">epochs</span><span class="p">,</span> <span class="n">callbacks</span><span class="o">=</span><span class="n">callbacks</span><span class="p">,</span> <span class="n">validation_split</span><span class="o">=</span><span class="n">validation_split</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="n">verbose</span><span class="p">,</span> <span class="o">**</span><span class="n">kwd</span><span class="p">)</span></div>
+
+    <span class="k">def</span> <span class="nf">_predict_scores_fixed</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="k">return</span> <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">_predict_scores_fixed</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+
+<div class="viewcode-block" id="CmpNet.predict_scores"><a class="viewcode-back" href="../../../api/objectranking.html#csrank.objectranking.CmpNet.predict_scores">[docs]</a>    <span class="k">def</span> <span class="nf">predict_scores</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="k">return</span> <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">predict_scores</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="CmpNet.predict_for_scores"><a class="viewcode-back" href="../../../api/objectranking.html#csrank.objectranking.CmpNet.predict_for_scores">[docs]</a>    <span class="k">def</span> <span class="nf">predict_for_scores</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">scores</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">ObjectRanker</span><span class="o">.</span><span class="n">predict_for_scores</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">scores</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="CmpNet.predict"><a class="viewcode-back" href="../../../api/objectranking.html#csrank.objectranking.CmpNet.predict">[docs]</a>    <span class="k">def</span> <span class="nf">predict</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="k">return</span> <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="CmpNet.clear_memory"><a class="viewcode-back" href="../../../api/objectranking.html#csrank.objectranking.CmpNet.clear_memory">[docs]</a>    <span class="k">def</span> <span class="nf">clear_memory</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">clear_memory</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="CmpNet.set_tunable_parameters"><a class="viewcode-back" href="../../../api/objectranking.html#csrank.objectranking.CmpNet.set_tunable_parameters">[docs]</a>    <span class="k">def</span> <span class="nf">set_tunable_parameters</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">n_hidden</span><span class="o">=</span><span class="mi">32</span><span class="p">,</span> <span class="n">n_units</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">reg_strength</span><span class="o">=</span><span class="mf">1e-4</span><span class="p">,</span> <span class="n">learning_rate</span><span class="o">=</span><span class="mf">1e-3</span><span class="p">,</span> <span class="n">batch_size</span><span class="o">=</span><span class="mi">128</span><span class="p">,</span>
+                               <span class="o">**</span><span class="n">point</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">set_tunable_parameters</span><span class="p">(</span><span class="n">n_hidden</span><span class="o">=</span><span class="n">n_hidden</span><span class="p">,</span> <span class="n">n_units</span><span class="o">=</span><span class="n">n_units</span><span class="p">,</span> <span class="n">reg_strength</span><span class="o">=</span><span class="n">reg_strength</span><span class="p">,</span>
+                                       <span class="n">learning_rate</span><span class="o">=</span><span class="n">learning_rate</span><span class="p">,</span> <span class="n">batch_size</span><span class="o">=</span><span class="n">batch_size</span><span class="p">,</span> <span class="o">**</span><span class="n">point</span><span class="p">)</span></div></div>
+</pre></div>
+
+           </div>
+           
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2018, Karlson Pfannschmidt, Pritha Gupta, Eyke Hüllermeier
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

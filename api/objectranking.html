@@ -1,0 +1,1336 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Object Ranking &mdash; csrank 1.0.0 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../_static/jquery.js"></script>
+        <script type="text/javascript" src="../_static/underscore.js"></script>
+        <script type="text/javascript" src="../_static/doctools.js"></script>
+        <script type="text/javascript" src="../_static/language_data.js"></script>
+        <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+        <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true, "ignoreClass": "document", "processClass": "math|output_area"}})</script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Choice Functions" href="choicefunction.html" />
+    <link rel="prev" title="API Reference" href="../api.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> csrank
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                1.0
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../intro.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../examples.html">Examples</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../api.html">API Reference</a><ul class="current">
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Object Ranking</a></li>
+<li class="toctree-l2"><a class="reference internal" href="choicefunction.html">Choice Functions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="discretechoice.html">Discrete Choice Models</a></li>
+</ul>
+</li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">csrank</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../api.html">API Reference</a> &raquo;</li>
+        
+      <li>Object Ranking</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../_sources/api/objectranking.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  
+<style>
+/* CSS overrides for sphinx_rtd_theme */
+
+/* 24px margin */
+.nbinput.nblast,
+.nboutput.nblast {
+    margin-bottom: 19px;  /* padding has already 5px */
+}
+
+/* ... except between code cells! */
+.nblast + .nbinput {
+    margin-top: -19px;
+}
+
+.admonition > p:before {
+    margin-right: 4px;  /* make room for the exclamation icon */
+}
+
+/* Fix math alignment, see https://github.com/rtfd/sphinx_rtd_theme/pull/686 */
+.math {
+    text-align: unset;
+}
+</style>
+<div class="section" id="object-ranking">
+<h1>Object Ranking<a class="headerlink" href="#object-ranking" title="Permalink to this headline">¶</a></h1>
+<table class="longtable docutils align-default">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#csrank.objectranking.FATEObjectRanker" title="csrank.objectranking.FATEObjectRanker"><code class="xref py py-obj docutils literal notranslate"><span class="pre">FATEObjectRanker</span></code></a>(n_object_features[, …])</p></td>
+<td><p>Create a FATE-network architecture for leaning object ranking function.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#csrank.objectranking.FETAObjectRanker" title="csrank.objectranking.FETAObjectRanker"><code class="xref py py-obj docutils literal notranslate"><span class="pre">FETAObjectRanker</span></code></a>(n_objects, n_object_features)</p></td>
+<td><p>Create a FETA-network architecture for object ranking.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#csrank.objectranking.CmpNet" title="csrank.objectranking.CmpNet"><code class="xref py py-obj docutils literal notranslate"><span class="pre">CmpNet</span></code></a>(n_object_features[, n_hidden, …])</p></td>
+<td><p>Create an instance of the <code class="xref py py-class docutils literal notranslate"><span class="pre">CmpNetCore</span></code> architecture for learning a object ranking function.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#csrank.objectranking.ListNet" title="csrank.objectranking.ListNet"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ListNet</span></code></a>(n_object_features, n_top[, …])</p></td>
+<td><p>Create an instance of the ListNet architecture.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#csrank.objectranking.RankNet" title="csrank.objectranking.RankNet"><code class="xref py py-obj docutils literal notranslate"><span class="pre">RankNet</span></code></a>(n_object_features[, n_hidden, …])</p></td>
+<td><p>Create an instance of the <code class="xref py py-class docutils literal notranslate"><span class="pre">RankNetCore</span></code> architecture for learning a object ranking function.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#csrank.objectranking.ExpectedRankRegression" title="csrank.objectranking.ExpectedRankRegression"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ExpectedRankRegression</span></code></a>(n_object_features[, …])</p></td>
+<td><p>Create an expected rank regression model.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#csrank.objectranking.RankSVM" title="csrank.objectranking.RankSVM"><code class="xref py py-obj docutils literal notranslate"><span class="pre">RankSVM</span></code></a>(n_object_features[, C, tol, …])</p></td>
+<td><p>Create an instance of the <code class="xref py py-class docutils literal notranslate"><span class="pre">PairwiseSVM</span></code> model for learning a object ranking function.</p></td>
+</tr>
+</tbody>
+</table>
+<span class="target" id="module-csrank.objectranking"></span><dl class="class">
+<dt id="csrank.objectranking.FATEObjectRanker">
+<em class="property">class </em><code class="sig-prename descclassname">csrank.objectranking.</code><code class="sig-name descname">FATEObjectRanker</code><span class="sig-paren">(</span><em class="sig-param">n_object_features, n_hidden_set_layers=2, n_hidden_set_units=2, n_hidden_joint_layers=32, n_hidden_joint_units=32, activation='selu', kernel_initializer='lecun_normal', kernel_regularizer=&lt;keras.regularizers.L1L2 object&gt;, optimizer=&lt;keras.optimizers.SGD object&gt;, batch_size=256, loss_function=&lt;function identifiable.&lt;locals&gt;.wrap_loss&gt;, metrics=[&lt;function zero_one_rank_loss_for_scores_ties&gt;], random_state=None, **kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/csrank/objectranking/fate_object_ranker.html#FATEObjectRanker"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#csrank.objectranking.FATEObjectRanker" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create a FATE-network architecture for leaning object ranking function. The first-aggregate-then-evaluate
+approach learns an embedding of each object and then aggregates that into a context representation
+<span class="math notranslate nohighlight">\(\mu_{C(x)}\)</span> and then scores each object <span class="math notranslate nohighlight">\(x\)</span> using a context-dependent utility function
+<span class="math notranslate nohighlight">\(U (x, \mu_{C(x)})\)</span>.
+To make it computationally efficient we take the the context <span class="math notranslate nohighlight">\(C(x)\)</span> as query set <span class="math notranslate nohighlight">\(Q\)</span>.
+The context-representation is evaluated as:</p>
+<div class="math notranslate nohighlight">
+\[\mu_{C(x)} = \frac{1}{\lvert C(x) \lvert} \sum_{y \in C(x)} \phi(y)\]</div>
+<p>where <span class="math notranslate nohighlight">\(\phi \colon \mathcal{X} \to \mathcal{Z}\)</span> maps each object <span class="math notranslate nohighlight">\(y\)</span> to an
+<span class="math notranslate nohighlight">\(m\)</span>-dimensional embedding space <span class="math notranslate nohighlight">\(\mathcal{Z} \subseteq \mathbb{R}^m\)</span>.
+Training complexity is quadratic in the number of objects and prediction complexity is only linear.
+The ranking for the given query set <span class="math notranslate nohighlight">\(Q\)</span> is defined as:</p>
+<div class="math notranslate nohighlight">
+\[ρ(Q)  = \operatorname{argsort}_{x \in Q}  \; U (x, \mu_{C(x)})\]</div>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>n_object_features</strong> (<em>int</em>) – Dimensionality of the feature space of each object</p></li>
+<li><p><strong>n_hidden_set_layers</strong> (<em>int</em>) – Number of set layers.</p></li>
+<li><p><strong>n_hidden_set_units</strong> (<em>int</em>) – Number of hidden set units.</p></li>
+<li><p><strong>n_hidden_joint_layers</strong> (<em>int</em>) – Number of joint layers.</p></li>
+<li><p><strong>n_hidden_joint_units</strong> (<em>int</em>) – Number of joint units.</p></li>
+<li><p><strong>activation</strong> (<em>string</em><em> or </em><em>function</em>) – Activation function to use in the hidden units</p></li>
+<li><p><strong>kernel_initializer</strong> (<em>function</em><em> or </em><em>string</em>) – Initialization function for the weights of each hidden layer</p></li>
+<li><p><strong>kernel_regularizer</strong> (<em>function</em><em> or </em><em>string</em>) – Regularizer to use in the hidden units</p></li>
+<li><p><strong>optimizer</strong> (<em>string</em><em> or </em><em>function</em>) – Stochastic gradient optimizer</p></li>
+<li><p><strong>batch_size</strong> (<em>int</em>) – Batch size to use for training</p></li>
+<li><p><strong>loss_function</strong> (<em>function</em>) – Differentiable loss function for the score vector</p></li>
+<li><p><strong>metrics</strong> (<em>list</em>) – List of evaluation metrics (can be non-differentiable)</p></li>
+<li><p><strong>random_state</strong> (<em>int</em><em> or </em><em>object</em>) – Numpy random state</p></li>
+<li><p><strong>**kwargs</strong> – Keyword arguments for the &#64;FATENetwork</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="method">
+<dt id="csrank.objectranking.FATEObjectRanker.clear_memory">
+<code class="sig-name descname">clear_memory</code><span class="sig-paren">(</span><em class="sig-param">**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/csrank/objectranking/fate_object_ranker.html#FATEObjectRanker.clear_memory"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#csrank.objectranking.FATEObjectRanker.clear_memory" title="Permalink to this definition">¶</a></dt>
+<dd><p>Clear the memory, restores the currently fitted model back to prevent memory leaks.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>n_objects</strong> (<em>int</em>) – float (n_instances, n_objects, n_features)</p></li>
+<li><p><strong>**kwargs</strong> – Keyword arguments for the function</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="csrank.objectranking.FATEObjectRanker.construct_model">
+<code class="sig-name descname">construct_model</code><span class="sig-paren">(</span><em class="sig-param">n_features</em>, <em class="sig-param">n_objects</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/csrank/objectranking/fate_object_ranker.html#FATEObjectRanker.construct_model"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#csrank.objectranking.FATEObjectRanker.construct_model" title="Permalink to this definition">¶</a></dt>
+<dd><p>Construct the FATE-network architecture using the <code class="xref py py-class docutils literal notranslate"><span class="pre">DeepSet</span></code> to learn the context representation
+<span class="math notranslate nohighlight">\(\mu_{C(x)}\)</span> for the given query set/context <span class="math notranslate nohighlight">\(Q=C(x)\)</span>. We construct an input tensor of query
+set <span class="math notranslate nohighlight">\(Q\)</span> of size (n_objects, n_features),iterate over it for each object and concatenate the
+context-representation feature tensor of size <span class="math notranslate nohighlight">\(\lvert  \mu_{C(x)} \lvert\)</span> into a joint layers.
+So, for each object we share the weights in the joint network and the output of this network is used to
+learn the generalized latent utility score <span class="math notranslate nohighlight">\(U (x, \mu_{C(x)})\)</span> of each object <span class="math notranslate nohighlight">\(x \in Q\)</span>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>n_features</strong> (<em>int</em>) – Features of the objects for which the network is constructed</p></li>
+<li><p><strong>n_objects</strong> (<em>int</em>) – Size of the query sets for which the network is constructed</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><strong>model</strong> (keras <code class="xref py py-class docutils literal notranslate"><span class="pre">Model</span></code>) – Neural network to learn the FATE utility score</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="csrank.objectranking.FATEObjectRanker.fit">
+<code class="sig-name descname">fit</code><span class="sig-paren">(</span><em class="sig-param">X</em>, <em class="sig-param">Y</em>, <em class="sig-param">**kwd</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/csrank/objectranking/fate_object_ranker.html#FATEObjectRanker.fit"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#csrank.objectranking.FATEObjectRanker.fit" title="Permalink to this definition">¶</a></dt>
+<dd><p>Fit a generic preference learning FATE-network model on a provided set of queries.</p>
+<p>The provided queries can be of a fixed size (numpy arrays) or of
+varying sizes in which case dictionaries are expected as input.</p>
+<p>For varying sizes a meta gradient descent is performed across the
+different query sizes.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>X</strong> (<em>numpy array</em><em> or </em><em>dict</em>) – Feature vectors of the objects
+(n_instances, n_objects, n_features) if numpy array or map from n_objects to numpy arrays</p></li>
+<li><p><strong>Y</strong> (<em>numpy array</em><em> or </em><em>dict</em>) – Preferences in form of rankings or choices for given objects
+(n_instances, n_objects) if numpy array or map from n_objects to numpy arrays</p></li>
+<li><p><strong>epochs</strong> (<em>int</em>) – Number of epochs to run if training for a fixed query size or
+number of epochs of the meta gradient descent for the variadic model</p></li>
+<li><p><strong>inner_epochs</strong> (<em>int</em>) – Number of epochs to train for each query size inside the variadic
+model</p></li>
+<li><p><strong>callbacks</strong> (<em>list</em>) – List of callbacks to be called during optimization</p></li>
+<li><p><strong>validation_split</strong> (<em>float</em><em> (</em><em>range :</em><em> [</em><em>0</em><em>,</em><em>1</em><em>]</em><em>)</em>) – Percentage of instances to split off to validate on</p></li>
+<li><p><strong>verbose</strong> (<em>bool</em>) – Print verbose information</p></li>
+<li><p><strong>global_lr</strong> (<em>float</em>) – Learning rate of the meta gradient descent (variadic model only)</p></li>
+<li><p><strong>global_momentum</strong> (<em>float</em>) – Momentum for the meta gradient descent (variadic model only)</p></li>
+<li><p><strong>min_bucket_size</strong> (<em>int</em>) – Restrict the training to queries of a minimum size</p></li>
+<li><p><strong>refit</strong> (<em>bool</em>) – If True, create a new model object, otherwise continue fitting the
+existing one if one exists.</p></li>
+<li><p><strong>**kwargs</strong> – Keyword arguments for the fit function</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="csrank.objectranking.FATEObjectRanker.predict">
+<code class="sig-name descname">predict</code><span class="sig-paren">(</span><em class="sig-param">X</em>, <em class="sig-param">**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/csrank/objectranking/fate_object_ranker.html#FATEObjectRanker.predict"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#csrank.objectranking.FATEObjectRanker.predict" title="Permalink to this definition">¶</a></dt>
+<dd><p>Predict preferences in the form of rankings or choices for a given collection of sets of objects called
+a query set using the function <a class="reference internal" href="#csrank.objectranking.FATEObjectRanker.predict_for_scores" title="csrank.objectranking.FATEObjectRanker.predict_for_scores"><code class="xref py py-meth docutils literal notranslate"><span class="pre">predict_for_scores()</span></code></a>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>X</strong> (<em>dict</em><em> or </em><em>numpy array</em>) – Dictionary with a mapping from the query set size to numpy arrays or a single numpy array of size:
+(n_instances, n_objects, n_features)</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><strong>Y</strong> (<em>dict or numpy array</em>) – Dictionary with a mapping from the query set size to numpy arrays or a single numpy array containing
+predicted preferences of size:
+(n_instances, n_objects)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="csrank.objectranking.FATEObjectRanker.predict_for_scores">
+<code class="sig-name descname">predict_for_scores</code><span class="sig-paren">(</span><em class="sig-param">scores</em>, <em class="sig-param">**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/csrank/objectranking/fate_object_ranker.html#FATEObjectRanker.predict_for_scores"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#csrank.objectranking.FATEObjectRanker.predict_for_scores" title="Permalink to this definition">¶</a></dt>
+<dd><p>The permutation vector <span class="math notranslate nohighlight">\(\pi\)</span> represents the ranking amongst the objects in <span class="math notranslate nohighlight">\(Q\)</span>, such that
+<span class="math notranslate nohighlight">\(\pi(k)\)</span> is the position of the <span class="math notranslate nohighlight">\(k\)</span>-th object <span class="math notranslate nohighlight">\(x_k\)</span>, and <span class="math notranslate nohighlight">\(\pi^{-1}(k)\)</span> is the index
+of the object on position <span class="math notranslate nohighlight">\(k\)</span>. Predict rankings for the scores for a given collection of sets of
+objects (query sets).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>scores</strong> (<em>dict</em><em> or </em><em>numpy array</em>) – Dictionary with a mapping from query set size to numpy arrays or a single numpy array of size containing
+scores of each object of size: (n_instances, n_objects)</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><strong>Y</strong> (<em>dict or numpy array</em>) – Dictionary with a mapping from objects size to numpy arrays or a single numpy array containing
+predicted rankings of size: (n_samples, n_objects)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="csrank.objectranking.FATEObjectRanker.predict_scores">
+<code class="sig-name descname">predict_scores</code><span class="sig-paren">(</span><em class="sig-param">X</em>, <em class="sig-param">**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/csrank/objectranking/fate_object_ranker.html#FATEObjectRanker.predict_scores"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#csrank.objectranking.FATEObjectRanker.predict_scores" title="Permalink to this definition">¶</a></dt>
+<dd><p>Predict the utility scores for each object in the collection of set of objects called a query set.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>X</strong> (<em>dict</em><em> or </em><em>numpy array</em>) – Dictionary with a mapping from query set size to numpy arrays or a single numpy array of size:
+(n_instances, n_objects, n_features)</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><strong>Y</strong> (<em>dict or numpy array</em>) – Dictionary with a mapping from query set size to numpy arrays or a single numpy array of size:
+(n_instances, n_objects)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="csrank.objectranking.FATEObjectRanker.set_tunable_parameters">
+<code class="sig-name descname">set_tunable_parameters</code><span class="sig-paren">(</span><em class="sig-param">n_hidden_set_units=32</em>, <em class="sig-param">n_hidden_set_layers=2</em>, <em class="sig-param">n_hidden_joint_units=32</em>, <em class="sig-param">n_hidden_joint_layers=2</em>, <em class="sig-param">reg_strength=0.0001</em>, <em class="sig-param">learning_rate=0.001</em>, <em class="sig-param">batch_size=128</em>, <em class="sig-param">**point</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/csrank/objectranking/fate_object_ranker.html#FATEObjectRanker.set_tunable_parameters"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#csrank.objectranking.FATEObjectRanker.set_tunable_parameters" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set tunable parameters of the FATE-network to the values provided.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>n_hidden_set_layers</strong> (<em>int</em>) – Number of hidden set layers</p></li>
+<li><p><strong>n_hidden_set_units</strong> (<em>int</em>) – Number of hidden set units in each set layer</p></li>
+<li><p><strong>n_hidden_joint_units</strong> (<em>int</em>) – Number of hidden joint layers</p></li>
+<li><p><strong>n_hidden_joint_layers</strong> (<em>int</em>) – Number of hidden units in each joint layer</p></li>
+<li><p><strong>reg_strength</strong> (<em>float</em>) – Regularization strength of the regularizer function applied to the <cite>kernel</cite> weights matrix</p></li>
+<li><p><strong>learning_rate</strong> (<em>float</em>) – Learning rate of the stochastic gradient descent algorithm used by the network</p></li>
+<li><p><strong>batch_size</strong> (<em>int</em>) – Batch size to use during training</p></li>
+<li><p><strong>point</strong> (<em>dict</em>) – Dictionary containing parameter values which are not tuned for the network</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="csrank.objectranking.FETAObjectRanker">
+<em class="property">class </em><code class="sig-prename descclassname">csrank.objectranking.</code><code class="sig-name descname">FETAObjectRanker</code><span class="sig-paren">(</span><em class="sig-param">n_objects</em>, <em class="sig-param">n_object_features</em>, <em class="sig-param">n_hidden=2</em>, <em class="sig-param">n_units=8</em>, <em class="sig-param">add_zeroth_order_model=False</em>, <em class="sig-param">max_number_of_objects=5</em>, <em class="sig-param">num_subsample=5</em>, <em class="sig-param">loss_function=&lt;function identifiable.&lt;locals&gt;.wrap_loss&gt;</em>, <em class="sig-param">batch_normalization=False</em>, <em class="sig-param">kernel_regularizer=&lt;keras.regularizers.L1L2 object&gt;</em>, <em class="sig-param">kernel_initializer='lecun_normal'</em>, <em class="sig-param">activation='selu'</em>, <em class="sig-param">optimizer=&lt;keras.optimizers.SGD object&gt;</em>, <em class="sig-param">metrics=None</em>, <em class="sig-param">batch_size=256</em>, <em class="sig-param">random_state=None</em>, <em class="sig-param">**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/csrank/objectranking/feta_object_ranker.html#FETAObjectRanker"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#csrank.objectranking.FETAObjectRanker" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create a FETA-network architecture for object ranking. The first-evaluate-then-aggregate approach
+approximates the context-dependent utility function using the first-order utility function
+<span class="math notranslate nohighlight">\(U_1 \colon \mathcal{X} \times \mathcal{X} \rightarrow [0,1]\)</span> and zeroth-order utility
+function <span class="math notranslate nohighlight">\(U_0 \colon \mathcal{X} \rightarrow [0,1]\)</span>.
+The scores each object <span class="math notranslate nohighlight">\(x\)</span> using a context-dependent utility function <span class="math notranslate nohighlight">\(U (x, C_i)\)</span>:</p>
+<div class="math notranslate nohighlight">
+\[U(x_i, C_i) = U_0(x_i) + \frac{1}{n-1} \sum_{x_j \in Q \setminus \{x_i\}} U_1(x_i , x_j) \, .\]</div>
+<p>Training and prediction complexity is quadratic in the number of objects.
+The ranking for the given query set <span class="math notranslate nohighlight">\(Q\)</span> is defined as:</p>
+<div class="math notranslate nohighlight">
+\[ρ(Q)  = \operatorname{argsort}_{x_i \in Q}  \; U (x_i, C_i)\]</div>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>n_objects</strong> (<em>int</em>) – Number of objects to be ranked</p></li>
+<li><p><strong>n_object_features</strong> (<em>int</em>) – Dimensionality of the feature space of each object</p></li>
+<li><p><strong>n_hidden</strong> (<em>int</em>) – Number of hidden layers</p></li>
+<li><p><strong>n_units</strong> (<em>int</em>) – Number of hidden units in each layer</p></li>
+<li><p><strong>add_zeroth_order_model</strong> (<em>bool</em>) – True if the model should include a latent utility function</p></li>
+<li><p><strong>max_number_of_objects</strong> (<em>int</em>) – The maximum number of objects to train from</p></li>
+<li><p><strong>num_subsample</strong> (<em>int</em>) – Number of objects to subsample to</p></li>
+<li><p><strong>loss_function</strong> (<em>function</em>) – Differentiable loss function for the score vector</p></li>
+<li><p><strong>batch_normalization</strong> (<em>bool</em>) – Whether to use batch normalization in the hidden layers</p></li>
+<li><p><strong>kernel_regularizer</strong> (<em>function</em>) – Regularizer to use in the hidden units</p></li>
+<li><p><strong>kernel_initializer</strong> (<em>function</em><em> or </em><em>string</em>) – Initialization function for the weights of each hidden layer</p></li>
+<li><p><strong>activation</strong> (<em>string</em><em> or </em><em>function</em>) – Activation function to use in the hidden units</p></li>
+<li><p><strong>optimizer</strong> (<em>string</em><em> or </em><em>function</em>) – Stochastic gradient optimizer</p></li>
+<li><p><strong>metrics</strong> (<em>list</em>) – List of evaluation metrics (can be non-differentiable)</p></li>
+<li><p><strong>batch_size</strong> (<em>int</em>) – Batch size to use for training</p></li>
+<li><p><strong>random_state</strong> (<em>int</em><em> or </em><em>object</em>) – Numpy random state</p></li>
+<li><p><strong>**kwargs</strong> – Keyword arguments for the hidden units</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="method">
+<dt id="csrank.objectranking.FETAObjectRanker.clear_memory">
+<code class="sig-name descname">clear_memory</code><span class="sig-paren">(</span><em class="sig-param">**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/csrank/objectranking/feta_object_ranker.html#FETAObjectRanker.clear_memory"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#csrank.objectranking.FETAObjectRanker.clear_memory" title="Permalink to this definition">¶</a></dt>
+<dd><p>Clear the memory, restores the currently fitted model back to prevent memory leaks.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>**kwargs</strong> – Keyword arguments for the function</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="csrank.objectranking.FETAObjectRanker.construct_model">
+<code class="sig-name descname">construct_model</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/csrank/objectranking/feta_object_ranker.html#FETAObjectRanker.construct_model"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#csrank.objectranking.FETAObjectRanker.construct_model" title="Permalink to this definition">¶</a></dt>
+<dd><p>Construct the <span class="math notranslate nohighlight">\(1\)</span>-st order and <span class="math notranslate nohighlight">\(0\)</span>-th order models, which are used to approximate the
+<span class="math notranslate nohighlight">\(U_1(x, C(x))\)</span> and the <span class="math notranslate nohighlight">\(U_0(x)\)</span> utilities respectively. For each pair of objects in
+<span class="math notranslate nohighlight">\(x_i, x_j \in Q\)</span> <span class="math notranslate nohighlight">\(U_1(x, C(x))\)</span> we construct <code class="xref py py-class docutils literal notranslate"><span class="pre">CmpNetCore</span></code> with weight sharing to
+approximate a pairwise-matrix. A pairwise matrix with index (i,j) corresponds to the <span class="math notranslate nohighlight">\(U_1(x_i,x_j)\)</span>
+is a measure of how favorable it is to choose <span class="math notranslate nohighlight">\(x_i\)</span> over <span class="math notranslate nohighlight">\(x_j\)</span>. Using this matrix we calculate
+the borda score for each object to calculate <span class="math notranslate nohighlight">\(U_1(x, C(x))\)</span>. For <cite>0</cite>-th order model we construct
+<span class="math notranslate nohighlight">\(\lvert Q \lvert\)</span> sequential networks whose weights are shared to evaluate the <span class="math notranslate nohighlight">\(U_0(x)\)</span> for
+each object in the query set <span class="math notranslate nohighlight">\(Q\)</span>. The output mode is using linear activation.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p><strong>model</strong> (keras <code class="xref py py-class docutils literal notranslate"><span class="pre">Model</span></code>) – Neural network to learn the FETA utility score</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="csrank.objectranking.FETAObjectRanker.fit">
+<code class="sig-name descname">fit</code><span class="sig-paren">(</span><em class="sig-param">X</em>, <em class="sig-param">Y</em>, <em class="sig-param">epochs=10</em>, <em class="sig-param">callbacks=None</em>, <em class="sig-param">validation_split=0.1</em>, <em class="sig-param">verbose=0</em>, <em class="sig-param">**kwd</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/csrank/objectranking/feta_object_ranker.html#FETAObjectRanker.fit"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#csrank.objectranking.FETAObjectRanker.fit" title="Permalink to this definition">¶</a></dt>
+<dd><p>Fit an object ranking learning model on a provided set of queries.
+The provided queries are of a fixed size (numpy arrays).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>X</strong> (<em>numpy array</em>) – (n_instances, n_objects, n_features)
+Feature vectors of the objects</p></li>
+<li><p><strong>Y</strong> (<em>numpy array</em>) – (n_instances, n_objects)
+Rankings of the given objects</p></li>
+<li><p><strong>epochs</strong> (<em>int</em>) – Number of epochs to run if training for a fixed query size</p></li>
+<li><p><strong>callbacks</strong> (<em>list</em>) – List of callbacks to be called during optimization</p></li>
+<li><p><strong>validation_split</strong> (<em>float</em>) – Percentage of instances to split off to validate on</p></li>
+<li><p><strong>verbose</strong> (<em>bool</em>) – Print verbose information</p></li>
+<li><p><strong>**kwd</strong> – Keyword arguments for the fit function</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="csrank.objectranking.FETAObjectRanker.predict">
+<code class="sig-name descname">predict</code><span class="sig-paren">(</span><em class="sig-param">X</em>, <em class="sig-param">**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/csrank/objectranking/feta_object_ranker.html#FETAObjectRanker.predict"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#csrank.objectranking.FETAObjectRanker.predict" title="Permalink to this definition">¶</a></dt>
+<dd><p>Predict preferences in the form of rankings or choices for a given collection of sets of objects called
+a query set using the function <a class="reference internal" href="#csrank.objectranking.FETAObjectRanker.predict_for_scores" title="csrank.objectranking.FETAObjectRanker.predict_for_scores"><code class="xref py py-meth docutils literal notranslate"><span class="pre">predict_for_scores()</span></code></a>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>X</strong> (<em>dict</em><em> or </em><em>numpy array</em>) – Dictionary with a mapping from the query set size to numpy arrays or a single numpy array of size:
+(n_instances, n_objects, n_features)</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><strong>Y</strong> (<em>dict or numpy array</em>) – Dictionary with a mapping from the query set size to numpy arrays or a single numpy array containing
+predicted preferences of size:
+(n_instances, n_objects)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="csrank.objectranking.FETAObjectRanker.predict_for_scores">
+<code class="sig-name descname">predict_for_scores</code><span class="sig-paren">(</span><em class="sig-param">scores</em>, <em class="sig-param">**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/csrank/objectranking/feta_object_ranker.html#FETAObjectRanker.predict_for_scores"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#csrank.objectranking.FETAObjectRanker.predict_for_scores" title="Permalink to this definition">¶</a></dt>
+<dd><p>The permutation vector <span class="math notranslate nohighlight">\(\pi\)</span> represents the ranking amongst the objects in <span class="math notranslate nohighlight">\(Q\)</span>, such that
+<span class="math notranslate nohighlight">\(\pi(k)\)</span> is the position of the <span class="math notranslate nohighlight">\(k\)</span>-th object <span class="math notranslate nohighlight">\(x_k\)</span>, and <span class="math notranslate nohighlight">\(\pi^{-1}(k)\)</span> is the index
+of the object on position <span class="math notranslate nohighlight">\(k\)</span>. Predict rankings for the scores for a given collection of sets of
+objects (query sets).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>scores</strong> (<em>dict</em><em> or </em><em>numpy array</em>) – Dictionary with a mapping from query set size to numpy arrays or a single numpy array of size containing
+scores of each object of size: (n_instances, n_objects)</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><strong>Y</strong> (<em>dict or numpy array</em>) – Dictionary with a mapping from objects size to numpy arrays or a single numpy array containing
+predicted rankings of size: (n_samples, n_objects)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="csrank.objectranking.FETAObjectRanker.predict_scores">
+<code class="sig-name descname">predict_scores</code><span class="sig-paren">(</span><em class="sig-param">X</em>, <em class="sig-param">**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/csrank/objectranking/feta_object_ranker.html#FETAObjectRanker.predict_scores"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#csrank.objectranking.FETAObjectRanker.predict_scores" title="Permalink to this definition">¶</a></dt>
+<dd><p>Predict the utility scores for each object in the collection of set of objects called a query set.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>X</strong> (<em>dict</em><em> or </em><em>numpy array</em>) – Dictionary with a mapping from query set size to numpy arrays or a single numpy array of size:
+(n_instances, n_objects, n_features)</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><strong>Y</strong> (<em>dict or numpy array</em>) – Dictionary with a mapping from query set size to numpy arrays or a single numpy array of size:
+(n_instances, n_objects)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="csrank.objectranking.FETAObjectRanker.set_tunable_parameters">
+<code class="sig-name descname">set_tunable_parameters</code><span class="sig-paren">(</span><em class="sig-param">n_hidden=32</em>, <em class="sig-param">n_units=2</em>, <em class="sig-param">reg_strength=0.0001</em>, <em class="sig-param">learning_rate=0.001</em>, <em class="sig-param">batch_size=128</em>, <em class="sig-param">**point</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/csrank/objectranking/feta_object_ranker.html#FETAObjectRanker.set_tunable_parameters"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#csrank.objectranking.FETAObjectRanker.set_tunable_parameters" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set tunable parameters of the FETA-network to the values provided.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>n_hidden</strong> (<em>int</em>) – Number of hidden layers used in the scoring network</p></li>
+<li><p><strong>n_units</strong> (<em>int</em>) – Number of hidden units in each layer of the scoring network</p></li>
+<li><p><strong>reg_strength</strong> (<em>float</em>) – Regularization strength of the regularizer function applied to the <cite>kernel</cite> weights matrix</p></li>
+<li><p><strong>learning_rate</strong> (<em>float</em>) – Learning rate of the stochastic gradient descent algorithm used by the network</p></li>
+<li><p><strong>batch_size</strong> (<em>int</em>) – Batch size to use during training</p></li>
+<li><p><strong>point</strong> (<em>dict</em>) – Dictionary containing parameter values which are not tuned for the network</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="csrank.objectranking.CmpNet">
+<em class="property">class </em><code class="sig-prename descclassname">csrank.objectranking.</code><code class="sig-name descname">CmpNet</code><span class="sig-paren">(</span><em class="sig-param">n_object_features, n_hidden=2, n_units=8, loss_function='binary_crossentropy', batch_normalization=True, kernel_regularizer=&lt;keras.regularizers.L1L2 object&gt;, kernel_initializer='lecun_normal', activation='relu', optimizer=&lt;keras.optimizers.SGD object&gt;, metrics=['binary_accuracy'], batch_size=256, random_state=None, **kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/csrank/objectranking/cmp_net.html#CmpNet"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#csrank.objectranking.CmpNet" title="Permalink to this definition">¶</a></dt>
+<dd><blockquote>
+<div><p>Create an instance of the <code class="xref py py-class docutils literal notranslate"><span class="pre">CmpNetCore</span></code> architecture for learning a object ranking function.
+CmpNet breaks the preferences in form of rankings into pairwise comparisons and learns a pairwise model for
+the each pair of object in the underlying set. For prediction list of objects is converted in pair of
+objects and the pairwise predicate is evaluated using them. The outputs of the network, i.e.,
+<span class="math notranslate nohighlight">\(U(x_1,x_2), U(x_2,x_1)\)</span> is a measure of how favorable it is to choose <span class="math notranslate nohighlight">\(x_1\)</span> over <span class="math notranslate nohighlight">\(x_2\)</span>.
+The utility score of object <span class="math notranslate nohighlight">\(x_i\)</span> in query set <span class="math notranslate nohighlight">\(Q = \{ x_1 , \ldots , x_n \}\)</span> is evaluated as:</p>
+<div class="math notranslate nohighlight">
+\[U(x_i) = \left\{ \frac{1}{n-1} \sum_{j \in [n] \setminus \{i\}} U_1(x_i , x_j)\right\}\]</div>
+<p>The ranking for the given query set <span class="math notranslate nohighlight">\(Q\)</span> is defined as:</p>
+<div class="math notranslate nohighlight">
+\[ρ(Q)  = \operatorname{argsort}_{x \in Q}  \; U(x)\]</div>
+</div></blockquote>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>n_object_features</strong> (<em>int</em>) – Number of features of the object space</p></li>
+<li><p><strong>n_hidden</strong> (<em>int</em>) – Number of hidden layers used in the scoring network</p></li>
+<li><p><strong>n_units</strong> (<em>int</em>) – Number of hidden units in each layer of the scoring network</p></li>
+<li><p><strong>loss_function</strong> (<em>function</em><em> or </em><em>string</em>) – Loss function to be used for the binary decision task of the
+pairwise comparisons</p></li>
+<li><p><strong>batch_normalization</strong> (<em>bool</em>) – Whether to use batch normalization in each hidden layer</p></li>
+<li><p><strong>kernel_regularizer</strong> (<em>function</em>) – Regularizer function applied to all the hidden weight matrices.</p></li>
+<li><p><strong>activation</strong> (<em>function</em><em> or </em><em>string</em>) – Type of activation function to use in each hidden layer</p></li>
+<li><p><strong>optimizer</strong> (<em>function</em><em> or </em><em>string</em>) – Optimizer to use during stochastic gradient descent</p></li>
+<li><p><strong>metrics</strong> (<em>list</em>) – List of metrics to evaluate during training (can be
+non-differentiable)</p></li>
+<li><p><strong>batch_size</strong> (<em>int</em>) – Batch size to use during training</p></li>
+<li><p><strong>random_state</strong> (<em>int</em><em>, </em><em>RandomState instance</em><em> or </em><em>None</em>) – Seed of the pseudorandom generator or a RandomState instance</p></li>
+<li><p><strong>**kwargs</strong> – Keyword arguments for the algorithms</p></li>
+</ul>
+</dd>
+</dl>
+<p class="rubric">References</p>
+<p>[1] Leonardo Rigutini, Tiziano Papini, Marco Maggini, and Franco Scarselli. 2011. SortNet: Learning to Rank by a Neural Preference Function. IEEE Trans. Neural Networks 22, 9 (2011), 1368–1380. <a class="reference external" href="https://doi.org/10.1109/TNN.2011.2160875">https://doi.org/10.1109/TNN.2011.2160875</a></p>
+<dl class="method">
+<dt id="csrank.objectranking.CmpNet.clear_memory">
+<code class="sig-name descname">clear_memory</code><span class="sig-paren">(</span><em class="sig-param">**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/csrank/objectranking/cmp_net.html#CmpNet.clear_memory"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#csrank.objectranking.CmpNet.clear_memory" title="Permalink to this definition">¶</a></dt>
+<dd><p>Clear the memory, restores the currently fitted model back to prevent memory leaks.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>**kwargs</strong> – Keyword arguments for the function</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="csrank.objectranking.CmpNet.construct_model">
+<code class="sig-name descname">construct_model</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/csrank/objectranking/cmp_net.html#CmpNet.construct_model"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#csrank.objectranking.CmpNet.construct_model" title="Permalink to this definition">¶</a></dt>
+<dd><p>Construct the CmpNet which is used to approximate the <span class="math notranslate nohighlight">\(U_1(x_i,x_j)\)</span>. For each pair of objects in
+<span class="math notranslate nohighlight">\(x_i, x_j \in Q\)</span> we construct two sub-networks with weight sharing in all hidden layers.
+The output of these networks are connected to two sigmoid units that produces the outputs of the network,
+i.e., <span class="math notranslate nohighlight">\(U(x_1,x_2), U(x_2,x_1)\)</span> for each pair of objects are evaluated. <span class="math notranslate nohighlight">\(U(x_1,x_2)\)</span> is a measure
+of how favorable it is to choose <span class="math notranslate nohighlight">\(x_1\)</span> over <span class="math notranslate nohighlight">\(x_2\)</span>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p><strong>model</strong> (keras <code class="xref py py-class docutils literal notranslate"><span class="pre">Model</span></code>) – Neural network to learn the CmpNet utility score</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="csrank.objectranking.CmpNet.fit">
+<code class="sig-name descname">fit</code><span class="sig-paren">(</span><em class="sig-param">X</em>, <em class="sig-param">Y</em>, <em class="sig-param">epochs=10</em>, <em class="sig-param">callbacks=None</em>, <em class="sig-param">validation_split=0.1</em>, <em class="sig-param">verbose=0</em>, <em class="sig-param">**kwd</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/csrank/objectranking/cmp_net.html#CmpNet.fit"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#csrank.objectranking.CmpNet.fit" title="Permalink to this definition">¶</a></dt>
+<dd><p>Fit an object ranking learning CmpNet model on a provided set of queries. The provided queries can be of a
+fixed size (numpy arrays). For learning this network the binary cross entropy loss function for a pair of
+objects <span class="math notranslate nohighlight">\(x_i, x_j \in Q\)</span> is defined as:</p>
+<div class="math notranslate nohighlight">
+\[C_{ij} =  -\tilde{P_{ij}}(0)\cdot \log(U(x_i,x_j)) - \tilde{P_{ij}}(1) \cdot \log(U(x_j,x_i)) \ ,\]</div>
+<p>where <span class="math notranslate nohighlight">\(\tilde{P_{ij}}\)</span> is ground truth probability of the preference of <span class="math notranslate nohighlight">\(x_i\)</span> over <span class="math notranslate nohighlight">\(x_j\)</span>.
+<span class="math notranslate nohighlight">\(\tilde{P_{ij}} = (1,0)\)</span> if <span class="math notranslate nohighlight">\(x_i \succ x_j\)</span> else <span class="math notranslate nohighlight">\(\tilde{P_{ij}} = (0,1)\)</span>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>X</strong> (<em>numpy array</em>) – (n_instances, n_objects, n_features)
+Feature vectors of the objects</p></li>
+<li><p><strong>Y</strong> (<em>numpy array</em>) – (n_instances, n_objects)
+Rankings of the given objects</p></li>
+<li><p><strong>epochs</strong> (<em>int</em>) – Number of epochs to run if training for a fixed query size</p></li>
+<li><p><strong>callbacks</strong> (<em>list</em>) – List of callbacks to be called during optimization</p></li>
+<li><p><strong>validation_split</strong> (<em>float</em>) – Percentage of instances to split off to validate on</p></li>
+<li><p><strong>verbose</strong> (<em>bool</em>) – Print verbose information</p></li>
+<li><p><strong>**kwd</strong> – Keyword arguments for the fit function</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="csrank.objectranking.CmpNet.predict">
+<code class="sig-name descname">predict</code><span class="sig-paren">(</span><em class="sig-param">X</em>, <em class="sig-param">**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/csrank/objectranking/cmp_net.html#CmpNet.predict"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#csrank.objectranking.CmpNet.predict" title="Permalink to this definition">¶</a></dt>
+<dd><p>Predict preferences in the form of rankings or choices for a given collection of sets of objects called
+a query set using the function <a class="reference internal" href="#csrank.objectranking.CmpNet.predict_for_scores" title="csrank.objectranking.CmpNet.predict_for_scores"><code class="xref py py-meth docutils literal notranslate"><span class="pre">predict_for_scores()</span></code></a>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>X</strong> (<em>dict</em><em> or </em><em>numpy array</em>) – Dictionary with a mapping from the query set size to numpy arrays or a single numpy array of size:
+(n_instances, n_objects, n_features)</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><strong>Y</strong> (<em>dict or numpy array</em>) – Dictionary with a mapping from the query set size to numpy arrays or a single numpy array containing
+predicted preferences of size:
+(n_instances, n_objects)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="csrank.objectranking.CmpNet.predict_for_scores">
+<code class="sig-name descname">predict_for_scores</code><span class="sig-paren">(</span><em class="sig-param">scores</em>, <em class="sig-param">**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/csrank/objectranking/cmp_net.html#CmpNet.predict_for_scores"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#csrank.objectranking.CmpNet.predict_for_scores" title="Permalink to this definition">¶</a></dt>
+<dd><p>The permutation vector <span class="math notranslate nohighlight">\(\pi\)</span> represents the ranking amongst the objects in <span class="math notranslate nohighlight">\(Q\)</span>, such that
+<span class="math notranslate nohighlight">\(\pi(k)\)</span> is the position of the <span class="math notranslate nohighlight">\(k\)</span>-th object <span class="math notranslate nohighlight">\(x_k\)</span>, and <span class="math notranslate nohighlight">\(\pi^{-1}(k)\)</span> is the index
+of the object on position <span class="math notranslate nohighlight">\(k\)</span>. Predict rankings for the scores for a given collection of sets of
+objects (query sets).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>scores</strong> (<em>dict</em><em> or </em><em>numpy array</em>) – Dictionary with a mapping from query set size to numpy arrays or a single numpy array of size containing
+scores of each object of size: (n_instances, n_objects)</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><strong>Y</strong> (<em>dict or numpy array</em>) – Dictionary with a mapping from objects size to numpy arrays or a single numpy array containing
+predicted rankings of size: (n_samples, n_objects)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="csrank.objectranking.CmpNet.predict_scores">
+<code class="sig-name descname">predict_scores</code><span class="sig-paren">(</span><em class="sig-param">X</em>, <em class="sig-param">**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/csrank/objectranking/cmp_net.html#CmpNet.predict_scores"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#csrank.objectranking.CmpNet.predict_scores" title="Permalink to this definition">¶</a></dt>
+<dd><p>Predict the utility scores for each object in the collection of set of objects called a query set.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>X</strong> (<em>dict</em><em> or </em><em>numpy array</em>) – Dictionary with a mapping from query set size to numpy arrays or a single numpy array of size:
+(n_instances, n_objects, n_features)</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><strong>Y</strong> (<em>dict or numpy array</em>) – Dictionary with a mapping from query set size to numpy arrays or a single numpy array of size:
+(n_instances, n_objects)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="csrank.objectranking.CmpNet.set_tunable_parameters">
+<code class="sig-name descname">set_tunable_parameters</code><span class="sig-paren">(</span><em class="sig-param">n_hidden=32</em>, <em class="sig-param">n_units=2</em>, <em class="sig-param">reg_strength=0.0001</em>, <em class="sig-param">learning_rate=0.001</em>, <em class="sig-param">batch_size=128</em>, <em class="sig-param">**point</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/csrank/objectranking/cmp_net.html#CmpNet.set_tunable_parameters"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#csrank.objectranking.CmpNet.set_tunable_parameters" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set tunable parameters of the CmpNet network to the values provided.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>n_hidden</strong> (<em>int</em>) – Number of hidden layers used in the scoring network</p></li>
+<li><p><strong>n_units</strong> (<em>int</em>) – Number of hidden units in each layer of the scoring network</p></li>
+<li><p><strong>reg_strength</strong> (<em>float</em>) – Regularization strength of the regularizer function applied to the <cite>kernel</cite> weights matrix</p></li>
+<li><p><strong>learning_rate</strong> (<em>float</em>) – Learning rate of the stochastic gradient descent algorithm used by the network</p></li>
+<li><p><strong>batch_size</strong> (<em>int</em>) – Batch size to use during training</p></li>
+<li><p><strong>point</strong> (<em>dict</em>) – Dictionary containing parameter values which are not tuned for the network</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="csrank.objectranking.ListNet">
+<em class="property">class </em><code class="sig-prename descclassname">csrank.objectranking.</code><code class="sig-name descname">ListNet</code><span class="sig-paren">(</span><em class="sig-param">n_object_features, n_top, n_hidden=2, n_units=8, loss_function=&lt;function identifiable.&lt;locals&gt;.wrap_loss&gt;, batch_normalization=False, kernel_regularizer=&lt;keras.regularizers.L1L2 object&gt;, activation='selu', kernel_initializer='lecun_normal', optimizer=&lt;keras.optimizers.SGD object&gt;, metrics=[&lt;function zero_one_rank_loss_for_scores_ties&gt;], batch_size=256, random_state=None, **kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/csrank/objectranking/list_net.html#ListNet"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#csrank.objectranking.ListNet" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create an instance of the ListNet architecture. ListNet trains a latent utility model based on
+top-k-subrankings of the objects. This network learns a latent utility score for each object in the given
+query set <span class="math notranslate nohighlight">\(Q = \{x_1, \ldots ,x_n\}\)</span> using the equation <span class="math notranslate nohighlight">\(U(x) = F(x, w)\)</span> where <span class="math notranslate nohighlight">\(w\)</span> is the
+weight vector. A listwise loss function like the negative Plackett-Luce likelihood is used for training.
+The ranking for the given query set <span class="math notranslate nohighlight">\(Q\)</span> is defined as:</p>
+<div class="math notranslate nohighlight">
+\[ρ(Q)  = \operatorname{argsort}_{x \in Q}  \; U(x)\]</div>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>n_object_features</strong> (<em>int</em>) – Number of features of the object space</p></li>
+<li><p><strong>n_top</strong> (<em>int</em>) – Size of the top-k-subrankings to consider for training</p></li>
+<li><p><strong>hash_file</strong> (<em>str</em>) – File path of the model where the weights are stored to get the predictions after clearing the memory</p></li>
+<li><p><strong>n_hidden</strong> (<em>int</em>) – Number of hidden layers used in the scoring network</p></li>
+<li><p><strong>n_units</strong> (<em>int</em>) – Number of hidden units in each layer of the scoring network</p></li>
+<li><p><strong>loss_function</strong> (<em>function</em><em> or </em><em>string</em>) – Listwise loss function which is applied on the top-k objects</p></li>
+<li><p><strong>batch_normalization</strong> (<em>bool</em>) – Whether to use batch normalization in each hidden layer</p></li>
+<li><p><strong>kernel_regularizer</strong> (<em>function</em>) – Regularizer function applied to all the hidden weight matrices.</p></li>
+<li><p><strong>activation</strong> (<em>function</em><em> or </em><em>string</em>) – Type of activation function to use in each hidden layer</p></li>
+<li><p><strong>kernel_initializer</strong> (<em>function</em><em> or </em><em>string</em>) – Initialization function for the weights of each hidden layer</p></li>
+<li><p><strong>optimizer</strong> (<em>function</em><em> or </em><em>string</em>) – Optimizer to use during stochastic gradient descent</p></li>
+<li><p><strong>metrics</strong> (<em>list</em>) – List of metrics to evaluate during training (can be
+non-differentiable)</p></li>
+<li><p><strong>batch_size</strong> (<em>int</em>) – Batch size to use during training</p></li>
+<li><p><strong>random_state</strong> (<em>int</em><em>, </em><em>RandomState instance</em><em> or </em><em>None</em>) – Seed of the pseudorandom generator or a RandomState instance</p></li>
+<li><p><strong>**kwargs</strong> – Keyword arguments for the algorithms</p></li>
+</ul>
+</dd>
+</dl>
+<p class="rubric">References</p>
+<p>[1] Z. Cao, T. Qin, T. Liu, M. Tsai and H. Li. “Learning to Rank: From Pairwise Approach to Listwise Approach.” ICML, 2007.</p>
+<dl class="method">
+<dt id="csrank.objectranking.ListNet.clear_memory">
+<code class="sig-name descname">clear_memory</code><span class="sig-paren">(</span><em class="sig-param">**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/csrank/objectranking/list_net.html#ListNet.clear_memory"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#csrank.objectranking.ListNet.clear_memory" title="Permalink to this definition">¶</a></dt>
+<dd><p>Clear the memory, restores the currently fitted model back to prevent memory leaks.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>**kwargs</strong> – Keyword arguments for the function</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="csrank.objectranking.ListNet.construct_model">
+<code class="sig-name descname">construct_model</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/csrank/objectranking/list_net.html#ListNet.construct_model"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#csrank.objectranking.ListNet.construct_model" title="Permalink to this definition">¶</a></dt>
+<dd><p>Construct the ListNet architecture which takes topk-subrankings from the given queries and minimize a
+listwise loss on the utility scores of top objects. Weight sharing guarantees that we learn the shared
+weights <span class="math notranslate nohighlight">\(w\)</span> of the latent utility function <span class="math notranslate nohighlight">\(U(x) = F(x, w)\)</span>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p><strong>model</strong> (keras model <code class="xref py py-class docutils literal notranslate"><span class="pre">Model</span></code>) – ListNet model used to learn the utiliy function using the top-k-subrankings in the provided set of queries.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="csrank.objectranking.ListNet.fit">
+<code class="sig-name descname">fit</code><span class="sig-paren">(</span><em class="sig-param">X</em>, <em class="sig-param">Y</em>, <em class="sig-param">epochs=10</em>, <em class="sig-param">callbacks=None</em>, <em class="sig-param">validation_split=0.1</em>, <em class="sig-param">verbose=0</em>, <em class="sig-param">**kwd</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/csrank/objectranking/list_net.html#ListNet.fit"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#csrank.objectranking.ListNet.fit" title="Permalink to this definition">¶</a></dt>
+<dd><p>Fit an object ranking learning ListNet on the top-k-subrankings in the provided set of queries. The provided
+queries can be of a fixed size (numpy arrays). For fitting the model we maximize the Plackett-Luce
+likelihood. For example for query set <span class="math notranslate nohighlight">\(Q = \{x_1,x_2,x_3\}\)</span>, the scores are <span class="math notranslate nohighlight">\(Q = (s_1,s_2,s_3)\)</span>
+and the ranking is <span class="math notranslate nohighlight">\(\pi = (3,1,2)\)</span>. The  Plackett-Luce likelihood is defined as:</p>
+<div class="math notranslate nohighlight">
+\[P_l(\pi) = \frac{s_2}{s_1+s_2+s_3} \cdot \frac{s_3}{s_1+s_3} \cdot \frac{s_1}{s_1}\]</div>
+<p>Note: For k=2 we obtain <a class="reference internal" href="#csrank.objectranking.RankNet" title="csrank.objectranking.RankNet"><code class="xref py py-class docutils literal notranslate"><span class="pre">RankNet</span></code></a> as a special case.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>X</strong> (<em>numpy array</em>) – (n_instances, n_objects, n_features)
+Feature vectors of the objects</p></li>
+<li><p><strong>Y</strong> (<em>numpy array</em>) – (n_instances, n_objects)
+Rankings of the given objects</p></li>
+<li><p><strong>epochs</strong> (<em>int</em>) – Number of epochs to run if training for a fixed query size</p></li>
+<li><p><strong>callbacks</strong> (<em>list</em>) – List of callbacks to be called during optimization</p></li>
+<li><p><strong>validation_split</strong> (<em>float</em>) – Percentage of instances to split off to validate on</p></li>
+<li><p><strong>verbose</strong> (<em>bool</em>) – Print verbose information</p></li>
+<li><p><strong>**kwd</strong> – Keyword arguments for the fit function</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="csrank.objectranking.ListNet.predict">
+<code class="sig-name descname">predict</code><span class="sig-paren">(</span><em class="sig-param">X</em>, <em class="sig-param">**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/csrank/objectranking/list_net.html#ListNet.predict"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#csrank.objectranking.ListNet.predict" title="Permalink to this definition">¶</a></dt>
+<dd><p>Predict preferences in the form of rankings or choices for a given collection of sets of objects called
+a query set using the function <a class="reference internal" href="#csrank.objectranking.ListNet.predict_for_scores" title="csrank.objectranking.ListNet.predict_for_scores"><code class="xref py py-meth docutils literal notranslate"><span class="pre">predict_for_scores()</span></code></a>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>X</strong> (<em>dict</em><em> or </em><em>numpy array</em>) – Dictionary with a mapping from the query set size to numpy arrays or a single numpy array of size:
+(n_instances, n_objects, n_features)</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><strong>Y</strong> (<em>dict or numpy array</em>) – Dictionary with a mapping from the query set size to numpy arrays or a single numpy array containing
+predicted preferences of size:
+(n_instances, n_objects)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="csrank.objectranking.ListNet.predict_for_scores">
+<code class="sig-name descname">predict_for_scores</code><span class="sig-paren">(</span><em class="sig-param">scores</em>, <em class="sig-param">**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/csrank/objectranking/list_net.html#ListNet.predict_for_scores"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#csrank.objectranking.ListNet.predict_for_scores" title="Permalink to this definition">¶</a></dt>
+<dd><p>The permutation vector <span class="math notranslate nohighlight">\(\pi\)</span> represents the ranking amongst the objects in <span class="math notranslate nohighlight">\(Q\)</span>, such that
+<span class="math notranslate nohighlight">\(\pi(k)\)</span> is the position of the <span class="math notranslate nohighlight">\(k\)</span>-th object <span class="math notranslate nohighlight">\(x_k\)</span>, and <span class="math notranslate nohighlight">\(\pi^{-1}(k)\)</span> is the index
+of the object on position <span class="math notranslate nohighlight">\(k\)</span>. Predict rankings for the scores for a given collection of sets of
+objects (query sets).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>scores</strong> (<em>dict</em><em> or </em><em>numpy array</em>) – Dictionary with a mapping from query set size to numpy arrays or a single numpy array of size containing
+scores of each object of size: (n_instances, n_objects)</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><strong>Y</strong> (<em>dict or numpy array</em>) – Dictionary with a mapping from objects size to numpy arrays or a single numpy array containing
+predicted rankings of size: (n_samples, n_objects)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="csrank.objectranking.ListNet.predict_scores">
+<code class="sig-name descname">predict_scores</code><span class="sig-paren">(</span><em class="sig-param">X</em>, <em class="sig-param">**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/csrank/objectranking/list_net.html#ListNet.predict_scores"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#csrank.objectranking.ListNet.predict_scores" title="Permalink to this definition">¶</a></dt>
+<dd><p>Predict the utility scores for each object in the collection of set of objects called a query set.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>X</strong> (<em>dict</em><em> or </em><em>numpy array</em>) – Dictionary with a mapping from query set size to numpy arrays or a single numpy array of size:
+(n_instances, n_objects, n_features)</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><strong>Y</strong> (<em>dict or numpy array</em>) – Dictionary with a mapping from query set size to numpy arrays or a single numpy array of size:
+(n_instances, n_objects)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="csrank.objectranking.ListNet.scoring_model">
+<em class="property">property </em><code class="sig-name descname">scoring_model</code><a class="headerlink" href="#csrank.objectranking.ListNet.scoring_model" title="Permalink to this definition">¶</a></dt>
+<dd><p>Creates a scoring model from the trained ListNet, which predicts the utility scores for given set of objects.
+This network consist of a sequential network which predicts the utility score for each object <span class="math notranslate nohighlight">\(x \in Q\)</span>
+using the latent utility function <span class="math notranslate nohighlight">\(U(x) = F(x, w)\)</span> where <span class="math notranslate nohighlight">\(w\)</span> is the weights of the model.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p><strong>scoring_model</strong> (keras model <code class="xref py py-class docutils literal notranslate"><span class="pre">Model</span></code>) – scoring model used to predict utility score for each object</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="csrank.objectranking.ListNet.set_tunable_parameters">
+<code class="sig-name descname">set_tunable_parameters</code><span class="sig-paren">(</span><em class="sig-param">n_hidden=32</em>, <em class="sig-param">n_units=2</em>, <em class="sig-param">reg_strength=0.0001</em>, <em class="sig-param">learning_rate=0.001</em>, <em class="sig-param">batch_size=128</em>, <em class="sig-param">**point</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/csrank/objectranking/list_net.html#ListNet.set_tunable_parameters"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#csrank.objectranking.ListNet.set_tunable_parameters" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set tunable parameters of the ListNet network to the values provided.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>n_hidden</strong> (<em>int</em>) – Number of hidden layers used in the scoring network</p></li>
+<li><p><strong>n_units</strong> (<em>int</em>) – Number of hidden units in each layer of the scoring network</p></li>
+<li><p><strong>reg_strength</strong> (<em>float</em>) – Regularization strength of the regularizer function applied to the <cite>kernel</cite> weights matrix</p></li>
+<li><p><strong>learning_rate</strong> (<em>float</em>) – Learning rate of the stochastic gradient descent algorithm used by the network</p></li>
+<li><p><strong>batch_size</strong> (<em>int</em>) – Batch size to use during training</p></li>
+<li><p><strong>point</strong> (<em>dict</em>) – Dictionary containing parameter values which are not tuned for the network</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="csrank.objectranking.RankNet">
+<em class="property">class </em><code class="sig-prename descclassname">csrank.objectranking.</code><code class="sig-name descname">RankNet</code><span class="sig-paren">(</span><em class="sig-param">n_object_features, n_hidden=2, n_units=8, loss_function='binary_crossentropy', batch_normalization=True, kernel_regularizer=&lt;keras.regularizers.L1L2 object&gt;, kernel_initializer='lecun_normal', activation='relu', optimizer=&lt;keras.optimizers.SGD object&gt;, metrics=['binary_accuracy'], batch_size=256, random_state=None, **kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/csrank/objectranking/rank_net.html#RankNet"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#csrank.objectranking.RankNet" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create an instance of the <code class="xref py py-class docutils literal notranslate"><span class="pre">RankNetCore</span></code> architecture for learning a object ranking function.
+It breaks the preferences into pairwise comparisons and learns a latent utility model for the objects.
+This network learns a latent utility score for each object in the given query set
+<span class="math notranslate nohighlight">\(Q = \{x_1, \ldots ,x_n\}\)</span> using the equation <span class="math notranslate nohighlight">\(U(x) = F(x, w)\)</span> where <span class="math notranslate nohighlight">\(w\)</span> is the weight
+vector. It is estimated using <em>pairwise preferences</em> generated from the rankings.
+The ranking for the given query set <span class="math notranslate nohighlight">\(Q\)</span> is defined as:</p>
+<div class="math notranslate nohighlight">
+\[ρ(Q)  = \operatorname{argsort}_{x \in Q}  \; U(x)\]</div>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>n_object_features</strong> (<em>int</em>) – Number of features of the object space</p></li>
+<li><p><strong>n_hidden</strong> (<em>int</em>) – Number of hidden layers used in the scoring network</p></li>
+<li><p><strong>n_units</strong> (<em>int</em>) – Number of hidden units in each layer of the scoring network</p></li>
+<li><p><strong>loss_function</strong> (<em>function</em><em> or </em><em>string</em>) – Loss function to be used for the binary decision task of the
+pairwise comparisons</p></li>
+<li><p><strong>batch_normalization</strong> (<em>bool</em>) – Whether to use batch normalization in each hidden layer</p></li>
+<li><p><strong>kernel_regularizer</strong> (<em>function</em>) – Regularizer function applied to all the hidden weight matrices.</p></li>
+<li><p><strong>kernel_initializer</strong> (<em>function</em><em> or </em><em>string</em>) – Initialization function for the weights of each hidden layer</p></li>
+<li><p><strong>activation</strong> (<em>function</em><em> or </em><em>string</em>) – Type of activation function to use in each hidden layer</p></li>
+<li><p><strong>optimizer</strong> (<em>function</em><em> or </em><em>string</em>) – Optimizer to use during stochastic gradient descent</p></li>
+<li><p><strong>metrics</strong> (<em>list</em>) – List of metrics to evaluate during training (can be non-differentiable)</p></li>
+<li><p><strong>batch_size</strong> (<em>int</em>) – Batch size to use during training</p></li>
+<li><p><strong>random_state</strong> (<em>int</em><em>, </em><em>RandomState instance</em><em> or </em><em>None</em>) – Seed of the pseudo-random generator or a RandomState instance</p></li>
+<li><p><strong>**kwargs</strong> – Keyword arguments for the algorithms</p></li>
+</ul>
+</dd>
+</dl>
+<p class="rubric">References</p>
+<p>[1] Burges, C. et al. (2005, August). “Learning to rank using gradient descent.”, In Proceedings of the 22nd international conference on Machine learning (pp. 89-96). ACM.</p>
+<p>[2] Burges, C. J. (2010). “From ranknet to lambdarank to lambdamart: An overview.”, Learning, 11(23-581).</p>
+<dl class="method">
+<dt id="csrank.objectranking.RankNet.clear_memory">
+<code class="sig-name descname">clear_memory</code><span class="sig-paren">(</span><em class="sig-param">**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/csrank/objectranking/rank_net.html#RankNet.clear_memory"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#csrank.objectranking.RankNet.clear_memory" title="Permalink to this definition">¶</a></dt>
+<dd><p>Clear the memory, restores the currently fitted model back to prevent memory leaks.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>**kwargs</strong> – Keyword arguments for the function</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="csrank.objectranking.RankNet.construct_model">
+<code class="sig-name descname">construct_model</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/csrank/objectranking/rank_net.html#RankNet.construct_model"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#csrank.objectranking.RankNet.construct_model" title="Permalink to this definition">¶</a></dt>
+<dd><p>Construct the RankNet which is used to approximate the <span class="math notranslate nohighlight">\(U(x)\)</span> utility. For each pair of objects in
+<span class="math notranslate nohighlight">\(x_i, x_j \in Q\)</span> we construct two sub-networks with weight sharing in all hidden layer apart form the
+last layer for which weights are mirrored version of each other. The output of these networks are connected
+to a sigmoid unit that produces the output <span class="math notranslate nohighlight">\(P_{ij}\)</span> which is the probability of preferring object
+<span class="math notranslate nohighlight">\(x_i\)</span> over <span class="math notranslate nohighlight">\(x_j\)</span>, to approximate the <span class="math notranslate nohighlight">\(U(x)\)</span>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p><strong>model</strong> (keras <code class="xref py py-class docutils literal notranslate"><span class="pre">Model</span></code>) – Neural network to learn the RankNet utility score</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="csrank.objectranking.RankNet.fit">
+<code class="sig-name descname">fit</code><span class="sig-paren">(</span><em class="sig-param">X</em>, <em class="sig-param">Y</em>, <em class="sig-param">epochs=10</em>, <em class="sig-param">callbacks=None</em>, <em class="sig-param">validation_split=0.1</em>, <em class="sig-param">verbose=0</em>, <em class="sig-param">**kwd</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/csrank/objectranking/rank_net.html#RankNet.fit"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#csrank.objectranking.RankNet.fit" title="Permalink to this definition">¶</a></dt>
+<dd><p>Fit an object ranking learning RankNet model on a provided set of queries. The provided queries can be of a
+fixed size (numpy arrays). For learning this network the binary cross entropy loss function for a pair of
+objects <span class="math notranslate nohighlight">\(x_i, x_j \in Q\)</span> is defined as:</p>
+<div class="math notranslate nohighlight">
+\[C_{ij} =  -\tilde{P_{ij}}\log(P_{ij}) - (1 - \tilde{P_{ij}})\log(1 - P{ij}) \enspace,\]</div>
+<p>where <span class="math notranslate nohighlight">\(\tilde{P_{ij}}\)</span> is ground truth probability of the preference of <span class="math notranslate nohighlight">\(x_i\)</span> over <span class="math notranslate nohighlight">\(x_j\)</span>.
+<span class="math notranslate nohighlight">\(\tilde{P_{ij}} = 1\)</span> if <span class="math notranslate nohighlight">\(x_i \succ x_j\)</span> else <span class="math notranslate nohighlight">\(\tilde{P_{ij}} = 0\)</span>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>X</strong> (<em>numpy array</em>) – (n_instances, n_objects, n_features)
+Feature vectors of the objects</p></li>
+<li><p><strong>Y</strong> (<em>numpy array</em>) – (n_instances, n_objects)
+Rankings of the given objects</p></li>
+<li><p><strong>epochs</strong> (<em>int</em>) – Number of epochs to run if training for a fixed query size</p></li>
+<li><p><strong>callbacks</strong> (<em>list</em>) – List of callbacks to be called during optimization</p></li>
+<li><p><strong>validation_split</strong> (<em>float</em>) – Percentage of instances to split off to validate on</p></li>
+<li><p><strong>verbose</strong> (<em>bool</em>) – Print verbose information</p></li>
+<li><p><strong>**kwd</strong> – Keyword arguments for the fit function</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="csrank.objectranking.RankNet.predict">
+<code class="sig-name descname">predict</code><span class="sig-paren">(</span><em class="sig-param">X</em>, <em class="sig-param">**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/csrank/objectranking/rank_net.html#RankNet.predict"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#csrank.objectranking.RankNet.predict" title="Permalink to this definition">¶</a></dt>
+<dd><p>Predict preferences in the form of rankings or choices for a given collection of sets of objects called
+a query set using the function <a class="reference internal" href="#csrank.objectranking.RankNet.predict_for_scores" title="csrank.objectranking.RankNet.predict_for_scores"><code class="xref py py-meth docutils literal notranslate"><span class="pre">predict_for_scores()</span></code></a>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>X</strong> (<em>dict</em><em> or </em><em>numpy array</em>) – Dictionary with a mapping from the query set size to numpy arrays or a single numpy array of size:
+(n_instances, n_objects, n_features)</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><strong>Y</strong> (<em>dict or numpy array</em>) – Dictionary with a mapping from the query set size to numpy arrays or a single numpy array containing
+predicted preferences of size:
+(n_instances, n_objects)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="csrank.objectranking.RankNet.predict_for_scores">
+<code class="sig-name descname">predict_for_scores</code><span class="sig-paren">(</span><em class="sig-param">scores</em>, <em class="sig-param">**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/csrank/objectranking/rank_net.html#RankNet.predict_for_scores"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#csrank.objectranking.RankNet.predict_for_scores" title="Permalink to this definition">¶</a></dt>
+<dd><p>The permutation vector <span class="math notranslate nohighlight">\(\pi\)</span> represents the ranking amongst the objects in <span class="math notranslate nohighlight">\(Q\)</span>, such that
+<span class="math notranslate nohighlight">\(\pi(k)\)</span> is the position of the <span class="math notranslate nohighlight">\(k\)</span>-th object <span class="math notranslate nohighlight">\(x_k\)</span>, and <span class="math notranslate nohighlight">\(\pi^{-1}(k)\)</span> is the index
+of the object on position <span class="math notranslate nohighlight">\(k\)</span>. Predict rankings for the scores for a given collection of sets of
+objects (query sets).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>scores</strong> (<em>dict</em><em> or </em><em>numpy array</em>) – Dictionary with a mapping from query set size to numpy arrays or a single numpy array of size containing
+scores of each object of size: (n_instances, n_objects)</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><strong>Y</strong> (<em>dict or numpy array</em>) – Dictionary with a mapping from objects size to numpy arrays or a single numpy array containing
+predicted rankings of size: (n_samples, n_objects)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="csrank.objectranking.RankNet.predict_scores">
+<code class="sig-name descname">predict_scores</code><span class="sig-paren">(</span><em class="sig-param">X</em>, <em class="sig-param">**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/csrank/objectranking/rank_net.html#RankNet.predict_scores"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#csrank.objectranking.RankNet.predict_scores" title="Permalink to this definition">¶</a></dt>
+<dd><p>Predict the utility scores for each object in the collection of set of objects called a query set.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>X</strong> (<em>dict</em><em> or </em><em>numpy array</em>) – Dictionary with a mapping from query set size to numpy arrays or a single numpy array of size:
+(n_instances, n_objects, n_features)</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><strong>Y</strong> (<em>dict or numpy array</em>) – Dictionary with a mapping from query set size to numpy arrays or a single numpy array of size:
+(n_instances, n_objects)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="csrank.objectranking.RankNet.set_tunable_parameters">
+<code class="sig-name descname">set_tunable_parameters</code><span class="sig-paren">(</span><em class="sig-param">n_hidden=32</em>, <em class="sig-param">n_units=2</em>, <em class="sig-param">reg_strength=0.0001</em>, <em class="sig-param">learning_rate=0.001</em>, <em class="sig-param">batch_size=128</em>, <em class="sig-param">**point</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/csrank/objectranking/rank_net.html#RankNet.set_tunable_parameters"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#csrank.objectranking.RankNet.set_tunable_parameters" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set tunable parameters of the RankNet network to the values provided.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>n_hidden</strong> (<em>int</em>) – Number of hidden layers used in the scoring network</p></li>
+<li><p><strong>n_units</strong> (<em>int</em>) – Number of hidden units in each layer of the scoring network</p></li>
+<li><p><strong>reg_strength</strong> (<em>float</em>) – Regularization strength of the regularizer function applied to the <cite>kernel</cite> weights matrix</p></li>
+<li><p><strong>learning_rate</strong> (<em>float</em>) – Learning rate of the stochastic gradient descent algorithm used by the network</p></li>
+<li><p><strong>batch_size</strong> (<em>int</em>) – Batch size to use during training</p></li>
+<li><p><strong>point</strong> (<em>dict</em>) – Dictionary containing parameter values which are not tuned for the network</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="csrank.objectranking.ExpectedRankRegression">
+<em class="property">class </em><code class="sig-prename descclassname">csrank.objectranking.</code><code class="sig-name descname">ExpectedRankRegression</code><span class="sig-paren">(</span><em class="sig-param">n_object_features</em>, <em class="sig-param">alpha=0.0</em>, <em class="sig-param">l1_ratio=0.5</em>, <em class="sig-param">tol=0.0001</em>, <em class="sig-param">normalize=True</em>, <em class="sig-param">fit_intercept=True</em>, <em class="sig-param">random_state=None</em>, <em class="sig-param">**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/csrank/objectranking/expected_rank_regression.html#ExpectedRankRegression"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#csrank.objectranking.ExpectedRankRegression" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create an expected rank regression model.
+This model normalizes the ranks to [0, 1] and treats them as regression target. For <code class="docutils literal notranslate"><span class="pre">α</span> <span class="pre">=</span> <span class="pre">0</span></code> we employ
+simple linear regression. For α &gt; 0 the model becomes ridge regression (when <code class="docutils literal notranslate"><span class="pre">l1_ratio</span> <span class="pre">=</span> <span class="pre">0</span></code>) or
+elastic net (when <code class="docutils literal notranslate"><span class="pre">l1_ratio</span> <span class="pre">&gt;</span> <span class="pre">0</span></code>). The target for an object <span class="math notranslate nohighlight">\(x_k \in Q\)</span> is:</p>
+<div class="math notranslate nohighlight">
+\[r(x_k) = \frac{\pi(k)}{n} \quad ,\]</div>
+<p>where <span class="math notranslate nohighlight">\(\pi(k)\)</span> is the rank of the <span class="math notranslate nohighlight">\(x_k\)</span>. The regression model learns a function
+<span class="math notranslate nohighlight">\(F \colon \mathcal{X} \to \mathbb{R}\)</span>. The ranking for the given query set <span class="math notranslate nohighlight">\(Q\)</span> defined as:</p>
+<div class="math notranslate nohighlight">
+\[ρ(Q)  = \operatorname{argsort}_{x \in Q}  \; -1*F(x)\]</div>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>n_object_features</strong> (<em>int</em>) – Number of features of the object space</p></li>
+<li><p><strong>alpha</strong> (<em>float</em><em>, </em><em>optional</em>) – Regularization strength</p></li>
+<li><p><strong>l1_ratio</strong> (<em>float</em><em>, </em><em>optional</em>) – Ratio between pure L2 (=0) or pure L1 (=1) regularization.</p></li>
+<li><p><strong>tol</strong> (<em>float</em><em>, </em><em>optional</em>) – Optimization tolerance</p></li>
+<li><p><strong>normalize</strong> (<em>bool</em><em>, </em><em>optional</em>) – If True, the regressors will be normalized before fitting.</p></li>
+<li><p><strong>fit_intercept</strong> (<em>bool</em><em>, </em><em>optional</em>) – If True, the linear model will also fit an intercept.</p></li>
+<li><p><strong>random_state</strong> (<em>int</em><em>, </em><em>RandomState instance</em><em> or </em><em>None</em><em>, </em><em>optional</em>) – Seed of the pseudorandom generator or a RandomState instance</p></li>
+<li><p><strong>**kwargs</strong> – Keyword arguments for the algorithms</p></li>
+</ul>
+</dd>
+</dl>
+<p class="rubric">References</p>
+<p>[1] Kamishima, T., Kazawa, H., &amp; Akaho, S. (2005, November). “Supervised ordering-an empirical survey.”, Fifth IEEE International Conference on Data Mining.</p>
+<dl class="method">
+<dt id="csrank.objectranking.ExpectedRankRegression.fit">
+<code class="sig-name descname">fit</code><span class="sig-paren">(</span><em class="sig-param">X</em>, <em class="sig-param">Y</em>, <em class="sig-param">**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/csrank/objectranking/expected_rank_regression.html#ExpectedRankRegression.fit"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#csrank.objectranking.ExpectedRankRegression.fit" title="Permalink to this definition">¶</a></dt>
+<dd><p>Fit an ExpectedRankRegression on the provided set of queries X and preferences Y of those objects.
+The provided queries and corresponding preferences are of a fixed size (numpy arrays).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>X</strong> (<em>numpy array</em>) – (n_instances, n_objects, n_features)
+Feature vectors of the objects</p></li>
+<li><p><strong>Y</strong> (<em>numpy array</em>) – (n_instances, n_objects)
+Rankings of the given objects</p></li>
+<li><p><strong>**kwargs</strong> – Keyword arguments for the fit function</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="csrank.objectranking.ExpectedRankRegression.predict">
+<code class="sig-name descname">predict</code><span class="sig-paren">(</span><em class="sig-param">X</em>, <em class="sig-param">**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/csrank/objectranking/expected_rank_regression.html#ExpectedRankRegression.predict"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#csrank.objectranking.ExpectedRankRegression.predict" title="Permalink to this definition">¶</a></dt>
+<dd><p>Predict preferences in the form of rankings or choices for a given collection of sets of objects called
+a query set using the function <a class="reference internal" href="#csrank.objectranking.ExpectedRankRegression.predict_for_scores" title="csrank.objectranking.ExpectedRankRegression.predict_for_scores"><code class="xref py py-meth docutils literal notranslate"><span class="pre">predict_for_scores()</span></code></a>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>X</strong> (<em>dict</em><em> or </em><em>numpy array</em>) – Dictionary with a mapping from the query set size to numpy arrays or a single numpy array of size:
+(n_instances, n_objects, n_features)</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><strong>Y</strong> (<em>dict or numpy array</em>) – Dictionary with a mapping from the query set size to numpy arrays or a single numpy array containing
+predicted preferences of size:
+(n_instances, n_objects)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="csrank.objectranking.ExpectedRankRegression.predict_for_scores">
+<code class="sig-name descname">predict_for_scores</code><span class="sig-paren">(</span><em class="sig-param">scores</em>, <em class="sig-param">**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/csrank/objectranking/expected_rank_regression.html#ExpectedRankRegression.predict_for_scores"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#csrank.objectranking.ExpectedRankRegression.predict_for_scores" title="Permalink to this definition">¶</a></dt>
+<dd><p>The permutation vector <span class="math notranslate nohighlight">\(\pi\)</span> represents the ranking amongst the objects in <span class="math notranslate nohighlight">\(Q\)</span>, such that
+<span class="math notranslate nohighlight">\(\pi(k)\)</span> is the position of the <span class="math notranslate nohighlight">\(k\)</span>-th object <span class="math notranslate nohighlight">\(x_k\)</span>, and <span class="math notranslate nohighlight">\(\pi^{-1}(k)\)</span> is the index
+of the object on position <span class="math notranslate nohighlight">\(k\)</span>. Predict rankings for the scores for a given collection of sets of
+objects (query sets).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>scores</strong> (<em>dict</em><em> or </em><em>numpy array</em>) – Dictionary with a mapping from query set size to numpy arrays or a single numpy array of size containing
+scores of each object of size: (n_instances, n_objects)</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><strong>Y</strong> (<em>dict or numpy array</em>) – Dictionary with a mapping from objects size to numpy arrays or a single numpy array containing
+predicted rankings of size: (n_samples, n_objects)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="csrank.objectranking.ExpectedRankRegression.predict_scores">
+<code class="sig-name descname">predict_scores</code><span class="sig-paren">(</span><em class="sig-param">X</em>, <em class="sig-param">**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/csrank/objectranking/expected_rank_regression.html#ExpectedRankRegression.predict_scores"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#csrank.objectranking.ExpectedRankRegression.predict_scores" title="Permalink to this definition">¶</a></dt>
+<dd><p>Predict the utility scores for each object in the collection of set of objects called a query set.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>X</strong> (<em>dict</em><em> or </em><em>numpy array</em>) – Dictionary with a mapping from query set size to numpy arrays or a single numpy array of size:
+(n_instances, n_objects, n_features)</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><strong>Y</strong> (<em>dict or numpy array</em>) – Dictionary with a mapping from query set size to numpy arrays or a single numpy array of size:
+(n_instances, n_objects)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="csrank.objectranking.ExpectedRankRegression.set_tunable_parameters">
+<code class="sig-name descname">set_tunable_parameters</code><span class="sig-paren">(</span><em class="sig-param">alpha=0.0</em>, <em class="sig-param">l1_ratio=0.5</em>, <em class="sig-param">tol=0.0001</em>, <em class="sig-param">**point</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/csrank/objectranking/expected_rank_regression.html#ExpectedRankRegression.set_tunable_parameters"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#csrank.objectranking.ExpectedRankRegression.set_tunable_parameters" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set tunable parameters of the PairwiseSVM model to the values provided.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>alpha</strong> (<em>float</em>) – Regularization strength</p></li>
+<li><p><strong>l1_ratio</strong> (<em>float in</em><em> [</em><em>0</em><em>,</em><em>1</em><em>]</em>) – Ratio between pure L2 (=0) or pure L1 (=1) regularization</p></li>
+<li><p><strong>tol</strong> (<em>float</em>) – Optimization tolerance for regression model</p></li>
+<li><p><strong>point</strong> (<em>dict</em>) – Dictionary containing parameter values which are not tuned for the network</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="csrank.objectranking.RankSVM">
+<em class="property">class </em><code class="sig-prename descclassname">csrank.objectranking.</code><code class="sig-name descname">RankSVM</code><span class="sig-paren">(</span><em class="sig-param">n_object_features</em>, <em class="sig-param">C=1.0</em>, <em class="sig-param">tol=0.0001</em>, <em class="sig-param">normalize=True</em>, <em class="sig-param">fit_intercept=True</em>, <em class="sig-param">random_state=None</em>, <em class="sig-param">**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/csrank/objectranking/rank_svm.html#RankSVM"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#csrank.objectranking.RankSVM" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create an instance of the <code class="xref py py-class docutils literal notranslate"><span class="pre">PairwiseSVM</span></code> model for learning a object ranking function.
+It learns a linear deterministic utility function of the form <span class="math notranslate nohighlight">\(U(x) = w \cdot x\)</span>, where <span class="math notranslate nohighlight">\(w\)</span> is
+the weight vector. It is estimated using <em>pairwise preferences</em> generated from the rankings.
+The ranking for the given query set <span class="math notranslate nohighlight">\(Q\)</span> is defined as:</p>
+<div class="math notranslate nohighlight">
+\[ρ(Q)  = \operatorname{argsort}_{x \in Q}  \; U(x)\]</div>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>n_object_features</strong> (<em>int</em>) – Number of features of the object space</p></li>
+<li><p><strong>C</strong> (<em>float</em><em>, </em><em>optional</em>) – Penalty parameter of the error term</p></li>
+<li><p><strong>tol</strong> (<em>float</em><em>, </em><em>optional</em>) – Optimization tolerance</p></li>
+<li><p><strong>normalize</strong> (<em>bool</em><em>, </em><em>optional</em>) – If True, the data will be normalized before fitting.</p></li>
+<li><p><strong>fit_intercept</strong> (<em>bool</em><em>, </em><em>optional</em>) – If True, the linear model will also fit an intercept.</p></li>
+<li><p><strong>random_state</strong> (<em>int</em><em>, </em><em>RandomState instance</em><em> or </em><em>None</em><em>, </em><em>optional</em>) – Seed of the pseudorandom generator or a RandomState instance</p></li>
+<li><p><strong>**kwargs</strong> – Keyword arguments for the algorithms</p></li>
+</ul>
+</dd>
+</dl>
+<p class="rubric">References</p>
+<p>[1] Joachims, T. (2002, July). “Optimizing search engines using clickthrough data.”, Proceedings of the eighth ACM SIGKDD international conference on Knowledge discovery and data mining (pp. 133-142). ACM.</p>
+<dl class="method">
+<dt id="csrank.objectranking.RankSVM.fit">
+<code class="sig-name descname">fit</code><span class="sig-paren">(</span><em class="sig-param">X</em>, <em class="sig-param">Y</em>, <em class="sig-param">**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/csrank/objectranking/rank_svm.html#RankSVM.fit"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#csrank.objectranking.RankSVM.fit" title="Permalink to this definition">¶</a></dt>
+<dd><p>Fit a generic preference learning model on a provided set of queries.
+The provided queries can be of a fixed size (numpy arrays).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>X</strong> (<em>numpy array</em><em>, </em><em>shape</em><em> (</em><em>n_samples</em><em>, </em><em>n_objects</em><em>, </em><em>n_features</em><em>)</em>) – Feature vectors of the objects</p></li>
+<li><p><strong>Y</strong> (<em>numpy array</em><em>, </em><em>shape</em><em> (</em><em>n_samples</em><em>, </em><em>n_objects</em><em>, </em><em>n_features</em><em>)</em>) – Preferences in form of Orderings or Choices for given n_objects</p></li>
+<li><p><strong>**kwargs</strong> – Keyword arguments for the fit function</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="csrank.objectranking.RankSVM.predict">
+<code class="sig-name descname">predict</code><span class="sig-paren">(</span><em class="sig-param">X</em>, <em class="sig-param">**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/csrank/objectranking/rank_svm.html#RankSVM.predict"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#csrank.objectranking.RankSVM.predict" title="Permalink to this definition">¶</a></dt>
+<dd><p>Predict preferences in the form of rankings or choices for a given collection of sets of objects called
+a query set using the function <a class="reference internal" href="#csrank.objectranking.RankSVM.predict_for_scores" title="csrank.objectranking.RankSVM.predict_for_scores"><code class="xref py py-meth docutils literal notranslate"><span class="pre">predict_for_scores()</span></code></a>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>X</strong> (<em>dict</em><em> or </em><em>numpy array</em>) – Dictionary with a mapping from the query set size to numpy arrays or a single numpy array of size:
+(n_instances, n_objects, n_features)</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><strong>Y</strong> (<em>dict or numpy array</em>) – Dictionary with a mapping from the query set size to numpy arrays or a single numpy array containing
+predicted preferences of size:
+(n_instances, n_objects)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="csrank.objectranking.RankSVM.predict_for_scores">
+<code class="sig-name descname">predict_for_scores</code><span class="sig-paren">(</span><em class="sig-param">scores</em>, <em class="sig-param">**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/csrank/objectranking/rank_svm.html#RankSVM.predict_for_scores"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#csrank.objectranking.RankSVM.predict_for_scores" title="Permalink to this definition">¶</a></dt>
+<dd><p>The permutation vector <span class="math notranslate nohighlight">\(\pi\)</span> represents the ranking amongst the objects in <span class="math notranslate nohighlight">\(Q\)</span>, such that
+<span class="math notranslate nohighlight">\(\pi(k)\)</span> is the position of the <span class="math notranslate nohighlight">\(k\)</span>-th object <span class="math notranslate nohighlight">\(x_k\)</span>, and <span class="math notranslate nohighlight">\(\pi^{-1}(k)\)</span> is the index
+of the object on position <span class="math notranslate nohighlight">\(k\)</span>. Predict rankings for the scores for a given collection of sets of
+objects (query sets).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>scores</strong> (<em>dict</em><em> or </em><em>numpy array</em>) – Dictionary with a mapping from query set size to numpy arrays or a single numpy array of size containing
+scores of each object of size: (n_instances, n_objects)</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><strong>Y</strong> (<em>dict or numpy array</em>) – Dictionary with a mapping from objects size to numpy arrays or a single numpy array containing
+predicted rankings of size: (n_samples, n_objects)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="csrank.objectranking.RankSVM.predict_scores">
+<code class="sig-name descname">predict_scores</code><span class="sig-paren">(</span><em class="sig-param">X</em>, <em class="sig-param">**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/csrank/objectranking/rank_svm.html#RankSVM.predict_scores"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#csrank.objectranking.RankSVM.predict_scores" title="Permalink to this definition">¶</a></dt>
+<dd><p>Predict the utility scores for each object in the collection of set of objects called a query set.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>X</strong> (<em>dict</em><em> or </em><em>numpy array</em>) – Dictionary with a mapping from query set size to numpy arrays or a single numpy array of size:
+(n_instances, n_objects, n_features)</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><strong>Y</strong> (<em>dict or numpy array</em>) – Dictionary with a mapping from query set size to numpy arrays or a single numpy array of size:
+(n_instances, n_objects)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="csrank.objectranking.RankSVM.set_tunable_parameters">
+<code class="sig-name descname">set_tunable_parameters</code><span class="sig-paren">(</span><em class="sig-param">C=1.0</em>, <em class="sig-param">tol=0.0001</em>, <em class="sig-param">**point</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/csrank/objectranking/rank_svm.html#RankSVM.set_tunable_parameters"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#csrank.objectranking.RankSVM.set_tunable_parameters" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set tunable parameters of the PairwiseSVM model to the values provided.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>C</strong> (<em>float</em>) – Penalty parameter of the error term of the SVM classifier</p></li>
+<li><p><strong>tol</strong> (<em>float</em>) – Optimization tolerance of the SVM classifier</p></li>
+<li><p><strong>point</strong> (<em>dict</em>) – Dictionary containing parameter values which are not tuned for the network</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="choicefunction.html" class="btn btn-neutral float-right" title="Choice Functions" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="../api.html" class="btn btn-neutral float-left" title="API Reference" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2018, Karlson Pfannschmidt, Pritha Gupta, Eyke Hüllermeier
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

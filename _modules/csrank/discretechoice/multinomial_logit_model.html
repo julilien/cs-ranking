@@ -1,0 +1,419 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>csrank.discretechoice.multinomial_logit_model &mdash; csrank 1.0.0 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../../../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../../../_static/jquery.js"></script>
+        <script type="text/javascript" src="../../../_static/underscore.js"></script>
+        <script type="text/javascript" src="../../../_static/doctools.js"></script>
+        <script type="text/javascript" src="../../../_static/language_data.js"></script>
+        <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+        <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true, "ignoreClass": "document", "processClass": "math|output_area"}})</script>
+    
+    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../../index.html" class="icon icon-home"> csrank
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                1.0
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../intro.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../examples.html">Examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../api.html">API Reference</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">csrank</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../../index.html">Module code</a> &raquo;</li>
+        
+      <li>csrank.discretechoice.multinomial_logit_model</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for csrank.discretechoice.multinomial_logit_model</h1><div class="highlight"><pre>
+<span></span><span class="kn">import</span> <span class="nn">logging</span>
+
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">pymc3</span> <span class="k">as</span> <span class="nn">pm</span>
+<span class="kn">import</span> <span class="nn">theano</span>
+<span class="kn">import</span> <span class="nn">theano.tensor</span> <span class="k">as</span> <span class="nn">tt</span>
+<span class="kn">from</span> <span class="nn">pymc3.variational.callbacks</span> <span class="k">import</span> <span class="n">CheckParametersConvergence</span>
+
+<span class="kn">import</span> <span class="nn">csrank.theano_util</span> <span class="k">as</span> <span class="nn">ttu</span>
+<span class="kn">from</span> <span class="nn">csrank.learner</span> <span class="k">import</span> <span class="n">Learner</span>
+<span class="kn">from</span> <span class="nn">csrank.util</span> <span class="k">import</span> <span class="n">print_dictionary</span>
+<span class="kn">from</span> <span class="nn">.discrete_choice</span> <span class="k">import</span> <span class="n">DiscreteObjectChooser</span>
+<span class="kn">from</span> <span class="nn">.likelihoods</span> <span class="k">import</span> <span class="n">likelihood_dict</span><span class="p">,</span> <span class="n">LogLikelihood</span><span class="p">,</span> <span class="n">create_weight_dictionary</span><span class="p">,</span> <span class="n">fit_pymc3_model</span>
+
+
+<div class="viewcode-block" id="MultinomialLogitModel"><a class="viewcode-back" href="../../../api/discretechoice.html#csrank.discretechoice.MultinomialLogitModel">[docs]</a><span class="k">class</span> <span class="nc">MultinomialLogitModel</span><span class="p">(</span><span class="n">DiscreteObjectChooser</span><span class="p">,</span> <span class="n">Learner</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">n_object_features</span><span class="p">,</span> <span class="n">loss_function</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="n">regularization</span><span class="o">=</span><span class="s1">&#39;l2&#39;</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">            Create an instance of the Multinomial Logit model for learning the discrete choice function. The utility</span>
+<span class="sd">            score for each object in query set :math:`Q` is defined as :math:`U(x) = w \\cdot x`, where :math:`w` is</span>
+<span class="sd">            the weight vector. The probability of choosing an object :math:`x_i` is defined by taking softmax over the</span>
+<span class="sd">            utility scores of the objects:</span>
+
+<span class="sd">            .. math::</span>
+
+<span class="sd">                P(x_i \\lvert Q) = \\frac{exp(U(x_i))}{\\sum_{x_j \\in Q} exp(U(x_j))}</span>
+
+<span class="sd">            The discrete choice for the given query set :math:`Q` is defined as:</span>
+
+<span class="sd">            .. math::</span>
+
+<span class="sd">                dc(Q) := \\operatorname{argmax}_{x_i \\in Q }  \\; P(x_i \\lvert Q)</span>
+
+<span class="sd">            Parameters</span>
+<span class="sd">            ----------</span>
+<span class="sd">            n_object_features : int</span>
+<span class="sd">                Number of features of the object space</span>
+<span class="sd">            loss_function : string , {‘categorical_crossentropy’, ‘binary_crossentropy’, ’categorical_hinge’}</span>
+<span class="sd">                Loss function to be used for the discrete choice decision from the query set</span>
+<span class="sd">            regularization : string, {‘l1’, ‘l2’}, string</span>
+<span class="sd">               Regularizer function (L1 or L2) applied to the `kernel` weights matrix</span>
+<span class="sd">            random_state : int or object</span>
+<span class="sd">                Numpy random state</span>
+<span class="sd">            **kwargs</span>
+<span class="sd">                Keyword arguments for the algorithms</span>
+
+<span class="sd">            References</span>
+<span class="sd">            ----------</span>
+<span class="sd">                [1] Kenneth E Train. „Discrete choice methods with simulation“. In: Cambridge university press, 2009. Chap Logit, pp. 41–86.</span>
+
+<span class="sd">                [2] Kenneth Train. Qualitative choice analysis. Cambridge, MA: MIT Press, 1986</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">logger</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="n">MultinomialLogitModel</span><span class="o">.</span><span class="vm">__name__</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">n_object_features</span> <span class="o">=</span> <span class="n">n_object_features</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">loss_function</span> <span class="o">=</span> <span class="n">likelihood_dict</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">loss_function</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">regularization</span> <span class="ow">in</span> <span class="p">[</span><span class="s1">&#39;l1&#39;</span><span class="p">,</span> <span class="s1">&#39;l2&#39;</span><span class="p">]:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">regularization</span> <span class="o">=</span> <span class="n">regularization</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">regularization</span> <span class="o">=</span> <span class="s1">&#39;l2&#39;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_config</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">model</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">trace</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">trace_vi</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">Xt</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">Yt</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">p</span> <span class="o">=</span> <span class="kc">None</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">model_configuration</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">            Constructs the dictionary containing the priors for the weight vectors for the model according to the</span>
+<span class="sd">            regularization function. The parameters are:</span>
+<span class="sd">                * **weights** : Weights to evaluates the utility of the objects</span>
+
+<span class="sd">            For ``l1`` regularization the priors are:</span>
+
+<span class="sd">            .. math::</span>
+
+<span class="sd">                \\text{mu}_w \\sim \\text{Normal}(\\text{mu}=0, \\text{sd}=5.0) \\\\</span>
+<span class="sd">                \\text{b}_w \\sim \\text{HalfCauchy}(\\beta=1.0) \\\\</span>
+<span class="sd">                \\text{weights} \\sim \\text{Laplace}(\\text{mu}=\\text{mu}_w, \\text{b}=\\text{b}_w)</span>
+
+<span class="sd">            For ``l2`` regularization the priors are:</span>
+
+<span class="sd">            .. math::</span>
+
+<span class="sd">                \\text{mu}_w \\sim \\text{Normal}(\\text{mu}=0, \\text{sd}=5.0) \\\\</span>
+<span class="sd">                \\text{sd}_w \\sim \\text{HalfCauchy}(\\beta=1.0) \\\\</span>
+<span class="sd">                \\text{weights} \\sim \\text{Normal}(\\text{mu}=\\text{mu}_w, \\text{sd}=\\text{sd}_w)</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_config</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">regularization</span> <span class="o">==</span> <span class="s1">&#39;l2&#39;</span><span class="p">:</span>
+                <span class="n">weight</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">Normal</span>
+                <span class="n">prior</span> <span class="o">=</span> <span class="s1">&#39;sd&#39;</span>
+            <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">regularization</span> <span class="o">==</span> <span class="s1">&#39;l1&#39;</span><span class="p">:</span>
+                <span class="n">weight</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">Laplace</span>
+                <span class="n">prior</span> <span class="o">=</span> <span class="s1">&#39;b&#39;</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_config</span> <span class="o">=</span> <span class="p">{</span>
+                <span class="s1">&#39;weights&#39;</span><span class="p">:</span> <span class="p">[</span><span class="n">weight</span><span class="p">,</span> <span class="p">{</span><span class="s1">&#39;mu&#39;</span><span class="p">:</span> <span class="p">(</span><span class="n">pm</span><span class="o">.</span><span class="n">Normal</span><span class="p">,</span> <span class="p">{</span><span class="s1">&#39;mu&#39;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span> <span class="s1">&#39;sd&#39;</span><span class="p">:</span> <span class="mi">5</span><span class="p">}),</span> <span class="n">prior</span><span class="p">:</span> <span class="p">(</span><span class="n">pm</span><span class="o">.</span><span class="n">HalfCauchy</span><span class="p">,</span> <span class="p">{</span><span class="s1">&#39;beta&#39;</span><span class="p">:</span> <span class="mi">1</span><span class="p">})}]}</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;Creating model with config </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">print_dictionary</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_config</span><span class="p">)))</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_config</span>
+
+<div class="viewcode-block" id="MultinomialLogitModel.construct_model"><a class="viewcode-back" href="../../../api/discretechoice.html#csrank.discretechoice.MultinomialLogitModel.construct_model">[docs]</a>    <span class="k">def</span> <span class="nf">construct_model</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">Y</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">            Constructs the multinomial logit model which evaluated the utility score as :math:`U(x) = w \\cdot x`, where</span>
+<span class="sd">            :math:`w` is the weight vector. The probability of choosing the object :math:`x_i` from the query set</span>
+<span class="sd">            :math:`Q = \\{x_1, \\ldots ,x_n\\}` is:</span>
+
+<span class="sd">            .. math::</span>
+
+<span class="sd">                P_i = P(x_i \\lvert Q) = \\frac{exp(U(x_i))}{\\sum_{x_j \\in Q} exp(U(x_j))}</span>
+
+<span class="sd">            Parameters</span>
+<span class="sd">            ----------</span>
+<span class="sd">            X : numpy array</span>
+<span class="sd">                (n_instances, n_objects, n_features)</span>
+<span class="sd">                Feature vectors of the objects</span>
+<span class="sd">            Y : numpy array</span>
+<span class="sd">                (n_instances, n_objects)</span>
+<span class="sd">                Preferences in the form of discrete choices for given objects</span>
+
+<span class="sd">            Returns</span>
+<span class="sd">            -------</span>
+<span class="sd">             model : pymc3 Model :class:`pm.Model`</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;Creating model_args config </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">print_dictionary</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">model_configuration</span><span class="p">)))</span>
+        <span class="k">with</span> <span class="n">pm</span><span class="o">.</span><span class="n">Model</span><span class="p">()</span> <span class="k">as</span> <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">Xt</span> <span class="o">=</span> <span class="n">theano</span><span class="o">.</span><span class="n">shared</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">Yt</span> <span class="o">=</span> <span class="n">theano</span><span class="o">.</span><span class="n">shared</span><span class="p">(</span><span class="n">Y</span><span class="p">)</span>
+            <span class="n">shapes</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;weights&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">n_object_features</span><span class="p">}</span>
+            <span class="c1"># shapes = {&#39;weights&#39;: (self.n_object_features, 3)}</span>
+            <span class="n">weights_dict</span> <span class="o">=</span> <span class="n">create_weight_dictionary</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">model_configuration</span><span class="p">,</span> <span class="n">shapes</span><span class="p">)</span>
+            <span class="n">intercept</span> <span class="o">=</span> <span class="n">pm</span><span class="o">.</span><span class="n">Normal</span><span class="p">(</span><span class="s1">&#39;intercept&#39;</span><span class="p">,</span> <span class="n">mu</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">sd</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
+            <span class="n">utility</span> <span class="o">=</span> <span class="n">tt</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">Xt</span><span class="p">,</span> <span class="n">weights_dict</span><span class="p">[</span><span class="s1">&#39;weights&#39;</span><span class="p">])</span> <span class="o">+</span> <span class="n">intercept</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">p</span> <span class="o">=</span> <span class="n">ttu</span><span class="o">.</span><span class="n">softmax</span><span class="p">(</span><span class="n">utility</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+
+            <span class="n">yl</span> <span class="o">=</span> <span class="n">LogLikelihood</span><span class="p">(</span><span class="s1">&#39;yl&#39;</span><span class="p">,</span> <span class="n">loss_func</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">loss_function</span><span class="p">,</span> <span class="n">p</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">p</span><span class="p">,</span> <span class="n">observed</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">Yt</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Model construction completed&quot;</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="MultinomialLogitModel.fit"><a class="viewcode-back" href="../../../api/discretechoice.html#csrank.discretechoice.MultinomialLogitModel.fit">[docs]</a>    <span class="k">def</span> <span class="nf">fit</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">Y</span><span class="p">,</span> <span class="n">sampler</span><span class="o">=</span><span class="s1">&#39;variational&#39;</span><span class="p">,</span> <span class="n">tune</span><span class="o">=</span><span class="mi">500</span><span class="p">,</span> <span class="n">draws</span><span class="o">=</span><span class="mi">500</span><span class="p">,</span>
+            <span class="n">vi_params</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;n&quot;</span><span class="p">:</span> <span class="mi">20000</span><span class="p">,</span> <span class="s2">&quot;method&quot;</span><span class="p">:</span> <span class="s2">&quot;advi&quot;</span><span class="p">,</span> <span class="s2">&quot;callbacks&quot;</span><span class="p">:</span> <span class="p">[</span><span class="n">CheckParametersConvergence</span><span class="p">()]},</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">            Fit a multinomial logit model on the provided set of queries X and choices Y of those objects. The</span>
+<span class="sd">            provided queries and corresponding preferences are of a fixed size (numpy arrays). For learning this network</span>
+<span class="sd">            the categorical cross entropy loss function for each object :math:`x_i \\in Q` is defined as:</span>
+
+<span class="sd">            .. math::</span>
+
+<span class="sd">                C_{i} =  -y(i)\\log(P_i) \\enspace,</span>
+
+<span class="sd">            where :math:`y` is ground-truth discrete choice vector of the objects in the given query set :math:`Q`.</span>
+<span class="sd">            The value :math:`y(i) = 1` if object :math:`x_i` is chosen else :math:`y(i) = 0`.</span>
+
+<span class="sd">            Parameters</span>
+<span class="sd">            ----------</span>
+<span class="sd">            X : numpy array (n_instances, n_objects, n_features)</span>
+<span class="sd">                Feature vectors of the objects</span>
+<span class="sd">            Y : numpy array (n_instances, n_objects)</span>
+<span class="sd">                Choices for given objects in the query</span>
+<span class="sd">            sampler : {‘variational’, ‘metropolis’, ‘nuts’}, string</span>
+<span class="sd">                The sampler used to estimate the posterior mean and mass matrix from the trace</span>
+
+<span class="sd">                    * **variational** : Run inference methods to estimate posterior mean and diagonal mass matrix</span>
+<span class="sd">                    * **metropolis** : Use the MAP as starting point and Metropolis-Hastings sampler</span>
+<span class="sd">                    * **nuts** : Use the No-U-Turn sampler</span>
+<span class="sd">            vi_params : dict</span>
+<span class="sd">                The parameters for the **variational** inference method</span>
+<span class="sd">            draws : int</span>
+<span class="sd">                The number of samples to draw. Defaults to 500. The number of tuned samples are discarded by default</span>
+<span class="sd">            tune : int</span>
+<span class="sd">                Number of iterations to tune, defaults to 500. Ignored when using &#39;SMC&#39;. Samplers adjust</span>
+<span class="sd">                the step sizes, scalings or similar during tuning. Tuning samples will be drawn in addition</span>
+<span class="sd">                to the number specified in the `draws` argument, and will be discarded unless</span>
+<span class="sd">                `discard_tuned_samples` is set to False.</span>
+<span class="sd">            **kwargs :</span>
+<span class="sd">                Keyword arguments for the fit function of :meth:`pymc3.fit`or :meth:`pymc3.sample`</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">construct_model</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">Y</span><span class="p">)</span>
+        <span class="n">fit_pymc3_model</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">sampler</span><span class="p">,</span> <span class="n">draws</span><span class="p">,</span> <span class="n">tune</span><span class="p">,</span> <span class="n">vi_params</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></div>
+
+    <span class="k">def</span> <span class="nf">_predict_scores_fixed</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="n">d</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="n">pm</span><span class="o">.</span><span class="n">summary</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">trace</span><span class="p">)[</span><span class="s1">&#39;mean&#39;</span><span class="p">])</span>
+        <span class="n">intercept</span> <span class="o">=</span> <span class="mf">0.0</span>
+        <span class="n">weights</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">d</span><span class="p">[</span><span class="s1">&#39;weights__</span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">i</span><span class="p">)]</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">n_object_features</span><span class="p">)])</span>
+        <span class="k">if</span> <span class="s1">&#39;intercept&#39;</span> <span class="ow">in</span> <span class="n">d</span><span class="p">:</span>
+            <span class="n">intercept</span> <span class="o">=</span> <span class="n">intercept</span> <span class="o">+</span> <span class="n">d</span><span class="p">[</span><span class="s1">&#39;intercept&#39;</span><span class="p">]</span>
+        <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">weights</span><span class="p">)</span> <span class="o">+</span> <span class="n">intercept</span>
+
+<div class="viewcode-block" id="MultinomialLogitModel.predict"><a class="viewcode-back" href="../../../api/discretechoice.html#csrank.discretechoice.MultinomialLogitModel.predict">[docs]</a>    <span class="k">def</span> <span class="nf">predict</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="k">return</span> <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="MultinomialLogitModel.predict_scores"><a class="viewcode-back" href="../../../api/discretechoice.html#csrank.discretechoice.MultinomialLogitModel.predict_scores">[docs]</a>    <span class="k">def</span> <span class="nf">predict_scores</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="k">return</span> <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">predict_scores</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="MultinomialLogitModel.predict_for_scores"><a class="viewcode-back" href="../../../api/discretechoice.html#csrank.discretechoice.MultinomialLogitModel.predict_for_scores">[docs]</a>    <span class="k">def</span> <span class="nf">predict_for_scores</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">scores</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">DiscreteObjectChooser</span><span class="o">.</span><span class="n">predict_for_scores</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">scores</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="MultinomialLogitModel.set_tunable_parameters"><a class="viewcode-back" href="../../../api/discretechoice.html#csrank.discretechoice.MultinomialLogitModel.set_tunable_parameters">[docs]</a>    <span class="k">def</span> <span class="nf">set_tunable_parameters</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">loss_function</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="n">regularization</span><span class="o">=</span><span class="s2">&quot;l1&quot;</span><span class="p">,</span> <span class="o">**</span><span class="n">point</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">            Set tunable parameters of the Multinomial Logit model to the values provided.</span>
+
+<span class="sd">            Parameters</span>
+<span class="sd">            ----------</span>
+<span class="sd">            loss_function : string , {‘categorical_crossentropy’, ‘binary_crossentropy’, ’categorical_hinge’}</span>
+<span class="sd">                Loss function to be used for the discrete choice decision from the query set</span>
+<span class="sd">            regularization : string, {‘l1’, ‘l2’}, string</span>
+<span class="sd">               Regularizer function (L1 or L2) applied to the `kernel` weights matrix</span>
+<span class="sd">            point: dict</span>
+<span class="sd">                Dictionary containing parameter values which are not tuned for the network</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">loss_function</span> <span class="ow">in</span> <span class="n">likelihood_dict</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">loss_function</span> <span class="o">=</span> <span class="n">likelihood_dict</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">loss_function</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">regularization</span> <span class="o">=</span> <span class="n">regularization</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">model</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">trace</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">trace_vi</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">Xt</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">Yt</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">p</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_config</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">point</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s1">&#39;This ranking algorithm does not support&#39;</span>
+                                <span class="s1">&#39; tunable parameters called: </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">print_dictionary</span><span class="p">(</span><span class="n">point</span><span class="p">)))</span></div></div>
+</pre></div>
+
+           </div>
+           
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2018, Karlson Pfannschmidt, Pritha Gupta, Eyke Hüllermeier
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

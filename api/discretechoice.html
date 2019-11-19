@@ -1,0 +1,2119 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Discrete Choice Models &mdash; csrank 1.0.0 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../_static/jquery.js"></script>
+        <script type="text/javascript" src="../_static/underscore.js"></script>
+        <script type="text/javascript" src="../_static/doctools.js"></script>
+        <script type="text/javascript" src="../_static/language_data.js"></script>
+        <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+        <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true, "ignoreClass": "document", "processClass": "math|output_area"}})</script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="prev" title="Choice Functions" href="choicefunction.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> csrank
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                1.0
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../intro.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../examples.html">Examples</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../api.html">API Reference</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="objectranking.html">Object Ranking</a></li>
+<li class="toctree-l2"><a class="reference internal" href="choicefunction.html">Choice Functions</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Discrete Choice Models</a></li>
+</ul>
+</li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">csrank</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../api.html">API Reference</a> &raquo;</li>
+        
+      <li>Discrete Choice Models</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../_sources/api/discretechoice.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  
+<style>
+/* CSS overrides for sphinx_rtd_theme */
+
+/* 24px margin */
+.nbinput.nblast,
+.nboutput.nblast {
+    margin-bottom: 19px;  /* padding has already 5px */
+}
+
+/* ... except between code cells! */
+.nblast + .nbinput {
+    margin-top: -19px;
+}
+
+.admonition > p:before {
+    margin-right: 4px;  /* make room for the exclamation icon */
+}
+
+/* Fix math alignment, see https://github.com/rtfd/sphinx_rtd_theme/pull/686 */
+.math {
+    text-align: unset;
+}
+</style>
+<div class="section" id="discrete-choice-models">
+<h1>Discrete Choice Models<a class="headerlink" href="#discrete-choice-models" title="Permalink to this headline">¶</a></h1>
+<table class="longtable docutils align-default">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#csrank.discretechoice.FATEDiscreteChoiceFunction" title="csrank.discretechoice.FATEDiscreteChoiceFunction"><code class="xref py py-obj docutils literal notranslate"><span class="pre">FATEDiscreteChoiceFunction</span></code></a>(n_object_features)</p></td>
+<td><p>Create a FATE-network architecture for leaning discrete choice function.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#csrank.discretechoice.FETADiscreteChoiceFunction" title="csrank.discretechoice.FETADiscreteChoiceFunction"><code class="xref py py-obj docutils literal notranslate"><span class="pre">FETADiscreteChoiceFunction</span></code></a>(n_objects, …[, …])</p></td>
+<td><p>Create a FETA-network architecture for learning the discrete choice functions.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#csrank.discretechoice.RankNetDiscreteChoiceFunction" title="csrank.discretechoice.RankNetDiscreteChoiceFunction"><code class="xref py py-obj docutils literal notranslate"><span class="pre">RankNetDiscreteChoiceFunction</span></code></a>(n_object_features)</p></td>
+<td><p>Create an instance of the <code class="xref py py-class docutils literal notranslate"><span class="pre">RankNetCore</span></code> architecture for learning a choice function.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#csrank.discretechoice.CmpNetDiscreteChoiceFunction" title="csrank.discretechoice.CmpNetDiscreteChoiceFunction"><code class="xref py py-obj docutils literal notranslate"><span class="pre">CmpNetDiscreteChoiceFunction</span></code></a>(n_object_features)</p></td>
+<td><p>Create an instance of the <code class="xref py py-class docutils literal notranslate"><span class="pre">CmpNetCore</span></code> architecture for learning a discrete choice function.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#csrank.discretechoice.PairwiseSVMDiscreteChoiceFunction" title="csrank.discretechoice.PairwiseSVMDiscreteChoiceFunction"><code class="xref py py-obj docutils literal notranslate"><span class="pre">PairwiseSVMDiscreteChoiceFunction</span></code></a>(…[, C, …])</p></td>
+<td><p>Create an instance of the <code class="xref py py-class docutils literal notranslate"><span class="pre">PairwiseSVM</span></code> model for learning a discrete choice function.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#csrank.discretechoice.GeneralizedNestedLogitModel" title="csrank.discretechoice.GeneralizedNestedLogitModel"><code class="xref py py-obj docutils literal notranslate"><span class="pre">GeneralizedNestedLogitModel</span></code></a>(…[, n_nests, …])</p></td>
+<td><p>Create an instance of the Generalized Nested Logit model for learning the discrete choice function.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#csrank.discretechoice.MixedLogitModel" title="csrank.discretechoice.MixedLogitModel"><code class="xref py py-obj docutils literal notranslate"><span class="pre">MixedLogitModel</span></code></a>(n_object_features[, …])</p></td>
+<td><p>Create an instance of the Mixed Logit model for learning the discrete choice function.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#csrank.discretechoice.MultinomialLogitModel" title="csrank.discretechoice.MultinomialLogitModel"><code class="xref py py-obj docutils literal notranslate"><span class="pre">MultinomialLogitModel</span></code></a>(n_object_features[, …])</p></td>
+<td><p>Create an instance of the Multinomial Logit model for learning the discrete choice function.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#csrank.discretechoice.NestedLogitModel" title="csrank.discretechoice.NestedLogitModel"><code class="xref py py-obj docutils literal notranslate"><span class="pre">NestedLogitModel</span></code></a>(n_object_features, n_objects)</p></td>
+<td><p>Create an instance of the Nested Logit model for learning the discrete choice function.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#csrank.discretechoice.PairedCombinatorialLogit" title="csrank.discretechoice.PairedCombinatorialLogit"><code class="xref py py-obj docutils literal notranslate"><span class="pre">PairedCombinatorialLogit</span></code></a>(n_object_features, …)</p></td>
+<td><p>Create an instance of the Paired Combinatorial Logit model for learning the discrete choice function.</p></td>
+</tr>
+</tbody>
+</table>
+<span class="target" id="module-csrank.discretechoice"></span><dl class="class">
+<dt id="csrank.discretechoice.FATEDiscreteChoiceFunction">
+<em class="property">class </em><code class="sig-prename descclassname">csrank.discretechoice.</code><code class="sig-name descname">FATEDiscreteChoiceFunction</code><span class="sig-paren">(</span><em class="sig-param">n_object_features, n_hidden_set_layers=2, n_hidden_set_units=2, loss_function='categorical_hinge', metrics=['categorical_accuracy'], n_hidden_joint_layers=32, n_hidden_joint_units=32, activation='selu', kernel_initializer='lecun_normal', kernel_regularizer=&lt;keras.regularizers.L1L2 object&gt;, optimizer=&lt;keras.optimizers.SGD object&gt;, batch_size=256, random_state=None, **kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/csrank/discretechoice/fate_discrete_choice.html#FATEDiscreteChoiceFunction"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#csrank.discretechoice.FATEDiscreteChoiceFunction" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create a FATE-network architecture for leaning discrete choice function. The first-aggregate-then-evaluate
+approach learns an embedding of each object and then aggregates that into a context representation
+<span class="math notranslate nohighlight">\(\mu_{C(x)}\)</span> and then scores each object <span class="math notranslate nohighlight">\(x\)</span> using a generalized utility function
+<span class="math notranslate nohighlight">\(U (x, \mu_{C(x)})\)</span>.
+To make it computationally efficient we take the the context <span class="math notranslate nohighlight">\(C(x)\)</span> as query set <span class="math notranslate nohighlight">\(Q\)</span>.
+The context-representation is evaluated as:</p>
+<div class="math notranslate nohighlight">
+\[\mu_{C(x)} = \frac{1}{\lvert C(x) \lvert} \sum_{y \in C(x)} \phi(y)\]</div>
+<p>where <span class="math notranslate nohighlight">\(\phi \colon \mathcal{X} \to \mathcal{Z}\)</span> maps each object <span class="math notranslate nohighlight">\(y\)</span> to an
+<span class="math notranslate nohighlight">\(m\)</span>-dimensional embedding space <span class="math notranslate nohighlight">\(\mathcal{Z} \subseteq \mathbb{R}^m\)</span>.
+Training complexity is quadratic in the number of objects and prediction complexity is only linear.
+The discrete choice for the given query set <span class="math notranslate nohighlight">\(Q\)</span> is defined as:</p>
+<div class="math notranslate nohighlight">
+\[dc(Q) := \operatorname{argmax}_{x \in Q}  \;  U (x, \mu_{C(x)})\]</div>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>n_object_features</strong> (<em>int</em>) – Dimensionality of the feature space of each object</p></li>
+<li><p><strong>n_hidden_set_layers</strong> (<em>int</em>) – Number of set layers.</p></li>
+<li><p><strong>n_hidden_set_units</strong> (<em>int</em>) – Number of hidden set units.</p></li>
+<li><p><strong>n_hidden_joint_layers</strong> (<em>int</em>) – Number of joint layers.</p></li>
+<li><p><strong>n_hidden_joint_units</strong> (<em>int</em>) – Number of joint units.</p></li>
+<li><p><strong>activation</strong> (<em>string</em><em> or </em><em>function</em>) – Activation function to use in the hidden units</p></li>
+<li><p><strong>kernel_initializer</strong> (<em>function</em><em> or </em><em>string</em>) – Initialization function for the weights of each hidden layer</p></li>
+<li><p><strong>kernel_regularizer</strong> (<em>function</em><em> or </em><em>string</em>) – Regularizer to use in the hidden units</p></li>
+<li><p><strong>optimizer</strong> (<em>string</em><em> or </em><em>function</em>) – Stochastic gradient optimizer</p></li>
+<li><p><strong>batch_size</strong> (<em>int</em>) – Batch size to use for training</p></li>
+<li><p><strong>loss_function</strong> (<em>function</em>) – Differentiable loss function for the score vector</p></li>
+<li><p><strong>metrics</strong> (<em>list</em>) – List of evaluation metrics (can be non-differentiable)</p></li>
+<li><p><strong>random_state</strong> (<em>int</em><em> or </em><em>object</em>) – Numpy random state</p></li>
+<li><p><strong>**kwargs</strong> – Keyword arguments for the &#64;FATENetwork</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="method">
+<dt id="csrank.discretechoice.FATEDiscreteChoiceFunction.clear_memory">
+<code class="sig-name descname">clear_memory</code><span class="sig-paren">(</span><em class="sig-param">**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/csrank/discretechoice/fate_discrete_choice.html#FATEDiscreteChoiceFunction.clear_memory"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#csrank.discretechoice.FATEDiscreteChoiceFunction.clear_memory" title="Permalink to this definition">¶</a></dt>
+<dd><p>Clear the memory, restores the currently fitted model back to prevent memory leaks.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>n_objects</strong> (<em>int</em>) – float (n_instances, n_objects, n_features)</p></li>
+<li><p><strong>**kwargs</strong> – Keyword arguments for the function</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="csrank.discretechoice.FATEDiscreteChoiceFunction.construct_model">
+<code class="sig-name descname">construct_model</code><span class="sig-paren">(</span><em class="sig-param">n_features</em>, <em class="sig-param">n_objects</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/csrank/discretechoice/fate_discrete_choice.html#FATEDiscreteChoiceFunction.construct_model"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#csrank.discretechoice.FATEDiscreteChoiceFunction.construct_model" title="Permalink to this definition">¶</a></dt>
+<dd><p>Construct the FATE-network architecture using the <code class="xref py py-class docutils literal notranslate"><span class="pre">DeepSet</span></code> to learn the context representation
+<span class="math notranslate nohighlight">\(\mu_{C(x)}\)</span> for the given query set/context <span class="math notranslate nohighlight">\(Q=C(x)\)</span>. We construct an input tensor of query
+set <span class="math notranslate nohighlight">\(Q\)</span> of size (n_objects, n_features),iterate over it for each object and concatenate the
+context-representation feature tensor of size <span class="math notranslate nohighlight">\(\lvert  \mu_{C(x)} \lvert\)</span> into a joint layers.
+So, for each object we share the weights in the joint network and the output of this network is used to
+learn the generalized latent utility score <span class="math notranslate nohighlight">\(U (x, \mu_{C(x)})\)</span> of each object <span class="math notranslate nohighlight">\(x \in Q\)</span>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>n_features</strong> (<em>int</em>) – Features of the objects for which the network is constructed</p></li>
+<li><p><strong>n_objects</strong> (<em>int</em>) – Size of the query sets for which the network is constructed</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><strong>model</strong> (keras <code class="xref py py-class docutils literal notranslate"><span class="pre">Model</span></code>) – Neural network to learn the FATE utility score</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="csrank.discretechoice.FATEDiscreteChoiceFunction.fit">
+<code class="sig-name descname">fit</code><span class="sig-paren">(</span><em class="sig-param">X</em>, <em class="sig-param">Y</em>, <em class="sig-param">**kwd</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/csrank/discretechoice/fate_discrete_choice.html#FATEDiscreteChoiceFunction.fit"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#csrank.discretechoice.FATEDiscreteChoiceFunction.fit" title="Permalink to this definition">¶</a></dt>
+<dd><p>Fit a generic preference learning FATE-network model on a provided set of queries.</p>
+<p>The provided queries can be of a fixed size (numpy arrays) or of
+varying sizes in which case dictionaries are expected as input.</p>
+<p>For varying sizes a meta gradient descent is performed across the
+different query sizes.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>X</strong> (<em>numpy array</em><em> or </em><em>dict</em>) – Feature vectors of the objects
+(n_instances, n_objects, n_features) if numpy array or map from n_objects to numpy arrays</p></li>
+<li><p><strong>Y</strong> (<em>numpy array</em><em> or </em><em>dict</em>) – Preferences in form of rankings or choices for given objects
+(n_instances, n_objects) if numpy array or map from n_objects to numpy arrays</p></li>
+<li><p><strong>epochs</strong> (<em>int</em>) – Number of epochs to run if training for a fixed query size or
+number of epochs of the meta gradient descent for the variadic model</p></li>
+<li><p><strong>inner_epochs</strong> (<em>int</em>) – Number of epochs to train for each query size inside the variadic
+model</p></li>
+<li><p><strong>callbacks</strong> (<em>list</em>) – List of callbacks to be called during optimization</p></li>
+<li><p><strong>validation_split</strong> (<em>float</em><em> (</em><em>range :</em><em> [</em><em>0</em><em>,</em><em>1</em><em>]</em><em>)</em>) – Percentage of instances to split off to validate on</p></li>
+<li><p><strong>verbose</strong> (<em>bool</em>) – Print verbose information</p></li>
+<li><p><strong>global_lr</strong> (<em>float</em>) – Learning rate of the meta gradient descent (variadic model only)</p></li>
+<li><p><strong>global_momentum</strong> (<em>float</em>) – Momentum for the meta gradient descent (variadic model only)</p></li>
+<li><p><strong>min_bucket_size</strong> (<em>int</em>) – Restrict the training to queries of a minimum size</p></li>
+<li><p><strong>refit</strong> (<em>bool</em>) – If True, create a new model object, otherwise continue fitting the
+existing one if one exists.</p></li>
+<li><p><strong>**kwargs</strong> – Keyword arguments for the fit function</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="csrank.discretechoice.FATEDiscreteChoiceFunction.predict">
+<code class="sig-name descname">predict</code><span class="sig-paren">(</span><em class="sig-param">X</em>, <em class="sig-param">**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/csrank/discretechoice/fate_discrete_choice.html#FATEDiscreteChoiceFunction.predict"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#csrank.discretechoice.FATEDiscreteChoiceFunction.predict" title="Permalink to this definition">¶</a></dt>
+<dd><p>Predict preferences in the form of rankings or choices for a given collection of sets of objects called
+a query set using the function <a class="reference internal" href="#csrank.discretechoice.FATEDiscreteChoiceFunction.predict_for_scores" title="csrank.discretechoice.FATEDiscreteChoiceFunction.predict_for_scores"><code class="xref py py-meth docutils literal notranslate"><span class="pre">predict_for_scores()</span></code></a>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>X</strong> (<em>dict</em><em> or </em><em>numpy array</em>) – Dictionary with a mapping from the query set size to numpy arrays or a single numpy array of size:
+(n_instances, n_objects, n_features)</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><strong>Y</strong> (<em>dict or numpy array</em>) – Dictionary with a mapping from the query set size to numpy arrays or a single numpy array containing
+predicted preferences of size:
+(n_instances, n_objects)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="csrank.discretechoice.FATEDiscreteChoiceFunction.predict_for_scores">
+<code class="sig-name descname">predict_for_scores</code><span class="sig-paren">(</span><em class="sig-param">scores</em>, <em class="sig-param">**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/csrank/discretechoice/fate_discrete_choice.html#FATEDiscreteChoiceFunction.predict_for_scores"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#csrank.discretechoice.FATEDiscreteChoiceFunction.predict_for_scores" title="Permalink to this definition">¶</a></dt>
+<dd><p>Binary discrete choice vector <span class="math notranslate nohighlight">\(y\)</span> represents the choices amongst the objects in <span class="math notranslate nohighlight">\(Q\)</span>, such that
+<span class="math notranslate nohighlight">\(y(k) = 1\)</span> represents that the object <span class="math notranslate nohighlight">\(x_k\)</span> is chosen and <span class="math notranslate nohighlight">\(y(k) = 0\)</span> represents
+it is not chosen. For choice to be discrete <span class="math notranslate nohighlight">\(\sum_{x_i \in Q} y(i) = 1\)</span>. Predict discrete choices for
+the scores for a given collection of sets of objects (query sets).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>scores</strong> (<em>dict</em><em> or </em><em>numpy array</em>) – Dictionary with a mapping from query set size to numpy arrays
+or a single numpy array of size containing scores of each object of size:
+(n_instances, n_objects)</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><strong>Y</strong> (<em>dict or numpy array</em>) – Dictionary with a mapping from query set size to numpy arrays
+or a single numpy array containing predicted discrete choice vectors of size:
+(n_instances, n_objects)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="csrank.discretechoice.FATEDiscreteChoiceFunction.predict_scores">
+<code class="sig-name descname">predict_scores</code><span class="sig-paren">(</span><em class="sig-param">X</em>, <em class="sig-param">**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/csrank/discretechoice/fate_discrete_choice.html#FATEDiscreteChoiceFunction.predict_scores"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#csrank.discretechoice.FATEDiscreteChoiceFunction.predict_scores" title="Permalink to this definition">¶</a></dt>
+<dd><p>Predict the utility scores for each object in the collection of set of objects called a query set.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>X</strong> (<em>dict</em><em> or </em><em>numpy array</em>) – Dictionary with a mapping from query set size to numpy arrays or a single numpy array of size:
+(n_instances, n_objects, n_features)</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><strong>Y</strong> (<em>dict or numpy array</em>) – Dictionary with a mapping from query set size to numpy arrays or a single numpy array of size:
+(n_instances, n_objects)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="csrank.discretechoice.FATEDiscreteChoiceFunction.set_tunable_parameters">
+<code class="sig-name descname">set_tunable_parameters</code><span class="sig-paren">(</span><em class="sig-param">n_hidden_set_units=32</em>, <em class="sig-param">n_hidden_set_layers=2</em>, <em class="sig-param">n_hidden_joint_units=32</em>, <em class="sig-param">n_hidden_joint_layers=2</em>, <em class="sig-param">reg_strength=0.0001</em>, <em class="sig-param">learning_rate=0.001</em>, <em class="sig-param">batch_size=128</em>, <em class="sig-param">**point</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/csrank/discretechoice/fate_discrete_choice.html#FATEDiscreteChoiceFunction.set_tunable_parameters"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#csrank.discretechoice.FATEDiscreteChoiceFunction.set_tunable_parameters" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set tunable parameters of the FATE-network to the values provided.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>n_hidden_set_layers</strong> (<em>int</em>) – Number of hidden set layers</p></li>
+<li><p><strong>n_hidden_set_units</strong> (<em>int</em>) – Number of hidden set units in each set layer</p></li>
+<li><p><strong>n_hidden_joint_units</strong> (<em>int</em>) – Number of hidden joint layers</p></li>
+<li><p><strong>n_hidden_joint_layers</strong> (<em>int</em>) – Number of hidden units in each joint layer</p></li>
+<li><p><strong>reg_strength</strong> (<em>float</em>) – Regularization strength of the regularizer function applied to the <cite>kernel</cite> weights matrix</p></li>
+<li><p><strong>learning_rate</strong> (<em>float</em>) – Learning rate of the stochastic gradient descent algorithm used by the network</p></li>
+<li><p><strong>batch_size</strong> (<em>int</em>) – Batch size to use during training</p></li>
+<li><p><strong>point</strong> (<em>dict</em>) – Dictionary containing parameter values which are not tuned for the network</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="csrank.discretechoice.FETADiscreteChoiceFunction">
+<em class="property">class </em><code class="sig-prename descclassname">csrank.discretechoice.</code><code class="sig-name descname">FETADiscreteChoiceFunction</code><span class="sig-paren">(</span><em class="sig-param">n_objects, n_object_features, n_hidden=2, n_units=8, add_zeroth_order_model=False, max_number_of_objects=10, num_subsample=5, loss_function='categorical_hinge', batch_normalization=False, kernel_regularizer=&lt;keras.regularizers.L1L2 object&gt;, kernel_initializer='lecun_normal', activation='selu', optimizer=&lt;keras.optimizers.SGD object&gt;, metrics=['categorical_accuracy'], batch_size=256, random_state=None, **kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/csrank/discretechoice/feta_discrete_choice.html#FETADiscreteChoiceFunction"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#csrank.discretechoice.FETADiscreteChoiceFunction" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create a FETA-network architecture for learning the discrete choice functions.
+The first-evaluate-then-aggregate approach approximates the context-dependent utility function using the
+first-order utility function <span class="math notranslate nohighlight">\(U_1 \colon \mathcal{X} \times \mathcal{X} \rightarrow [0,1]\)</span>
+and zeroth-order utility function  <span class="math notranslate nohighlight">\(U_0 \colon \mathcal{X} \rightarrow [0,1]\)</span>.
+The scores each object <span class="math notranslate nohighlight">\(x\)</span> using a context-dependent utility function <span class="math notranslate nohighlight">\(U (x, C_i)\)</span>:</p>
+<div class="math notranslate nohighlight">
+\[U(x_i, C_i) = U_0(x_i) + \frac{1}{n-1} \sum_{x_j \in Q \setminus \{x_i\}} U_1(x_i , x_j) \, .\]</div>
+<p>Training and prediction complexity is quadratic in the number of objects.
+The discrete choice for the given query set <span class="math notranslate nohighlight">\(Q\)</span> is defined as:</p>
+<div class="math notranslate nohighlight">
+\[dc(Q) := \operatorname{argmax}_{x_i \in Q}  \;  U (x_i, C_i)\]</div>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>n_objects</strong> (<em>int</em>) – Number of objects in each query set</p></li>
+<li><p><strong>n_object_features</strong> (<em>int</em>) – Dimensionality of the feature space of each object</p></li>
+<li><p><strong>n_hidden</strong> (<em>int</em>) – Number of hidden layers</p></li>
+<li><p><strong>n_units</strong> (<em>int</em>) – Number of hidden units in each layer</p></li>
+<li><p><strong>add_zeroth_order_model</strong> (<em>bool</em>) – True if the model should include a latent utility function</p></li>
+<li><p><strong>max_number_of_objects</strong> (<em>int</em>) – The maximum number of objects to train from</p></li>
+<li><p><strong>num_subsample</strong> (<em>int</em>) – Number of objects to subsample to</p></li>
+<li><p><strong>loss_function</strong> (<em>function</em>) – Differentiable loss function for the score vector</p></li>
+<li><p><strong>batch_normalization</strong> (<em>bool</em>) – Whether to use batch normalization in the hidden layers</p></li>
+<li><p><strong>kernel_regularizer</strong> (<em>function</em>) – Regularizer to use in the hidden units</p></li>
+<li><p><strong>kernel_initializer</strong> (<em>function</em><em> or </em><em>string</em>) – Initialization function for the weights of each hidden layer</p></li>
+<li><p><strong>activation</strong> (<em>string</em><em> or </em><em>function</em>) – Activation function to use in the hidden units</p></li>
+<li><p><strong>optimizer</strong> (<em>string</em><em> or </em><em>function</em>) – Stochastic gradient optimizer</p></li>
+<li><p><strong>metrics</strong> (<em>list</em>) – List of evaluation metrics (can be non-differentiable)</p></li>
+<li><p><strong>batch_size</strong> (<em>int</em>) – Batch size to use for training</p></li>
+<li><p><strong>random_state</strong> (<em>int</em><em> or </em><em>object</em>) – Numpy random state</p></li>
+<li><p><strong>**kwargs</strong> – Keyword arguments for the hidden units</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="method">
+<dt id="csrank.discretechoice.FETADiscreteChoiceFunction.clear_memory">
+<code class="sig-name descname">clear_memory</code><span class="sig-paren">(</span><em class="sig-param">**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/csrank/discretechoice/feta_discrete_choice.html#FETADiscreteChoiceFunction.clear_memory"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#csrank.discretechoice.FETADiscreteChoiceFunction.clear_memory" title="Permalink to this definition">¶</a></dt>
+<dd><p>Clear the memory, restores the currently fitted model back to prevent memory leaks.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>**kwargs</strong> – Keyword arguments for the function</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="csrank.discretechoice.FETADiscreteChoiceFunction.construct_model">
+<code class="sig-name descname">construct_model</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/csrank/discretechoice/feta_discrete_choice.html#FETADiscreteChoiceFunction.construct_model"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#csrank.discretechoice.FETADiscreteChoiceFunction.construct_model" title="Permalink to this definition">¶</a></dt>
+<dd><p>Construct the <span class="math notranslate nohighlight">\(1\)</span>-st order and <span class="math notranslate nohighlight">\(0\)</span>-th order models, which are used to approximate the
+<span class="math notranslate nohighlight">\(U_1(x, C(x))\)</span> and the <span class="math notranslate nohighlight">\(U_0(x)\)</span> utilities respectively. For each pair of objects in
+<span class="math notranslate nohighlight">\(x_i, x_j \in Q\)</span> <span class="math notranslate nohighlight">\(U_1(x, C(x))\)</span> we construct <code class="xref py py-class docutils literal notranslate"><span class="pre">CmpNetCore</span></code> with weight sharing to
+approximate a pairwise-matrix. A pairwise matrix with index (i,j) corresponds to the <span class="math notranslate nohighlight">\(U_1(x_i,x_j)\)</span>
+is a measure of how favorable it is to choose <span class="math notranslate nohighlight">\(x_i\)</span> over <span class="math notranslate nohighlight">\(x_j\)</span>. Using this matrix we calculate
+the borda score for each object to calculate <span class="math notranslate nohighlight">\(U_1(x, C(x))\)</span>. For <cite>0</cite>-th order model we construct
+<span class="math notranslate nohighlight">\(\lvert Q \lvert\)</span> sequential networks whose weights are shared to evaluate the <span class="math notranslate nohighlight">\(U_0(x)\)</span> for
+each object in the query set <span class="math notranslate nohighlight">\(Q\)</span>. The output mode is using sigmoid activation.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p><strong>model</strong> (keras <code class="xref py py-class docutils literal notranslate"><span class="pre">Model</span></code>) – Neural network to learn the FETA utility score</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="csrank.discretechoice.FETADiscreteChoiceFunction.fit">
+<code class="sig-name descname">fit</code><span class="sig-paren">(</span><em class="sig-param">X</em>, <em class="sig-param">Y</em>, <em class="sig-param">**kwd</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/csrank/discretechoice/feta_discrete_choice.html#FETADiscreteChoiceFunction.fit"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#csrank.discretechoice.FETADiscreteChoiceFunction.fit" title="Permalink to this definition">¶</a></dt>
+<dd><p>Fit a generic preference learning model on a provided set of queries.
+The provided queries can be of a fixed size (numpy arrays).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>X</strong> (<em>numpy array</em>) – (n_instances, n_objects, n_features)
+Feature vectors of the objects</p></li>
+<li><p><strong>Y</strong> (<em>numpy array</em>) – (n_instances, n_objects)
+Preferences in form of rankings or choices for given objects</p></li>
+<li><p><strong>epochs</strong> (<em>int</em>) – Number of epochs to run if training for a fixed query size</p></li>
+<li><p><strong>callbacks</strong> (<em>list</em>) – List of callbacks to be called during optimization</p></li>
+<li><p><strong>validation_split</strong> (<em>float</em><em> (</em><em>range :</em><em> [</em><em>0</em><em>,</em><em>1</em><em>]</em><em>)</em>) – Percentage of instances to split off to validate on</p></li>
+<li><p><strong>verbose</strong> (<em>bool</em>) – Print verbose information</p></li>
+<li><p><strong>**kwd</strong> – Keyword arguments for the fit function</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="csrank.discretechoice.FETADiscreteChoiceFunction.predict">
+<code class="sig-name descname">predict</code><span class="sig-paren">(</span><em class="sig-param">X</em>, <em class="sig-param">**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/csrank/discretechoice/feta_discrete_choice.html#FETADiscreteChoiceFunction.predict"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#csrank.discretechoice.FETADiscreteChoiceFunction.predict" title="Permalink to this definition">¶</a></dt>
+<dd><p>Predict preferences in the form of rankings or choices for a given collection of sets of objects called
+a query set using the function <a class="reference internal" href="#csrank.discretechoice.FETADiscreteChoiceFunction.predict_for_scores" title="csrank.discretechoice.FETADiscreteChoiceFunction.predict_for_scores"><code class="xref py py-meth docutils literal notranslate"><span class="pre">predict_for_scores()</span></code></a>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>X</strong> (<em>dict</em><em> or </em><em>numpy array</em>) – Dictionary with a mapping from the query set size to numpy arrays or a single numpy array of size:
+(n_instances, n_objects, n_features)</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><strong>Y</strong> (<em>dict or numpy array</em>) – Dictionary with a mapping from the query set size to numpy arrays or a single numpy array containing
+predicted preferences of size:
+(n_instances, n_objects)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="csrank.discretechoice.FETADiscreteChoiceFunction.predict_for_scores">
+<code class="sig-name descname">predict_for_scores</code><span class="sig-paren">(</span><em class="sig-param">scores</em>, <em class="sig-param">**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/csrank/discretechoice/feta_discrete_choice.html#FETADiscreteChoiceFunction.predict_for_scores"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#csrank.discretechoice.FETADiscreteChoiceFunction.predict_for_scores" title="Permalink to this definition">¶</a></dt>
+<dd><p>Binary discrete choice vector <span class="math notranslate nohighlight">\(y\)</span> represents the choices amongst the objects in <span class="math notranslate nohighlight">\(Q\)</span>, such that
+<span class="math notranslate nohighlight">\(y(k) = 1\)</span> represents that the object <span class="math notranslate nohighlight">\(x_k\)</span> is chosen and <span class="math notranslate nohighlight">\(y(k) = 0\)</span> represents
+it is not chosen. For choice to be discrete <span class="math notranslate nohighlight">\(\sum_{x_i \in Q} y(i) = 1\)</span>. Predict discrete choices for
+the scores for a given collection of sets of objects (query sets).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>scores</strong> (<em>dict</em><em> or </em><em>numpy array</em>) – Dictionary with a mapping from query set size to numpy arrays
+or a single numpy array of size containing scores of each object of size:
+(n_instances, n_objects)</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><strong>Y</strong> (<em>dict or numpy array</em>) – Dictionary with a mapping from query set size to numpy arrays
+or a single numpy array containing predicted discrete choice vectors of size:
+(n_instances, n_objects)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="csrank.discretechoice.FETADiscreteChoiceFunction.predict_scores">
+<code class="sig-name descname">predict_scores</code><span class="sig-paren">(</span><em class="sig-param">X</em>, <em class="sig-param">**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/csrank/discretechoice/feta_discrete_choice.html#FETADiscreteChoiceFunction.predict_scores"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#csrank.discretechoice.FETADiscreteChoiceFunction.predict_scores" title="Permalink to this definition">¶</a></dt>
+<dd><p>Predict the utility scores for each object in the collection of set of objects called a query set.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>X</strong> (<em>dict</em><em> or </em><em>numpy array</em>) – Dictionary with a mapping from query set size to numpy arrays or a single numpy array of size:
+(n_instances, n_objects, n_features)</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><strong>Y</strong> (<em>dict or numpy array</em>) – Dictionary with a mapping from query set size to numpy arrays or a single numpy array of size:
+(n_instances, n_objects)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="csrank.discretechoice.FETADiscreteChoiceFunction.set_tunable_parameters">
+<code class="sig-name descname">set_tunable_parameters</code><span class="sig-paren">(</span><em class="sig-param">n_hidden=32</em>, <em class="sig-param">n_units=2</em>, <em class="sig-param">reg_strength=0.0001</em>, <em class="sig-param">learning_rate=0.001</em>, <em class="sig-param">batch_size=128</em>, <em class="sig-param">**point</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/csrank/discretechoice/feta_discrete_choice.html#FETADiscreteChoiceFunction.set_tunable_parameters"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#csrank.discretechoice.FETADiscreteChoiceFunction.set_tunable_parameters" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set tunable parameters of the FETA-network to the values provided.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>n_hidden</strong> (<em>int</em>) – Number of hidden layers used in the scoring network</p></li>
+<li><p><strong>n_units</strong> (<em>int</em>) – Number of hidden units in each layer of the scoring network</p></li>
+<li><p><strong>reg_strength</strong> (<em>float</em>) – Regularization strength of the regularizer function applied to the <cite>kernel</cite> weights matrix</p></li>
+<li><p><strong>learning_rate</strong> (<em>float</em>) – Learning rate of the stochastic gradient descent algorithm used by the network</p></li>
+<li><p><strong>batch_size</strong> (<em>int</em>) – Batch size to use during training</p></li>
+<li><p><strong>point</strong> (<em>dict</em>) – Dictionary containing parameter values which are not tuned for the network</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="csrank.discretechoice.RankNetDiscreteChoiceFunction">
+<em class="property">class </em><code class="sig-prename descclassname">csrank.discretechoice.</code><code class="sig-name descname">RankNetDiscreteChoiceFunction</code><span class="sig-paren">(</span><em class="sig-param">n_object_features, n_hidden=2, n_units=8, loss_function='binary_crossentropy', batch_normalization=True, kernel_regularizer=&lt;keras.regularizers.L1L2 object&gt;, kernel_initializer='lecun_normal', activation='relu', optimizer=&lt;keras.optimizers.SGD object&gt;, metrics=['binary_accuracy'], batch_size=256, random_state=None, **kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/csrank/discretechoice/ranknet_discrete_choice.html#RankNetDiscreteChoiceFunction"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#csrank.discretechoice.RankNetDiscreteChoiceFunction" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create an instance of the <code class="xref py py-class docutils literal notranslate"><span class="pre">RankNetCore</span></code> architecture for learning a choice function.
+It breaks the preferences into pairwise comparisons and learns a latent utility model for the objects.
+This network learns a latent utility score for each object in the given query set
+<span class="math notranslate nohighlight">\(Q = \{x_1, \ldots ,x_n\}\)</span> using the equation <span class="math notranslate nohighlight">\(U(x) = F(x, w)\)</span> where <span class="math notranslate nohighlight">\(w\)</span> is the weight
+vector. It is estimated using <em>pairwise preferences</em> generated from the discrete choices.</p>
+<p>The discrete choice for the given query set <span class="math notranslate nohighlight">\(Q\)</span> is defined as:</p>
+<div class="math notranslate nohighlight">
+\[ρ(Q)  = \operatorname{argsort}_{x \in Q}  \; U(x)\]</div>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>n_object_features</strong> (<em>int</em>) – Number of features of the object space</p></li>
+<li><p><strong>n_hidden</strong> (<em>int</em>) – Number of hidden layers used in the scoring network</p></li>
+<li><p><strong>n_units</strong> (<em>int</em>) – Number of hidden units in each layer of the scoring network</p></li>
+<li><p><strong>loss_function</strong> (<em>function</em><em> or </em><em>string</em>) – Loss function to be used for the binary decision task of the pairwise comparisons</p></li>
+<li><p><strong>batch_normalization</strong> (<em>bool</em>) – Whether to use batch normalization in each hidden layer</p></li>
+<li><p><strong>kernel_regularizer</strong> (<em>function</em>) – Regularizer function applied to all the hidden weight matrices.</p></li>
+<li><p><strong>kernel_initializer</strong> (<em>function</em><em> or </em><em>string</em>) – Initialization function for the weights of each hidden layer</p></li>
+<li><p><strong>activation</strong> (<em>function</em><em> or </em><em>string</em>) – Type of activation function to use in each hidden layer</p></li>
+<li><p><strong>optimizer</strong> (<em>function</em><em> or </em><em>string</em>) – Optimizer to use during stochastic gradient descent</p></li>
+<li><p><strong>metrics</strong> (<em>list</em>) – List of metrics to evaluate during training (can be non-differentiable)</p></li>
+<li><p><strong>batch_size</strong> (<em>int</em>) – Batch size to use during training</p></li>
+<li><p><strong>random_state</strong> (<em>int</em><em>, </em><em>RandomState instance</em><em> or </em><em>None</em>) – Seed of the pseudo-random generator or a RandomState instance</p></li>
+<li><p><strong>**kwargs</strong> – Keyword arguments for the algorithms</p></li>
+</ul>
+</dd>
+</dl>
+<p class="rubric">References</p>
+<p>[1] Burges, C. et al. (2005, August). “Learning to rank using gradient descent.”, In Proceedings of the 22nd international conference on Machine learning (pp. 89-96). ACM.</p>
+<p>[2] Burges, C. J. (2010). “From ranknet to lambdarank to lambdamart: An overview.”, Learning, 11(23-581).</p>
+<dl class="method">
+<dt id="csrank.discretechoice.RankNetDiscreteChoiceFunction.clear_memory">
+<code class="sig-name descname">clear_memory</code><span class="sig-paren">(</span><em class="sig-param">**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/csrank/discretechoice/ranknet_discrete_choice.html#RankNetDiscreteChoiceFunction.clear_memory"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#csrank.discretechoice.RankNetDiscreteChoiceFunction.clear_memory" title="Permalink to this definition">¶</a></dt>
+<dd><p>Clear the memory, restores the currently fitted model back to prevent memory leaks.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>**kwargs</strong> – Keyword arguments for the function</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="csrank.discretechoice.RankNetDiscreteChoiceFunction.construct_model">
+<code class="sig-name descname">construct_model</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/csrank/discretechoice/ranknet_discrete_choice.html#RankNetDiscreteChoiceFunction.construct_model"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#csrank.discretechoice.RankNetDiscreteChoiceFunction.construct_model" title="Permalink to this definition">¶</a></dt>
+<dd><p>Construct the RankNet which is used to approximate the <span class="math notranslate nohighlight">\(U(x)\)</span> utility. For each pair of objects in
+<span class="math notranslate nohighlight">\(x_i, x_j \in Q\)</span> we construct two sub-networks with weight sharing in all hidden layer apart form the
+last layer for which weights are mirrored version of each other. The output of these networks are connected
+to a sigmoid unit that produces the output <span class="math notranslate nohighlight">\(P_{ij}\)</span> which is the probability of preferring object
+<span class="math notranslate nohighlight">\(x_i\)</span> over <span class="math notranslate nohighlight">\(x_j\)</span>, to approximate the <span class="math notranslate nohighlight">\(U(x)\)</span>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p><strong>model</strong> (keras <code class="xref py py-class docutils literal notranslate"><span class="pre">Model</span></code>) – Neural network to learn the RankNet utility score</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="csrank.discretechoice.RankNetDiscreteChoiceFunction.fit">
+<code class="sig-name descname">fit</code><span class="sig-paren">(</span><em class="sig-param">X</em>, <em class="sig-param">Y</em>, <em class="sig-param">**kwd</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/csrank/discretechoice/ranknet_discrete_choice.html#RankNetDiscreteChoiceFunction.fit"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#csrank.discretechoice.RankNetDiscreteChoiceFunction.fit" title="Permalink to this definition">¶</a></dt>
+<dd><p>Fit a generic preference learning RankNet model on a provided set of queries. The provided queries can be of
+a fixed size (numpy arrays). For learning this network the binary cross entropy loss function for a pair of
+objects <span class="math notranslate nohighlight">\(x_i, x_j \in Q\)</span> is defined as:</p>
+<div class="math notranslate nohighlight">
+\[C_{ij} =  -\tilde{P_{ij}}\log(P_{ij}) - (1 - \tilde{P_{ij}})\log(1 - P{ij}) \enspace,\]</div>
+<p>where <span class="math notranslate nohighlight">\(\tilde{P_{ij}}\)</span> is ground truth probability of the preference of <span class="math notranslate nohighlight">\(x_i\)</span> over <span class="math notranslate nohighlight">\(x_j\)</span>.
+<span class="math notranslate nohighlight">\(\tilde{P_{ij}} = 1\)</span> if <span class="math notranslate nohighlight">\(x_i \succ x_j\)</span> else <span class="math notranslate nohighlight">\(\tilde{P_{ij}} = 0\)</span>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>X</strong> (<em>numpy array</em><em> (</em><em>n_instances</em><em>, </em><em>n_objects</em><em>, </em><em>n_features</em><em>)</em>) – Feature vectors of the objects</p></li>
+<li><p><strong>Y</strong> (<em>numpy array</em><em> (</em><em>n_instances</em><em>, </em><em>n_objects</em><em>)</em>) – Preferences in form of Orderings or Choices for given n_objects</p></li>
+<li><p><strong>epochs</strong> (<em>int</em>) – Number of epochs to run if training for a fixed query size</p></li>
+<li><p><strong>callbacks</strong> (<em>list</em>) – List of callbacks to be called during optimization</p></li>
+<li><p><strong>validation_split</strong> (<em>float</em><em> (</em><em>range :</em><em> [</em><em>0</em><em>,</em><em>1</em><em>]</em><em>)</em>) – Percentage of instances to split off to validate on</p></li>
+<li><p><strong>verbose</strong> (<em>bool</em>) – Print verbose information</p></li>
+<li><p><strong>**kwd</strong> – Keyword arguments for the fit function</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="csrank.discretechoice.RankNetDiscreteChoiceFunction.predict">
+<code class="sig-name descname">predict</code><span class="sig-paren">(</span><em class="sig-param">X</em>, <em class="sig-param">**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/csrank/discretechoice/ranknet_discrete_choice.html#RankNetDiscreteChoiceFunction.predict"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#csrank.discretechoice.RankNetDiscreteChoiceFunction.predict" title="Permalink to this definition">¶</a></dt>
+<dd><p>Predict preferences in the form of rankings or choices for a given collection of sets of objects called
+a query set using the function <a class="reference internal" href="#csrank.discretechoice.RankNetDiscreteChoiceFunction.predict_for_scores" title="csrank.discretechoice.RankNetDiscreteChoiceFunction.predict_for_scores"><code class="xref py py-meth docutils literal notranslate"><span class="pre">predict_for_scores()</span></code></a>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>X</strong> (<em>dict</em><em> or </em><em>numpy array</em>) – Dictionary with a mapping from the query set size to numpy arrays or a single numpy array of size:
+(n_instances, n_objects, n_features)</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><strong>Y</strong> (<em>dict or numpy array</em>) – Dictionary with a mapping from the query set size to numpy arrays or a single numpy array containing
+predicted preferences of size:
+(n_instances, n_objects)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="csrank.discretechoice.RankNetDiscreteChoiceFunction.predict_for_scores">
+<code class="sig-name descname">predict_for_scores</code><span class="sig-paren">(</span><em class="sig-param">scores</em>, <em class="sig-param">**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/csrank/discretechoice/ranknet_discrete_choice.html#RankNetDiscreteChoiceFunction.predict_for_scores"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#csrank.discretechoice.RankNetDiscreteChoiceFunction.predict_for_scores" title="Permalink to this definition">¶</a></dt>
+<dd><p>Binary discrete choice vector <span class="math notranslate nohighlight">\(y\)</span> represents the choices amongst the objects in <span class="math notranslate nohighlight">\(Q\)</span>, such that
+<span class="math notranslate nohighlight">\(y(k) = 1\)</span> represents that the object <span class="math notranslate nohighlight">\(x_k\)</span> is chosen and <span class="math notranslate nohighlight">\(y(k) = 0\)</span> represents
+it is not chosen. For choice to be discrete <span class="math notranslate nohighlight">\(\sum_{x_i \in Q} y(i) = 1\)</span>. Predict discrete choices for
+the scores for a given collection of sets of objects (query sets).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>scores</strong> (<em>dict</em><em> or </em><em>numpy array</em>) – Dictionary with a mapping from query set size to numpy arrays
+or a single numpy array of size containing scores of each object of size:
+(n_instances, n_objects)</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><strong>Y</strong> (<em>dict or numpy array</em>) – Dictionary with a mapping from query set size to numpy arrays
+or a single numpy array containing predicted discrete choice vectors of size:
+(n_instances, n_objects)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="csrank.discretechoice.RankNetDiscreteChoiceFunction.predict_scores">
+<code class="sig-name descname">predict_scores</code><span class="sig-paren">(</span><em class="sig-param">X</em>, <em class="sig-param">**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/csrank/discretechoice/ranknet_discrete_choice.html#RankNetDiscreteChoiceFunction.predict_scores"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#csrank.discretechoice.RankNetDiscreteChoiceFunction.predict_scores" title="Permalink to this definition">¶</a></dt>
+<dd><p>Predict the utility scores for each object in the collection of set of objects called a query set.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>X</strong> (<em>dict</em><em> or </em><em>numpy array</em>) – Dictionary with a mapping from query set size to numpy arrays or a single numpy array of size:
+(n_instances, n_objects, n_features)</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><strong>Y</strong> (<em>dict or numpy array</em>) – Dictionary with a mapping from query set size to numpy arrays or a single numpy array of size:
+(n_instances, n_objects)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="csrank.discretechoice.RankNetDiscreteChoiceFunction.set_tunable_parameters">
+<code class="sig-name descname">set_tunable_parameters</code><span class="sig-paren">(</span><em class="sig-param">n_hidden=32</em>, <em class="sig-param">n_units=2</em>, <em class="sig-param">reg_strength=0.0001</em>, <em class="sig-param">learning_rate=0.001</em>, <em class="sig-param">batch_size=128</em>, <em class="sig-param">**point</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/csrank/discretechoice/ranknet_discrete_choice.html#RankNetDiscreteChoiceFunction.set_tunable_parameters"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#csrank.discretechoice.RankNetDiscreteChoiceFunction.set_tunable_parameters" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set tunable parameters of the RankNet network to the values provided.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>n_hidden</strong> (<em>int</em>) – Number of hidden layers used in the scoring network</p></li>
+<li><p><strong>n_units</strong> (<em>int</em>) – Number of hidden units in each layer of the scoring network</p></li>
+<li><p><strong>reg_strength</strong> (<em>float</em>) – Regularization strength of the regularizer function applied to the <cite>kernel</cite> weights matrix</p></li>
+<li><p><strong>learning_rate</strong> (<em>float</em>) – Learning rate of the stochastic gradient descent algorithm used by the network</p></li>
+<li><p><strong>batch_size</strong> (<em>int</em>) – Batch size to use during training</p></li>
+<li><p><strong>point</strong> (<em>dict</em>) – Dictionary containing parameter values which are not tuned for the network</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="csrank.discretechoice.CmpNetDiscreteChoiceFunction">
+<em class="property">class </em><code class="sig-prename descclassname">csrank.discretechoice.</code><code class="sig-name descname">CmpNetDiscreteChoiceFunction</code><span class="sig-paren">(</span><em class="sig-param">n_object_features, n_hidden=2, n_units=8, loss_function='binary_crossentropy', batch_normalization=True, kernel_regularizer=&lt;keras.regularizers.L1L2 object&gt;, kernel_initializer='lecun_normal', activation='relu', optimizer=&lt;keras.optimizers.SGD object&gt;, metrics=['binary_accuracy'], batch_size=256, random_state=None, **kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/csrank/discretechoice/cmpnet_discrete_choice.html#CmpNetDiscreteChoiceFunction"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#csrank.discretechoice.CmpNetDiscreteChoiceFunction" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create an instance of the <code class="xref py py-class docutils literal notranslate"><span class="pre">CmpNetCore</span></code> architecture for learning a discrete choice function.
+CmpNet breaks the preferences in form of rankings into pairwise comparisons and learns a pairwise model for
+the each pair of object in the underlying set. For prediction list of objects is converted in pair of
+objects and the pairwise predicate is evaluated using them. The outputs of the network for each pair of
+objects <span class="math notranslate nohighlight">\(U(x_1,x_2), U(x_2,x_1)\)</span> are evaluated.
+<span class="math notranslate nohighlight">\(U(x_1,x_2)\)</span> is a measure of how favorable it is to choose <span class="math notranslate nohighlight">\(x_1\)</span> over <span class="math notranslate nohighlight">\(x_2\)</span>.
+The utility score of object <span class="math notranslate nohighlight">\(x_i\)</span> in query set <span class="math notranslate nohighlight">\(Q = \{ x_1 , \ldots , x_n \}\)</span> is evaluated as:</p>
+<div class="math notranslate nohighlight">
+\[U(x_i) = \left\{ \frac{1}{n-1} \sum_{j \in [n] \setminus \{i\}} U_1(x_i , x_j)\right\}\]</div>
+<p>The discrete choice for the given query set <span class="math notranslate nohighlight">\(Q\)</span> is defined as:</p>
+<div class="math notranslate nohighlight">
+\[dc(Q) := \operatorname{argmax}_{i \in [n]}  \; U(x_i)\]</div>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>n_object_features</strong> (<em>int</em>) – Number of features of the object space</p></li>
+<li><p><strong>n_hidden</strong> (<em>int</em>) – Number of hidden layers used in the scoring network</p></li>
+<li><p><strong>n_units</strong> (<em>int</em>) – Number of hidden units in each layer of the scoring network</p></li>
+<li><p><strong>loss_function</strong> (<em>function</em><em> or </em><em>string</em>) – Loss function to be used for the binary decision task of the pairwise comparisons</p></li>
+<li><p><strong>batch_normalization</strong> (<em>bool</em>) – Whether to use batch normalization in each hidden layer</p></li>
+<li><p><strong>kernel_regularizer</strong> (<em>function</em>) – Regularizer function applied to all the hidden weight matrices</p></li>
+<li><p><strong>kernel_initializer</strong> (<em>function</em><em> or </em><em>string</em>) – Initialization function for the weights of each hidden layer</p></li>
+<li><p><strong>activation</strong> (<em>function</em><em> or </em><em>string</em>) – Type of activation function to use in each hidden layer</p></li>
+<li><p><strong>optimizer</strong> (<em>function</em><em> or </em><em>string</em>) – Optimizer to use during stochastic gradient descent</p></li>
+<li><p><strong>metrics</strong> (<em>list</em>) – List of metrics to evaluate during training (can be non-differentiable)</p></li>
+<li><p><strong>batch_size</strong> (<em>int</em>) – Batch size to use during training</p></li>
+<li><p><strong>random_state</strong> (<em>int</em><em>, </em><em>RandomState instance</em><em> or </em><em>None</em>) – Seed of the pseudorandom generator or a RandomState instance</p></li>
+<li><p><strong>**kwargs</strong> – Keyword arguments for the algorithms</p></li>
+</ul>
+</dd>
+</dl>
+<p class="rubric">References</p>
+<p>[1] Leonardo Rigutini, Tiziano Papini, Marco Maggini, and Franco Scarselli. 2011. SortNet: Learning to Rank by a Neural Preference Function. IEEE Trans. Neural Networks 22, 9 (2011), 1368–1380. <a class="reference external" href="https://doi.org/10.1109/TNN.2011.2160875">https://doi.org/10.1109/TNN.2011.2160875</a></p>
+<dl class="method">
+<dt id="csrank.discretechoice.CmpNetDiscreteChoiceFunction.clear_memory">
+<code class="sig-name descname">clear_memory</code><span class="sig-paren">(</span><em class="sig-param">**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/csrank/discretechoice/cmpnet_discrete_choice.html#CmpNetDiscreteChoiceFunction.clear_memory"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#csrank.discretechoice.CmpNetDiscreteChoiceFunction.clear_memory" title="Permalink to this definition">¶</a></dt>
+<dd><p>Clear the memory, restores the currently fitted model back to prevent memory leaks.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>**kwargs</strong> – Keyword arguments for the function</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="csrank.discretechoice.CmpNetDiscreteChoiceFunction.construct_model">
+<code class="sig-name descname">construct_model</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/csrank/discretechoice/cmpnet_discrete_choice.html#CmpNetDiscreteChoiceFunction.construct_model"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#csrank.discretechoice.CmpNetDiscreteChoiceFunction.construct_model" title="Permalink to this definition">¶</a></dt>
+<dd><p>Construct the CmpNet which is used to approximate the <span class="math notranslate nohighlight">\(U_1(x_i,x_j)\)</span>. For each pair of objects in
+<span class="math notranslate nohighlight">\(x_i, x_j \in Q\)</span> we construct two sub-networks with weight sharing in all hidden layers.
+The output of these networks are connected to two sigmoid units that produces the outputs of the network,
+i.e., <span class="math notranslate nohighlight">\(U(x_1,x_2), U(x_2,x_1)\)</span> for each pair of objects are evaluated. <span class="math notranslate nohighlight">\(U(x_1,x_2)\)</span> is a measure
+of how favorable it is to choose <span class="math notranslate nohighlight">\(x_1\)</span> over <span class="math notranslate nohighlight">\(x_2\)</span>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p><strong>model</strong> (keras <code class="xref py py-class docutils literal notranslate"><span class="pre">Model</span></code>) – Neural network to learn the CmpNet utility score</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="csrank.discretechoice.CmpNetDiscreteChoiceFunction.fit">
+<code class="sig-name descname">fit</code><span class="sig-paren">(</span><em class="sig-param">X</em>, <em class="sig-param">Y</em>, <em class="sig-param">**kwd</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/csrank/discretechoice/cmpnet_discrete_choice.html#CmpNetDiscreteChoiceFunction.fit"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#csrank.discretechoice.CmpNetDiscreteChoiceFunction.fit" title="Permalink to this definition">¶</a></dt>
+<dd><p>Fit a generic preference learning CmptNet on the provided set of queries X and preferences Y of those
+objects. The provided queries and corresponding preferences are of a fixed size (numpy arrays).
+For learning this network the binary cross entropy loss function for a pair of objects
+<span class="math notranslate nohighlight">\(x_i, x_j \in Q\)</span> is defined as:</p>
+<div class="math notranslate nohighlight">
+\[C_{ij} =  -\tilde{P_{ij}}(0)\cdot \log(U(x_i,x_j)) - \tilde{P_{ij}}(1) \cdot \log(U(x_j,x_i)) \ ,\]</div>
+<p>where <span class="math notranslate nohighlight">\(\tilde{P_{ij}}\)</span> is ground truth probability of the preference of <span class="math notranslate nohighlight">\(x_i\)</span> over <span class="math notranslate nohighlight">\(x_j\)</span>.
+<span class="math notranslate nohighlight">\(\tilde{P_{ij}} = (1,0)\)</span> if <span class="math notranslate nohighlight">\(x_i \succ x_j\)</span> else <span class="math notranslate nohighlight">\(\tilde{P_{ij}} = (0,1)\)</span>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>X</strong> (<em>numpy array</em>) – (n_instances, n_objects, n_features)
+Feature vectors of the objects</p></li>
+<li><p><strong>Y</strong> (<em>numpy array</em>) – (n_instances, n_objects)
+Preferences in form of Orderings or Choices for given n_objects</p></li>
+<li><p><strong>epochs</strong> (<em>int</em>) – Number of epochs to run if training for a fixed query size</p></li>
+<li><p><strong>callbacks</strong> (<em>list</em>) – List of callbacks to be called during optimization</p></li>
+<li><p><strong>validation_split</strong> (<em>float</em><em> (</em><em>range :</em><em> [</em><em>0</em><em>,</em><em>1</em><em>]</em><em>)</em>) – Percentage of instances to split off to validate on</p></li>
+<li><p><strong>verbose</strong> (<em>bool</em>) – Print verbose information</p></li>
+<li><p><strong>**kwd</strong> – Keyword arguments for the fit function</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="csrank.discretechoice.CmpNetDiscreteChoiceFunction.predict">
+<code class="sig-name descname">predict</code><span class="sig-paren">(</span><em class="sig-param">X</em>, <em class="sig-param">**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/csrank/discretechoice/cmpnet_discrete_choice.html#CmpNetDiscreteChoiceFunction.predict"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#csrank.discretechoice.CmpNetDiscreteChoiceFunction.predict" title="Permalink to this definition">¶</a></dt>
+<dd><p>Predict preferences in the form of rankings or choices for a given collection of sets of objects called
+a query set using the function <a class="reference internal" href="#csrank.discretechoice.CmpNetDiscreteChoiceFunction.predict_for_scores" title="csrank.discretechoice.CmpNetDiscreteChoiceFunction.predict_for_scores"><code class="xref py py-meth docutils literal notranslate"><span class="pre">predict_for_scores()</span></code></a>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>X</strong> (<em>dict</em><em> or </em><em>numpy array</em>) – Dictionary with a mapping from the query set size to numpy arrays or a single numpy array of size:
+(n_instances, n_objects, n_features)</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><strong>Y</strong> (<em>dict or numpy array</em>) – Dictionary with a mapping from the query set size to numpy arrays or a single numpy array containing
+predicted preferences of size:
+(n_instances, n_objects)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="csrank.discretechoice.CmpNetDiscreteChoiceFunction.predict_for_scores">
+<code class="sig-name descname">predict_for_scores</code><span class="sig-paren">(</span><em class="sig-param">scores</em>, <em class="sig-param">**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/csrank/discretechoice/cmpnet_discrete_choice.html#CmpNetDiscreteChoiceFunction.predict_for_scores"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#csrank.discretechoice.CmpNetDiscreteChoiceFunction.predict_for_scores" title="Permalink to this definition">¶</a></dt>
+<dd><p>Binary discrete choice vector <span class="math notranslate nohighlight">\(y\)</span> represents the choices amongst the objects in <span class="math notranslate nohighlight">\(Q\)</span>, such that
+<span class="math notranslate nohighlight">\(y(k) = 1\)</span> represents that the object <span class="math notranslate nohighlight">\(x_k\)</span> is chosen and <span class="math notranslate nohighlight">\(y(k) = 0\)</span> represents
+it is not chosen. For choice to be discrete <span class="math notranslate nohighlight">\(\sum_{x_i \in Q} y(i) = 1\)</span>. Predict discrete choices for
+the scores for a given collection of sets of objects (query sets).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>scores</strong> (<em>dict</em><em> or </em><em>numpy array</em>) – Dictionary with a mapping from query set size to numpy arrays
+or a single numpy array of size containing scores of each object of size:
+(n_instances, n_objects)</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><strong>Y</strong> (<em>dict or numpy array</em>) – Dictionary with a mapping from query set size to numpy arrays
+or a single numpy array containing predicted discrete choice vectors of size:
+(n_instances, n_objects)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="csrank.discretechoice.CmpNetDiscreteChoiceFunction.predict_scores">
+<code class="sig-name descname">predict_scores</code><span class="sig-paren">(</span><em class="sig-param">X</em>, <em class="sig-param">**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/csrank/discretechoice/cmpnet_discrete_choice.html#CmpNetDiscreteChoiceFunction.predict_scores"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#csrank.discretechoice.CmpNetDiscreteChoiceFunction.predict_scores" title="Permalink to this definition">¶</a></dt>
+<dd><p>Predict the utility scores for each object in the collection of set of objects called a query set.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>X</strong> (<em>dict</em><em> or </em><em>numpy array</em>) – Dictionary with a mapping from query set size to numpy arrays or a single numpy array of size:
+(n_instances, n_objects, n_features)</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><strong>Y</strong> (<em>dict or numpy array</em>) – Dictionary with a mapping from query set size to numpy arrays or a single numpy array of size:
+(n_instances, n_objects)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="csrank.discretechoice.CmpNetDiscreteChoiceFunction.set_tunable_parameters">
+<code class="sig-name descname">set_tunable_parameters</code><span class="sig-paren">(</span><em class="sig-param">n_hidden=32</em>, <em class="sig-param">n_units=2</em>, <em class="sig-param">reg_strength=0.0001</em>, <em class="sig-param">learning_rate=0.001</em>, <em class="sig-param">batch_size=128</em>, <em class="sig-param">**point</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/csrank/discretechoice/cmpnet_discrete_choice.html#CmpNetDiscreteChoiceFunction.set_tunable_parameters"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#csrank.discretechoice.CmpNetDiscreteChoiceFunction.set_tunable_parameters" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set tunable parameters of the CmpNet network to the values provided.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>n_hidden</strong> (<em>int</em>) – Number of hidden layers used in the scoring network</p></li>
+<li><p><strong>n_units</strong> (<em>int</em>) – Number of hidden units in each layer of the scoring network</p></li>
+<li><p><strong>reg_strength</strong> (<em>float</em>) – Regularization strength of the regularizer function applied to the <cite>kernel</cite> weights matrix</p></li>
+<li><p><strong>learning_rate</strong> (<em>float</em>) – Learning rate of the stochastic gradient descent algorithm used by the network</p></li>
+<li><p><strong>batch_size</strong> (<em>int</em>) – Batch size to use during training</p></li>
+<li><p><strong>point</strong> (<em>dict</em>) – Dictionary containing parameter values which are not tuned for the network</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="csrank.discretechoice.PairwiseSVMDiscreteChoiceFunction">
+<em class="property">class </em><code class="sig-prename descclassname">csrank.discretechoice.</code><code class="sig-name descname">PairwiseSVMDiscreteChoiceFunction</code><span class="sig-paren">(</span><em class="sig-param">n_object_features</em>, <em class="sig-param">C=1.0</em>, <em class="sig-param">tol=0.0001</em>, <em class="sig-param">normalize=True</em>, <em class="sig-param">fit_intercept=True</em>, <em class="sig-param">random_state=None</em>, <em class="sig-param">**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/csrank/discretechoice/pairwise_discrete_choice.html#PairwiseSVMDiscreteChoiceFunction"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#csrank.discretechoice.PairwiseSVMDiscreteChoiceFunction" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create an instance of the <code class="xref py py-class docutils literal notranslate"><span class="pre">PairwiseSVM</span></code> model for learning a discrete choice function.
+It learns a linear deterministic utility function of the form <span class="math notranslate nohighlight">\(U(x) = w \cdot x\)</span>, where <span class="math notranslate nohighlight">\(w\)</span> is
+the weight vector. It is estimated using <em>pairwise preferences</em> generated from the discrete choices.
+The discrete choice for the given query set <span class="math notranslate nohighlight">\(Q\)</span> is defined as:</p>
+<div class="math notranslate nohighlight">
+\[ρ(Q)  = \operatorname{argmax}_{x \in Q}  \; U(x)\]</div>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>n_object_features</strong> (<em>int</em>) – Number of features of the object space</p></li>
+<li><p><strong>C</strong> (<em>float</em><em>, </em><em>optional</em>) – Penalty parameter of the error term</p></li>
+<li><p><strong>tol</strong> (<em>float</em><em>, </em><em>optional</em>) – Optimization tolerance</p></li>
+<li><p><strong>normalize</strong> (<em>bool</em><em>, </em><em>optional</em>) – If True, the data will be normalized before fitting.</p></li>
+<li><p><strong>fit_intercept</strong> (<em>bool</em><em>, </em><em>optional</em>) – If True, the linear model will also fit an intercept.</p></li>
+<li><p><strong>random_state</strong> (<em>int</em><em>, </em><em>RandomState instance</em><em> or </em><em>None</em><em>, </em><em>optional</em>) – Seed of the pseudorandom generator or a RandomState instance</p></li>
+<li><p><strong>**kwargs</strong> – Keyword arguments for the algorithms</p></li>
+</ul>
+</dd>
+</dl>
+<p class="rubric">References</p>
+<p>[1] Theodoros Evgeniou, Massimiliano Pontil, and Olivier Toubia.„A convex optimization approach to modeling consumer heterogeneity in conjoint estimation“. In: Marketing Science 26.6 (2007), pp. 805–818.</p>
+<p>[2] Sebastián Maldonado, Ricardo Montoya, and Richard Weber. „Advanced conjoint analysis using feature selection via support vector machines“. In: European Journal of Operational Research 241.2 (2015), pp. 564 –574.</p>
+<dl class="method">
+<dt id="csrank.discretechoice.PairwiseSVMDiscreteChoiceFunction.fit">
+<code class="sig-name descname">fit</code><span class="sig-paren">(</span><em class="sig-param">X</em>, <em class="sig-param">Y</em>, <em class="sig-param">**kwd</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/csrank/discretechoice/pairwise_discrete_choice.html#PairwiseSVMDiscreteChoiceFunction.fit"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#csrank.discretechoice.PairwiseSVMDiscreteChoiceFunction.fit" title="Permalink to this definition">¶</a></dt>
+<dd><p>Fit a generic preference learning model on a provided set of queries.
+The provided queries can be of a fixed size (numpy arrays).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>X</strong> (<em>numpy array</em><em>, </em><em>shape</em><em> (</em><em>n_samples</em><em>, </em><em>n_objects</em><em>, </em><em>n_features</em><em>)</em>) – Feature vectors of the objects</p></li>
+<li><p><strong>Y</strong> (<em>numpy array</em><em>, </em><em>shape</em><em> (</em><em>n_samples</em><em>, </em><em>n_objects</em><em>, </em><em>n_features</em><em>)</em>) – Preferences in form of Orderings or Choices for given n_objects</p></li>
+<li><p><strong>**kwargs</strong> – Keyword arguments for the fit function</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="csrank.discretechoice.PairwiseSVMDiscreteChoiceFunction.predict">
+<code class="sig-name descname">predict</code><span class="sig-paren">(</span><em class="sig-param">X</em>, <em class="sig-param">**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/csrank/discretechoice/pairwise_discrete_choice.html#PairwiseSVMDiscreteChoiceFunction.predict"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#csrank.discretechoice.PairwiseSVMDiscreteChoiceFunction.predict" title="Permalink to this definition">¶</a></dt>
+<dd><p>Predict preferences in the form of rankings or choices for a given collection of sets of objects called
+a query set using the function <a class="reference internal" href="#csrank.discretechoice.PairwiseSVMDiscreteChoiceFunction.predict_for_scores" title="csrank.discretechoice.PairwiseSVMDiscreteChoiceFunction.predict_for_scores"><code class="xref py py-meth docutils literal notranslate"><span class="pre">predict_for_scores()</span></code></a>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>X</strong> (<em>dict</em><em> or </em><em>numpy array</em>) – Dictionary with a mapping from the query set size to numpy arrays or a single numpy array of size:
+(n_instances, n_objects, n_features)</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><strong>Y</strong> (<em>dict or numpy array</em>) – Dictionary with a mapping from the query set size to numpy arrays or a single numpy array containing
+predicted preferences of size:
+(n_instances, n_objects)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="csrank.discretechoice.PairwiseSVMDiscreteChoiceFunction.predict_for_scores">
+<code class="sig-name descname">predict_for_scores</code><span class="sig-paren">(</span><em class="sig-param">scores</em>, <em class="sig-param">**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/csrank/discretechoice/pairwise_discrete_choice.html#PairwiseSVMDiscreteChoiceFunction.predict_for_scores"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#csrank.discretechoice.PairwiseSVMDiscreteChoiceFunction.predict_for_scores" title="Permalink to this definition">¶</a></dt>
+<dd><p>Binary discrete choice vector <span class="math notranslate nohighlight">\(y\)</span> represents the choices amongst the objects in <span class="math notranslate nohighlight">\(Q\)</span>, such that
+<span class="math notranslate nohighlight">\(y(k) = 1\)</span> represents that the object <span class="math notranslate nohighlight">\(x_k\)</span> is chosen and <span class="math notranslate nohighlight">\(y(k) = 0\)</span> represents
+it is not chosen. For choice to be discrete <span class="math notranslate nohighlight">\(\sum_{x_i \in Q} y(i) = 1\)</span>. Predict discrete choices for
+the scores for a given collection of sets of objects (query sets).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>scores</strong> (<em>dict</em><em> or </em><em>numpy array</em>) – Dictionary with a mapping from query set size to numpy arrays
+or a single numpy array of size containing scores of each object of size:
+(n_instances, n_objects)</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><strong>Y</strong> (<em>dict or numpy array</em>) – Dictionary with a mapping from query set size to numpy arrays
+or a single numpy array containing predicted discrete choice vectors of size:
+(n_instances, n_objects)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="csrank.discretechoice.PairwiseSVMDiscreteChoiceFunction.predict_scores">
+<code class="sig-name descname">predict_scores</code><span class="sig-paren">(</span><em class="sig-param">X</em>, <em class="sig-param">**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/csrank/discretechoice/pairwise_discrete_choice.html#PairwiseSVMDiscreteChoiceFunction.predict_scores"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#csrank.discretechoice.PairwiseSVMDiscreteChoiceFunction.predict_scores" title="Permalink to this definition">¶</a></dt>
+<dd><p>Predict the utility scores for each object in the collection of set of objects called a query set.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>X</strong> (<em>dict</em><em> or </em><em>numpy array</em>) – Dictionary with a mapping from query set size to numpy arrays or a single numpy array of size:
+(n_instances, n_objects, n_features)</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><strong>Y</strong> (<em>dict or numpy array</em>) – Dictionary with a mapping from query set size to numpy arrays or a single numpy array of size:
+(n_instances, n_objects)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="csrank.discretechoice.PairwiseSVMDiscreteChoiceFunction.set_tunable_parameters">
+<code class="sig-name descname">set_tunable_parameters</code><span class="sig-paren">(</span><em class="sig-param">C=1.0</em>, <em class="sig-param">tol=0.0001</em>, <em class="sig-param">**point</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/csrank/discretechoice/pairwise_discrete_choice.html#PairwiseSVMDiscreteChoiceFunction.set_tunable_parameters"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#csrank.discretechoice.PairwiseSVMDiscreteChoiceFunction.set_tunable_parameters" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set tunable parameters of the PairwiseSVM model to the values provided.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>C</strong> (<em>float</em>) – Penalty parameter of the error term of the SVM classifier</p></li>
+<li><p><strong>tol</strong> (<em>float</em>) – Optimization tolerance of the SVM classifier</p></li>
+<li><p><strong>point</strong> (<em>dict</em>) – Dictionary containing parameter values which are not tuned for the network</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="csrank.discretechoice.GeneralizedNestedLogitModel">
+<em class="property">class </em><code class="sig-prename descclassname">csrank.discretechoice.</code><code class="sig-name descname">GeneralizedNestedLogitModel</code><span class="sig-paren">(</span><em class="sig-param">n_object_features</em>, <em class="sig-param">n_objects</em>, <em class="sig-param">n_nests=None</em>, <em class="sig-param">loss_function='None'</em>, <em class="sig-param">regularization='l2'</em>, <em class="sig-param">alpha=0.05</em>, <em class="sig-param">random_state=None</em>, <em class="sig-param">**kwd</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/csrank/discretechoice/generalized_nested_logit.html#GeneralizedNestedLogitModel"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#csrank.discretechoice.GeneralizedNestedLogitModel" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create an instance of the Generalized Nested Logit model for learning the discrete choice function. This
+model divides objects into subsets called nests, such that the each object is associtated to each nest to some degree.
+This model structure is 1-layer of hierarchy and the <span class="math notranslate nohighlight">\(\lambda\)</span> for each nest <span class="math notranslate nohighlight">\(B_k\)</span> signifies the degree of independence
+and  <span class="math notranslate nohighlight">\(1-\lambda\)</span> signifies the correlations between the object in it. We learn two weight vectors and the  <span class="math notranslate nohighlight">\(\lambda s\)</span>.
+The probability of choosing an object <span class="math notranslate nohighlight">\(x_i\)</span> from the given query set <span class="math notranslate nohighlight">\(Q\)</span> is defined by product
+of choosing the nest in which <span class="math notranslate nohighlight">\(x_i\)</span> exists and then choosing the the object from the nest.</p>
+<div class="math notranslate nohighlight">
+\[P(x_i \lvert Q) = P_i = \sum_{\substack{B_k \in \mathcal{B} \ i \in B_k}}P_{i \lvert B_k} P_{B_k} \enspace ,\]</div>
+<p>The discrete choice for the given query set <span class="math notranslate nohighlight">\(Q\)</span> is defined as:</p>
+<div class="math notranslate nohighlight">
+\[dc(Q) := \operatorname{argmax}_{x_i \in Q }  \; P(x_i \lvert Q)\]</div>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>n_object_features</strong> (<em>int</em>) – Number of features of the object space</p></li>
+<li><p><strong>n_objects</strong> (<em>int</em>) – Number of objects in each query set</p></li>
+<li><p><strong>n_nests</strong> (<em>int range :</em><em> [</em><em>2</em><em>,</em><em>n_objects/2</em><em>]</em>) – The number of nests/subsets in which the objects are divided</p></li>
+<li><p><strong>loss_function</strong> (<em>string</em><em> , </em><em>{‘categorical_crossentropy’</em><em>, </em><em>‘binary_crossentropy’</em><em>, </em><em>’categorical_hinge’}</em>) – Loss function to be used for the discrete choice decision from the query set</p></li>
+<li><p><strong>regularization</strong> (<em>string</em><em>, </em><em>{‘l1’</em><em>, </em><em>‘l2’}</em><em>, </em><em>string</em>) – Regularizer function (L1 or L2) applied to the <cite>kernel</cite> weights matrix</p></li>
+<li><p><strong>alpha</strong> (<em>float</em><em> (</em><em>range :</em><em> [</em><em>0</em><em>,</em><em>1</em><em>]</em><em>)</em>) – The lower bound of the correlations between the objects in a nest</p></li>
+<li><p><strong>random_state</strong> (<em>int</em><em> or </em><em>object</em>) – Numpy random state</p></li>
+<li><p><strong>**kwargs</strong> – Keyword arguments for the algorithms</p></li>
+</ul>
+</dd>
+</dl>
+<p class="rubric">References</p>
+<p>[1] Kenneth E Train. „Discrete choice methods with simulation“. In: Cambridge university press, 2009. Chap GEV, pp. 87–111.</p>
+<p>[2] Kenneth Train. Qualitative choice analysis. Cambridge, MA: MIT Press, 1986</p>
+<p>[3] Chieh-Hua Wen and Frank S Koppelman. „The generalized nested logit model“. In: Transportation Research Part B: Methodological 35.7 (2001), pp. 627–641</p>
+<dl class="method">
+<dt id="csrank.discretechoice.GeneralizedNestedLogitModel.construct_model">
+<code class="sig-name descname">construct_model</code><span class="sig-paren">(</span><em class="sig-param">X</em>, <em class="sig-param">Y</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/csrank/discretechoice/generalized_nested_logit.html#GeneralizedNestedLogitModel.construct_model"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#csrank.discretechoice.GeneralizedNestedLogitModel.construct_model" title="Permalink to this definition">¶</a></dt>
+<dd><p>Constructs the nested logit model by applying priors on weight vectors <strong>weights</strong> and <strong>weights_k</strong> as per
+<a class="reference internal" href="#csrank.discretechoice.GeneralizedNestedLogitModel.model_configuration" title="csrank.discretechoice.GeneralizedNestedLogitModel.model_configuration"><code class="xref py py-meth docutils literal notranslate"><span class="pre">model_configuration()</span></code></a>. Then we apply a uniform prior to the <span class="math notranslate nohighlight">\(\lambda s\)</span>, i.e.
+<span class="math notranslate nohighlight">\(\lambda s \sim Uniform(\text{alpha}, 1.0)\)</span>.The probability of choosing the object <span class="math notranslate nohighlight">\(x_i\)</span> from the
+query set <span class="math notranslate nohighlight">\(Q = \{x_1, \ldots ,x_n\}\)</span> is evaluated in <a class="reference internal" href="#csrank.discretechoice.GeneralizedNestedLogitModel.get_probabilities" title="csrank.discretechoice.GeneralizedNestedLogitModel.get_probabilities"><code class="xref py py-meth docutils literal notranslate"><span class="pre">get_probabilities()</span></code></a>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>X</strong> (<em>numpy array</em>) – (n_instances, n_objects, n_features)
+Feature vectors of the objects</p></li>
+<li><p><strong>Y</strong> (<em>numpy array</em>) – (n_instances, n_objects)
+Preferences in the form of discrete choices for given objects</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><strong>model</strong> (pymc3 Model <code class="xref py py-class docutils literal notranslate"><span class="pre">pm.Model</span></code>)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="csrank.discretechoice.GeneralizedNestedLogitModel.fit">
+<code class="sig-name descname">fit</code><span class="sig-paren">(</span><em class="sig-param">X, Y, sampler='variational', tune=500, draws=500, vi_params={'callbacks': [&lt;pymc3.variational.callbacks.CheckParametersConvergence object&gt;], 'method': 'advi', 'n': 20000}, **kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/csrank/discretechoice/generalized_nested_logit.html#GeneralizedNestedLogitModel.fit"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#csrank.discretechoice.GeneralizedNestedLogitModel.fit" title="Permalink to this definition">¶</a></dt>
+<dd><p>Fit a generalized nested logit model on the provided set of queries X and choices Y of those objects. The
+provided queries and corresponding preferences are of a fixed size (numpy arrays). For learning this network
+the categorical cross entropy loss function for each object <span class="math notranslate nohighlight">\(x_i \in Q\)</span> is defined as:</p>
+<div class="math notranslate nohighlight">
+\[C_{i} =  -y(i)\log(P_i) \enspace,\]</div>
+<p>where <span class="math notranslate nohighlight">\(y\)</span> is ground-truth discrete choice vector of the objects in the given query set <span class="math notranslate nohighlight">\(Q\)</span>.
+The value <span class="math notranslate nohighlight">\(y(i) = 1\)</span> if object <span class="math notranslate nohighlight">\(x_i\)</span> is chosen else <span class="math notranslate nohighlight">\(y(i) = 0\)</span>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>X</strong> (<em>numpy array</em><em> (</em><em>n_instances</em><em>, </em><em>n_objects</em><em>, </em><em>n_features</em><em>)</em>) – Feature vectors of the objects</p></li>
+<li><p><strong>Y</strong> (<em>numpy array</em><em> (</em><em>n_instances</em><em>, </em><em>n_objects</em><em>)</em>) – Choices for given objects in the query</p></li>
+<li><p><strong>sampler</strong> (<em>{‘variational’</em><em>, </em><em>‘metropolis’</em><em>, </em><em>‘nuts’}</em><em>, </em><em>string</em>) – <p>The sampler used to estimate the posterior mean and mass matrix from the trace</p>
+<blockquote>
+<div><ul>
+<li><p><strong>variational</strong> : Run inference methods to estimate posterior mean and diagonal mass matrix</p></li>
+<li><p><strong>metropolis</strong> : Use the MAP as starting point and Metropolis-Hastings sampler</p></li>
+<li><p><strong>nuts</strong> : Use the No-U-Turn sampler</p></li>
+</ul>
+</div></blockquote>
+</p></li>
+<li><p><strong>vi_params</strong> (<em>dict</em>) – The parameters for the <strong>variational</strong> inference method</p></li>
+<li><p><strong>draws</strong> (<em>int</em>) – The number of samples to draw. Defaults to 500. The number of tuned samples are discarded by default</p></li>
+<li><p><strong>tune</strong> (<em>int</em>) – Number of iterations to tune, defaults to 500. Ignored when using ‘SMC’. Samplers adjust
+the step sizes, scalings or similar during tuning. Tuning samples will be drawn in addition
+to the number specified in the <cite>draws</cite> argument, and will be discarded unless
+<cite>discard_tuned_samples</cite> is set to False.</p></li>
+<li><p><strong>**kwargs</strong> – Keyword arguments for the fit function of <code class="xref py py-meth docutils literal notranslate"><span class="pre">pymc3.fit`or</span> <span class="pre">:meth:`pymc3.sample()</span></code></p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="csrank.discretechoice.GeneralizedNestedLogitModel.get_probabilities">
+<code class="sig-name descname">get_probabilities</code><span class="sig-paren">(</span><em class="sig-param">utility</em>, <em class="sig-param">lambda_k</em>, <em class="sig-param">alpha_ik</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/csrank/discretechoice/generalized_nested_logit.html#GeneralizedNestedLogitModel.get_probabilities"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#csrank.discretechoice.GeneralizedNestedLogitModel.get_probabilities" title="Permalink to this definition">¶</a></dt>
+<dd><p>This method calculates the probability of choosing an object from the query set using the following parameters of the model which are used:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p><strong>weights</strong> (<span class="math notranslate nohighlight">\(w\)</span>): Weights to get the utility of the object <span class="math notranslate nohighlight">\(Y_i = U(x_i) = w \cdot x_i\)</span></p></li>
+<li><p><strong>weights_k</strong> (<span class="math notranslate nohighlight">\(w_k\)</span>): Weights to get fractional allocation of each object :math:’x_j’  in :math:’Q’ to each nest math:<cite>B_k</cite> as <span class="math notranslate nohighlight">\(\alpha_{ik} = w_k \cdot x_i\)</span>.</p></li>
+<li><p><strong>lambda_k</strong> (<span class="math notranslate nohighlight">\(\lambda_k\)</span>): Lambda for nest <span class="math notranslate nohighlight">\(B_k\)</span> for correlations between the obejcts.</p></li>
+</ul>
+</div></blockquote>
+<p>The probability of choosing the object <span class="math notranslate nohighlight">\(x_i\)</span> from the query set <span class="math notranslate nohighlight">\(Q\)</span>:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}P_i = \sum_{\substack{B_k \in \mathcal{B} \ i \in B_k}} P_{i \lvert {B_k}} P_{B_k} \enspace where, \\
+P_{B_k} = \frac{{\left(\sum_{j \in B_k} {\left(\alpha_{jk} \boldsymbol{e}^{V_j} \right)}^ {^{1}/{\lambda_k}} \right)}^{\lambda_k}}{\sum_{\ell = 1}^{K} {\left( \sum_{j \in B_{\ell}} {\left( \alpha_{j\ell} \boldsymbol{e}^{V_j} \right)}^{^{1}/{\lambda_\ell}} \right)^{\lambda_{\ell}}}} \\
+P_{{i} \lvert {B_k}} = \frac{{\left(\alpha_{ik} \boldsymbol{e}^{V_i} \right)}^{^{1}/{\lambda_k}}}{\sum_{j \in B_k} {\left(\alpha_{jk} \boldsymbol{e}^{V_j} \right)}^{^{1}/{\lambda_k}}} \enspace ,\end{split}\]</div>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>utility</strong> (<em>theano tensor</em>) – (n_instances, n_objects)
+Utility <span class="math notranslate nohighlight">\(Y_i\)</span> of the objects <span class="math notranslate nohighlight">\(x_i \in Q\)</span> in the query sets</p></li>
+<li><p><strong>lambda_k</strong> (<em>theano tensor</em><em> (</em><em>range :</em><em> [</em><em>alpha</em><em>, </em><em>1.0</em><em>]</em><em>)</em>) – (n_nests)
+Measure of independence amongst the obejcts in each nests</p></li>
+<li><p><strong>alpha_ik</strong> (<em>theano tensor</em>) – (n_instances, n_objects, n_nests)
+Fractional allocation of each object <span class="math notranslate nohighlight">\(x_i\)</span> in each nest math:<cite>B_k</cite></p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><strong>p</strong> (<em>theano tensor</em>) – (n_instances, n_objects)
+Choice probabilities <span class="math notranslate nohighlight">\(P_i\)</span> of the objects <span class="math notranslate nohighlight">\(x_i \in Q\)</span> in the query sets</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="csrank.discretechoice.GeneralizedNestedLogitModel.model_configuration">
+<em class="property">property </em><code class="sig-name descname">model_configuration</code><a class="headerlink" href="#csrank.discretechoice.GeneralizedNestedLogitModel.model_configuration" title="Permalink to this definition">¶</a></dt>
+<dd><p>Constructs the dictionary containing the priors for the weight vectors for the model according to the
+regularization function. The parameters are:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p><strong>weights</strong> : Weights to evaluates the utility of the objects</p></li>
+<li><p><strong>weights_k</strong> : Weights to evaluates the fractional allocation of each object in :math:’Q’ to each nest</p></li>
+</ul>
+</div></blockquote>
+<p>For <code class="docutils literal notranslate"><span class="pre">l1</span></code> regularization the priors are:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\text{mu}_w \sim \text{Normal}(\text{mu}=0, \text{sd}=5.0) \\
+\text{b}_w \sim \text{HalfCauchy}(\beta=1.0) \\
+\text{weights} \sim \text{Laplace}(\text{mu}=\text{mu}_w, \text{b}=\text{b}_w)\end{split}\]</div>
+<p>For <code class="docutils literal notranslate"><span class="pre">l2</span></code> regularization the priors are:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\text{mu}_w \sim \text{Normal}(\text{mu}=0, \text{sd}=5.0) \\
+\text{sd}_w \sim \text{HalfCauchy}(\beta=1.0) \\
+\text{weights} \sim \text{Normal}(\text{mu}=\text{mu}_w, \text{sd}=\text{sd}_w)\end{split}\]</div>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p><strong>configuration</strong> (<em>dict</em>) – Dictionary containing the priors applies on the weights</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="csrank.discretechoice.GeneralizedNestedLogitModel.predict">
+<code class="sig-name descname">predict</code><span class="sig-paren">(</span><em class="sig-param">X</em>, <em class="sig-param">**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/csrank/discretechoice/generalized_nested_logit.html#GeneralizedNestedLogitModel.predict"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#csrank.discretechoice.GeneralizedNestedLogitModel.predict" title="Permalink to this definition">¶</a></dt>
+<dd><p>Predict preferences in the form of rankings or choices for a given collection of sets of objects called
+a query set using the function <a class="reference internal" href="#csrank.discretechoice.GeneralizedNestedLogitModel.predict_for_scores" title="csrank.discretechoice.GeneralizedNestedLogitModel.predict_for_scores"><code class="xref py py-meth docutils literal notranslate"><span class="pre">predict_for_scores()</span></code></a>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>X</strong> (<em>dict</em><em> or </em><em>numpy array</em>) – Dictionary with a mapping from the query set size to numpy arrays or a single numpy array of size:
+(n_instances, n_objects, n_features)</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><strong>Y</strong> (<em>dict or numpy array</em>) – Dictionary with a mapping from the query set size to numpy arrays or a single numpy array containing
+predicted preferences of size:
+(n_instances, n_objects)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="csrank.discretechoice.GeneralizedNestedLogitModel.predict_for_scores">
+<code class="sig-name descname">predict_for_scores</code><span class="sig-paren">(</span><em class="sig-param">scores</em>, <em class="sig-param">**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/csrank/discretechoice/generalized_nested_logit.html#GeneralizedNestedLogitModel.predict_for_scores"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#csrank.discretechoice.GeneralizedNestedLogitModel.predict_for_scores" title="Permalink to this definition">¶</a></dt>
+<dd><p>Binary discrete choice vector <span class="math notranslate nohighlight">\(y\)</span> represents the choices amongst the objects in <span class="math notranslate nohighlight">\(Q\)</span>, such that
+<span class="math notranslate nohighlight">\(y(k) = 1\)</span> represents that the object <span class="math notranslate nohighlight">\(x_k\)</span> is chosen and <span class="math notranslate nohighlight">\(y(k) = 0\)</span> represents
+it is not chosen. For choice to be discrete <span class="math notranslate nohighlight">\(\sum_{x_i \in Q} y(i) = 1\)</span>. Predict discrete choices for
+the scores for a given collection of sets of objects (query sets).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>scores</strong> (<em>dict</em><em> or </em><em>numpy array</em>) – Dictionary with a mapping from query set size to numpy arrays
+or a single numpy array of size containing scores of each object of size:
+(n_instances, n_objects)</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><strong>Y</strong> (<em>dict or numpy array</em>) – Dictionary with a mapping from query set size to numpy arrays
+or a single numpy array containing predicted discrete choice vectors of size:
+(n_instances, n_objects)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="csrank.discretechoice.GeneralizedNestedLogitModel.predict_scores">
+<code class="sig-name descname">predict_scores</code><span class="sig-paren">(</span><em class="sig-param">X</em>, <em class="sig-param">**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/csrank/discretechoice/generalized_nested_logit.html#GeneralizedNestedLogitModel.predict_scores"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#csrank.discretechoice.GeneralizedNestedLogitModel.predict_scores" title="Permalink to this definition">¶</a></dt>
+<dd><p>Predict the utility scores for each object in the collection of set of objects called a query set.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>X</strong> (<em>dict</em><em> or </em><em>numpy array</em>) – Dictionary with a mapping from query set size to numpy arrays or a single numpy array of size:
+(n_instances, n_objects, n_features)</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><strong>Y</strong> (<em>dict or numpy array</em>) – Dictionary with a mapping from query set size to numpy arrays or a single numpy array of size:
+(n_instances, n_objects)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="csrank.discretechoice.GeneralizedNestedLogitModel.set_tunable_parameters">
+<code class="sig-name descname">set_tunable_parameters</code><span class="sig-paren">(</span><em class="sig-param">alpha=None</em>, <em class="sig-param">n_nests=None</em>, <em class="sig-param">loss_function=''</em>, <em class="sig-param">regularization='l2'</em>, <em class="sig-param">**point</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/csrank/discretechoice/generalized_nested_logit.html#GeneralizedNestedLogitModel.set_tunable_parameters"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#csrank.discretechoice.GeneralizedNestedLogitModel.set_tunable_parameters" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set tunable parameters of the Nested Logit model to the values provided.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>alpha</strong> (<em>float</em><em> (</em><em>range :</em><em> [</em><em>0</em><em>,</em><em>1</em><em>]</em><em>)</em>) – The lower bound of the correlations between the objects in a nest</p></li>
+<li><p><strong>n_nests</strong> (<em>int</em><em> (</em><em>range :</em><em> [</em><em>2</em><em>,</em><em>n_objects</em><em>]</em><em>)</em>) – The number of nests in which the objects are divided</p></li>
+<li><p><strong>loss_function</strong> (<em>string</em><em> , </em><em>{‘categorical_crossentropy’</em><em>, </em><em>‘binary_crossentropy’</em><em>, </em><em>’categorical_hinge’}</em>) – Loss function to be used for the discrete choice decision from the query set</p></li>
+<li><p><strong>regularization</strong> (<em>string</em><em>, </em><em>{‘l1’</em><em>, </em><em>‘l2’}</em><em>, </em><em>string</em>) – Regularizer function (L1 or L2) applied to the <cite>kernel</cite> weights matrix</p></li>
+<li><p><strong>point</strong> (<em>dict</em>) – Dictionary containing parameter values which are not tuned for the network</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="csrank.discretechoice.MixedLogitModel">
+<em class="property">class </em><code class="sig-prename descclassname">csrank.discretechoice.</code><code class="sig-name descname">MixedLogitModel</code><span class="sig-paren">(</span><em class="sig-param">n_object_features</em>, <em class="sig-param">n_mixtures=4</em>, <em class="sig-param">loss_function=''</em>, <em class="sig-param">regularization='l2'</em>, <em class="sig-param">**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/csrank/discretechoice/mixed_logit_model.html#MixedLogitModel"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#csrank.discretechoice.MixedLogitModel" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create an instance of the Mixed Logit model for learning the discrete choice function. In this model we
+assume weights of this model to be random due to which this model can learn different variations in choices
+amongst the individuals. The utility score for each object in query set <span class="math notranslate nohighlight">\(Q\)</span> is defined as
+<span class="math notranslate nohighlight">\(U_r(x) = w_r \cdot x\)</span>, where <span class="math notranslate nohighlight">\(w_r\)</span> is the k-th sample weight vector from the underlying distribution
+The probability of choosing an object <span class="math notranslate nohighlight">\(x_i\)</span> is defined by taking softmax over the
+utility scores of the objects:</p>
+<div class="math notranslate nohighlight">
+\[P(x_i \lvert Q) = \frac{1}{R} \sum_{r=1}^R \frac{exp(U_r(x_i))}{\sum_{x_j \in Q} exp(U_r(x_j))}\]</div>
+<p>The discrete choice for the given query set <span class="math notranslate nohighlight">\(Q\)</span> is defined as:</p>
+<div class="math notranslate nohighlight">
+\[dc(Q) := \operatorname{argmax}_{x_i \in Q }  \; P(x_i \lvert Q)\]</div>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>n_object_features</strong> (<em>int</em>) – Number of features of the object space</p></li>
+<li><p><strong>n_mixtures</strong> (<em>int</em><em> (</em><em>range :</em><em> [</em><em>2</em><em>, </em><em>inf</em><em>]</em><em>)</em>) – The number of logit models (<span class="math notranslate nohighlight">\(R\)</span>) which are used to estimate the choice probability</p></li>
+<li><p><strong>loss_function</strong> (<em>string</em><em> , </em><em>{‘categorical_crossentropy’</em><em>, </em><em>‘binary_crossentropy’</em><em>, </em><em>’categorical_hinge’}</em>) – Loss function to be used for the discrete choice decision from the query set</p></li>
+<li><p><strong>regularization</strong> (<em>string</em><em>, </em><em>{‘l1’</em><em>, </em><em>‘l2’}</em><em>, </em><em>string</em>) – Regularizer function (L1 or L2) applied to the <cite>kernel</cite> weights matrix</p></li>
+<li><p><strong>random_state</strong> (<em>int</em><em> or </em><em>object</em>) – Numpy random state</p></li>
+<li><p><strong>**kwargs</strong> – Keyword arguments for the algorithms</p></li>
+</ul>
+</dd>
+</dl>
+<p class="rubric">References</p>
+<p>[1] Kenneth E Train. „Discrete choice methods with simulation“. In: Cambridge university press, 2009. Chap Mixed Logit, pp. 153–172.</p>
+<p>[2] Kenneth Train. Qualitative choice analysis. Cambridge, MA: MIT Press, 1986</p>
+<p>[3] Daniel McFadden and Kenneth Train. „Mixed MNL models for discrete response“. In: Journal of applied Econometrics 15.5 (2000), pp. 447–470</p>
+<dl class="method">
+<dt id="csrank.discretechoice.MixedLogitModel.construct_model">
+<code class="sig-name descname">construct_model</code><span class="sig-paren">(</span><em class="sig-param">X</em>, <em class="sig-param">Y</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/csrank/discretechoice/mixed_logit_model.html#MixedLogitModel.construct_model"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#csrank.discretechoice.MixedLogitModel.construct_model" title="Permalink to this definition">¶</a></dt>
+<dd><p>Constructs the mixed logit model by applying priors on weight vectors <strong>weights</strong> as per
+<a class="reference internal" href="#csrank.discretechoice.MixedLogitModel.model_configuration" title="csrank.discretechoice.MixedLogitModel.model_configuration"><code class="xref py py-meth docutils literal notranslate"><span class="pre">model_configuration()</span></code></a>. The probability of choosing the object <span class="math notranslate nohighlight">\(x_i\)</span> from the query set
+<span class="math notranslate nohighlight">\(Q = \{x_1, \ldots ,x_n\}\)</span> assuming we draw <span class="math notranslate nohighlight">\(R\)</span> samples of the weight vectors is:</p>
+<div class="math notranslate nohighlight">
+\[P(x_i \lvert Q) = \frac{1}{R} \sum_{r=1}^R \frac{exp(U_r(x_i))}{\sum_{x_j \in Q} exp(U_r(x_j))}\]</div>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>X</strong> (<em>numpy array</em>) – (n_instances, n_objects, n_features)
+Feature vectors of the objects</p></li>
+<li><p><strong>Y</strong> (<em>numpy array</em>) – (n_instances, n_objects)
+Preferences in the form of discrete choices for given objects</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><strong>model</strong> (pymc3 Model <code class="xref py py-class docutils literal notranslate"><span class="pre">pm.Model</span></code>)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="csrank.discretechoice.MixedLogitModel.fit">
+<code class="sig-name descname">fit</code><span class="sig-paren">(</span><em class="sig-param">X, Y, sampler='variational', tune=500, draws=500, vi_params={'callbacks': [&lt;pymc3.variational.callbacks.CheckParametersConvergence object&gt;], 'method': 'advi', 'n': 20000}, **kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/csrank/discretechoice/mixed_logit_model.html#MixedLogitModel.fit"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#csrank.discretechoice.MixedLogitModel.fit" title="Permalink to this definition">¶</a></dt>
+<dd><p>Fit a mixed logit model on the provided set of queries X and choices Y of those objects. The provided
+queries and corresponding preferences are of a fixed size (numpy arrays). For learning this network
+the categorical cross entropy loss function for each object <span class="math notranslate nohighlight">\(x_i \in Q\)</span> is defined as:</p>
+<div class="math notranslate nohighlight">
+\[C_{i} =  -y(i)\log(P_i) \enspace,\]</div>
+<p>where <span class="math notranslate nohighlight">\(y\)</span> is ground-truth discrete choice vector of the objects in the given query set <span class="math notranslate nohighlight">\(Q\)</span>.
+The value <span class="math notranslate nohighlight">\(y(i) = 1\)</span> if object <span class="math notranslate nohighlight">\(x_i\)</span> is chosen else <span class="math notranslate nohighlight">\(y(i) = 0\)</span>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>X</strong> (<em>numpy array</em><em> (</em><em>n_instances</em><em>, </em><em>n_objects</em><em>, </em><em>n_features</em><em>)</em>) – Feature vectors of the objects</p></li>
+<li><p><strong>Y</strong> (<em>numpy array</em><em> (</em><em>n_instances</em><em>, </em><em>n_objects</em><em>)</em>) – Choices for given objects in the query</p></li>
+<li><p><strong>sampler</strong> (<em>{‘variational’</em><em>, </em><em>‘metropolis’</em><em>, </em><em>‘nuts’}</em><em>, </em><em>string</em>) – <p>The sampler used to estimate the posterior mean and mass matrix from the trace</p>
+<blockquote>
+<div><ul>
+<li><p><strong>variational</strong> : Run inference methods to estimate posterior mean and diagonal mass matrix</p></li>
+<li><p><strong>metropolis</strong> : Use the MAP as starting point and Metropolis-Hastings sampler</p></li>
+<li><p><strong>nuts</strong> : Use the No-U-Turn sampler</p></li>
+</ul>
+</div></blockquote>
+</p></li>
+<li><p><strong>vi_params</strong> (<em>dict</em>) – The parameters for the <strong>variational</strong> inference method</p></li>
+<li><p><strong>draws</strong> (<em>int</em>) – The number of samples to draw. Defaults to 500. The number of tuned samples are discarded by default</p></li>
+<li><p><strong>tune</strong> (<em>int</em>) – Number of iterations to tune, defaults to 500. Ignored when using ‘SMC’. Samplers adjust
+the step sizes, scalings or similar during tuning. Tuning samples will be drawn in addition
+to the number specified in the <cite>draws</cite> argument, and will be discarded unless
+<cite>discard_tuned_samples</cite> is set to False.</p></li>
+<li><p><strong>**kwargs</strong> – Keyword arguments for the fit function of <code class="xref py py-meth docutils literal notranslate"><span class="pre">pymc3.fit`or</span> <span class="pre">:meth:`pymc3.sample()</span></code></p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="csrank.discretechoice.MixedLogitModel.model_configuration">
+<em class="property">property </em><code class="sig-name descname">model_configuration</code><a class="headerlink" href="#csrank.discretechoice.MixedLogitModel.model_configuration" title="Permalink to this definition">¶</a></dt>
+<dd><p>Constructs the dictionary containing the priors for the weight vectors for the model according to the
+regularization function. The parameters are:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p><strong>weights</strong> : Distribution of the weigh vectors to evaluates the utility of the objects</p></li>
+</ul>
+</div></blockquote>
+<p>For <code class="docutils literal notranslate"><span class="pre">l1</span></code> regularization the priors are:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\text{mu}_w \sim \text{Normal}(\text{mu}=0, \text{sd}=5.0) \\
+\text{b}_w \sim \text{HalfCauchy}(\beta=1.0) \\
+\text{weights} \sim \text{Laplace}(\text{mu}=\text{mu}_w, \text{b}=\text{b}_w)\end{split}\]</div>
+<p>For <code class="docutils literal notranslate"><span class="pre">l2</span></code> regularization the priors are:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\text{mu}_w \sim \text{Normal}(\text{mu}=0, \text{sd}=5.0) \\
+\text{sd}_w \sim \text{HalfCauchy}(\beta=1.0) \\
+\text{weights} \sim \text{Normal}(\text{mu}=\text{mu}_w, \text{sd}=\text{sd}_w)\end{split}\]</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="csrank.discretechoice.MixedLogitModel.predict">
+<code class="sig-name descname">predict</code><span class="sig-paren">(</span><em class="sig-param">X</em>, <em class="sig-param">**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/csrank/discretechoice/mixed_logit_model.html#MixedLogitModel.predict"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#csrank.discretechoice.MixedLogitModel.predict" title="Permalink to this definition">¶</a></dt>
+<dd><p>Predict preferences in the form of rankings or choices for a given collection of sets of objects called
+a query set using the function <a class="reference internal" href="#csrank.discretechoice.MixedLogitModel.predict_for_scores" title="csrank.discretechoice.MixedLogitModel.predict_for_scores"><code class="xref py py-meth docutils literal notranslate"><span class="pre">predict_for_scores()</span></code></a>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>X</strong> (<em>dict</em><em> or </em><em>numpy array</em>) – Dictionary with a mapping from the query set size to numpy arrays or a single numpy array of size:
+(n_instances, n_objects, n_features)</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><strong>Y</strong> (<em>dict or numpy array</em>) – Dictionary with a mapping from the query set size to numpy arrays or a single numpy array containing
+predicted preferences of size:
+(n_instances, n_objects)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="csrank.discretechoice.MixedLogitModel.predict_for_scores">
+<code class="sig-name descname">predict_for_scores</code><span class="sig-paren">(</span><em class="sig-param">scores</em>, <em class="sig-param">**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/csrank/discretechoice/mixed_logit_model.html#MixedLogitModel.predict_for_scores"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#csrank.discretechoice.MixedLogitModel.predict_for_scores" title="Permalink to this definition">¶</a></dt>
+<dd><p>Binary discrete choice vector <span class="math notranslate nohighlight">\(y\)</span> represents the choices amongst the objects in <span class="math notranslate nohighlight">\(Q\)</span>, such that
+<span class="math notranslate nohighlight">\(y(k) = 1\)</span> represents that the object <span class="math notranslate nohighlight">\(x_k\)</span> is chosen and <span class="math notranslate nohighlight">\(y(k) = 0\)</span> represents
+it is not chosen. For choice to be discrete <span class="math notranslate nohighlight">\(\sum_{x_i \in Q} y(i) = 1\)</span>. Predict discrete choices for
+the scores for a given collection of sets of objects (query sets).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>scores</strong> (<em>dict</em><em> or </em><em>numpy array</em>) – Dictionary with a mapping from query set size to numpy arrays
+or a single numpy array of size containing scores of each object of size:
+(n_instances, n_objects)</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><strong>Y</strong> (<em>dict or numpy array</em>) – Dictionary with a mapping from query set size to numpy arrays
+or a single numpy array containing predicted discrete choice vectors of size:
+(n_instances, n_objects)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="csrank.discretechoice.MixedLogitModel.predict_scores">
+<code class="sig-name descname">predict_scores</code><span class="sig-paren">(</span><em class="sig-param">X</em>, <em class="sig-param">**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/csrank/discretechoice/mixed_logit_model.html#MixedLogitModel.predict_scores"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#csrank.discretechoice.MixedLogitModel.predict_scores" title="Permalink to this definition">¶</a></dt>
+<dd><p>Predict the utility scores for each object in the collection of set of objects called a query set.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>X</strong> (<em>dict</em><em> or </em><em>numpy array</em>) – Dictionary with a mapping from query set size to numpy arrays or a single numpy array of size:
+(n_instances, n_objects, n_features)</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><strong>Y</strong> (<em>dict or numpy array</em>) – Dictionary with a mapping from query set size to numpy arrays or a single numpy array of size:
+(n_instances, n_objects)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="csrank.discretechoice.MixedLogitModel.set_tunable_parameters">
+<code class="sig-name descname">set_tunable_parameters</code><span class="sig-paren">(</span><em class="sig-param">n_mixtures=4</em>, <em class="sig-param">loss_function=''</em>, <em class="sig-param">regularization='l1'</em>, <em class="sig-param">**point</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/csrank/discretechoice/mixed_logit_model.html#MixedLogitModel.set_tunable_parameters"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#csrank.discretechoice.MixedLogitModel.set_tunable_parameters" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set tunable parameters of the Mixed Logit model to the values provided.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>n_mixtures</strong> (<em>int</em><em> (</em><em>range :</em><em> [</em><em>2</em><em>, </em><em>inf</em><em>]</em><em>)</em>) – The number of logit models (<span class="math notranslate nohighlight">\(R\)</span>) which are used to estimate the choice probability</p></li>
+<li><p><strong>loss_function</strong> (<em>string</em><em> , </em><em>{‘categorical_crossentropy’</em><em>, </em><em>‘binary_crossentropy’</em><em>, </em><em>’categorical_hinge’}</em>) – Loss function to be used for the discrete choice decision from the query set</p></li>
+<li><p><strong>regularization</strong> (<em>string</em><em>, </em><em>{‘l1’</em><em>, </em><em>‘l2’}</em><em>, </em><em>string</em>) – Regularizer function (L1 or L2) applied to the <cite>kernel</cite> weights matrix</p></li>
+<li><p><strong>point</strong> (<em>dict</em>) – Dictionary containing parameter values which are not tuned for the network</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="csrank.discretechoice.MultinomialLogitModel">
+<em class="property">class </em><code class="sig-prename descclassname">csrank.discretechoice.</code><code class="sig-name descname">MultinomialLogitModel</code><span class="sig-paren">(</span><em class="sig-param">n_object_features</em>, <em class="sig-param">loss_function=''</em>, <em class="sig-param">regularization='l2'</em>, <em class="sig-param">**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/csrank/discretechoice/multinomial_logit_model.html#MultinomialLogitModel"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#csrank.discretechoice.MultinomialLogitModel" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create an instance of the Multinomial Logit model for learning the discrete choice function. The utility
+score for each object in query set <span class="math notranslate nohighlight">\(Q\)</span> is defined as <span class="math notranslate nohighlight">\(U(x) = w \cdot x\)</span>, where <span class="math notranslate nohighlight">\(w\)</span> is
+the weight vector. The probability of choosing an object <span class="math notranslate nohighlight">\(x_i\)</span> is defined by taking softmax over the
+utility scores of the objects:</p>
+<div class="math notranslate nohighlight">
+\[P(x_i \lvert Q) = \frac{exp(U(x_i))}{\sum_{x_j \in Q} exp(U(x_j))}\]</div>
+<p>The discrete choice for the given query set <span class="math notranslate nohighlight">\(Q\)</span> is defined as:</p>
+<div class="math notranslate nohighlight">
+\[dc(Q) := \operatorname{argmax}_{x_i \in Q }  \; P(x_i \lvert Q)\]</div>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>n_object_features</strong> (<em>int</em>) – Number of features of the object space</p></li>
+<li><p><strong>loss_function</strong> (<em>string</em><em> , </em><em>{‘categorical_crossentropy’</em><em>, </em><em>‘binary_crossentropy’</em><em>, </em><em>’categorical_hinge’}</em>) – Loss function to be used for the discrete choice decision from the query set</p></li>
+<li><p><strong>regularization</strong> (<em>string</em><em>, </em><em>{‘l1’</em><em>, </em><em>‘l2’}</em><em>, </em><em>string</em>) – Regularizer function (L1 or L2) applied to the <cite>kernel</cite> weights matrix</p></li>
+<li><p><strong>random_state</strong> (<em>int</em><em> or </em><em>object</em>) – Numpy random state</p></li>
+<li><p><strong>**kwargs</strong> – Keyword arguments for the algorithms</p></li>
+</ul>
+</dd>
+</dl>
+<p class="rubric">References</p>
+<p>[1] Kenneth E Train. „Discrete choice methods with simulation“. In: Cambridge university press, 2009. Chap Logit, pp. 41–86.</p>
+<p>[2] Kenneth Train. Qualitative choice analysis. Cambridge, MA: MIT Press, 1986</p>
+<dl class="method">
+<dt id="csrank.discretechoice.MultinomialLogitModel.construct_model">
+<code class="sig-name descname">construct_model</code><span class="sig-paren">(</span><em class="sig-param">X</em>, <em class="sig-param">Y</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/csrank/discretechoice/multinomial_logit_model.html#MultinomialLogitModel.construct_model"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#csrank.discretechoice.MultinomialLogitModel.construct_model" title="Permalink to this definition">¶</a></dt>
+<dd><p>Constructs the multinomial logit model which evaluated the utility score as <span class="math notranslate nohighlight">\(U(x) = w \cdot x\)</span>, where
+<span class="math notranslate nohighlight">\(w\)</span> is the weight vector. The probability of choosing the object <span class="math notranslate nohighlight">\(x_i\)</span> from the query set
+<span class="math notranslate nohighlight">\(Q = \{x_1, \ldots ,x_n\}\)</span> is:</p>
+<div class="math notranslate nohighlight">
+\[P_i = P(x_i \lvert Q) = \frac{exp(U(x_i))}{\sum_{x_j \in Q} exp(U(x_j))}\]</div>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>X</strong> (<em>numpy array</em>) – (n_instances, n_objects, n_features)
+Feature vectors of the objects</p></li>
+<li><p><strong>Y</strong> (<em>numpy array</em>) – (n_instances, n_objects)
+Preferences in the form of discrete choices for given objects</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><strong>model</strong> (pymc3 Model <code class="xref py py-class docutils literal notranslate"><span class="pre">pm.Model</span></code>)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="csrank.discretechoice.MultinomialLogitModel.fit">
+<code class="sig-name descname">fit</code><span class="sig-paren">(</span><em class="sig-param">X, Y, sampler='variational', tune=500, draws=500, vi_params={'callbacks': [&lt;pymc3.variational.callbacks.CheckParametersConvergence object&gt;], 'method': 'advi', 'n': 20000}, **kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/csrank/discretechoice/multinomial_logit_model.html#MultinomialLogitModel.fit"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#csrank.discretechoice.MultinomialLogitModel.fit" title="Permalink to this definition">¶</a></dt>
+<dd><p>Fit a multinomial logit model on the provided set of queries X and choices Y of those objects. The
+provided queries and corresponding preferences are of a fixed size (numpy arrays). For learning this network
+the categorical cross entropy loss function for each object <span class="math notranslate nohighlight">\(x_i \in Q\)</span> is defined as:</p>
+<div class="math notranslate nohighlight">
+\[C_{i} =  -y(i)\log(P_i) \enspace,\]</div>
+<p>where <span class="math notranslate nohighlight">\(y\)</span> is ground-truth discrete choice vector of the objects in the given query set <span class="math notranslate nohighlight">\(Q\)</span>.
+The value <span class="math notranslate nohighlight">\(y(i) = 1\)</span> if object <span class="math notranslate nohighlight">\(x_i\)</span> is chosen else <span class="math notranslate nohighlight">\(y(i) = 0\)</span>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>X</strong> (<em>numpy array</em><em> (</em><em>n_instances</em><em>, </em><em>n_objects</em><em>, </em><em>n_features</em><em>)</em>) – Feature vectors of the objects</p></li>
+<li><p><strong>Y</strong> (<em>numpy array</em><em> (</em><em>n_instances</em><em>, </em><em>n_objects</em><em>)</em>) – Choices for given objects in the query</p></li>
+<li><p><strong>sampler</strong> (<em>{‘variational’</em><em>, </em><em>‘metropolis’</em><em>, </em><em>‘nuts’}</em><em>, </em><em>string</em>) – <p>The sampler used to estimate the posterior mean and mass matrix from the trace</p>
+<blockquote>
+<div><ul>
+<li><p><strong>variational</strong> : Run inference methods to estimate posterior mean and diagonal mass matrix</p></li>
+<li><p><strong>metropolis</strong> : Use the MAP as starting point and Metropolis-Hastings sampler</p></li>
+<li><p><strong>nuts</strong> : Use the No-U-Turn sampler</p></li>
+</ul>
+</div></blockquote>
+</p></li>
+<li><p><strong>vi_params</strong> (<em>dict</em>) – The parameters for the <strong>variational</strong> inference method</p></li>
+<li><p><strong>draws</strong> (<em>int</em>) – The number of samples to draw. Defaults to 500. The number of tuned samples are discarded by default</p></li>
+<li><p><strong>tune</strong> (<em>int</em>) – Number of iterations to tune, defaults to 500. Ignored when using ‘SMC’. Samplers adjust
+the step sizes, scalings or similar during tuning. Tuning samples will be drawn in addition
+to the number specified in the <cite>draws</cite> argument, and will be discarded unless
+<cite>discard_tuned_samples</cite> is set to False.</p></li>
+<li><p><strong>**kwargs</strong> – Keyword arguments for the fit function of <code class="xref py py-meth docutils literal notranslate"><span class="pre">pymc3.fit`or</span> <span class="pre">:meth:`pymc3.sample()</span></code></p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="csrank.discretechoice.MultinomialLogitModel.model_configuration">
+<em class="property">property </em><code class="sig-name descname">model_configuration</code><a class="headerlink" href="#csrank.discretechoice.MultinomialLogitModel.model_configuration" title="Permalink to this definition">¶</a></dt>
+<dd><p>Constructs the dictionary containing the priors for the weight vectors for the model according to the
+regularization function. The parameters are:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p><strong>weights</strong> : Weights to evaluates the utility of the objects</p></li>
+</ul>
+</div></blockquote>
+<p>For <code class="docutils literal notranslate"><span class="pre">l1</span></code> regularization the priors are:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\text{mu}_w \sim \text{Normal}(\text{mu}=0, \text{sd}=5.0) \\
+\text{b}_w \sim \text{HalfCauchy}(\beta=1.0) \\
+\text{weights} \sim \text{Laplace}(\text{mu}=\text{mu}_w, \text{b}=\text{b}_w)\end{split}\]</div>
+<p>For <code class="docutils literal notranslate"><span class="pre">l2</span></code> regularization the priors are:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\text{mu}_w \sim \text{Normal}(\text{mu}=0, \text{sd}=5.0) \\
+\text{sd}_w \sim \text{HalfCauchy}(\beta=1.0) \\
+\text{weights} \sim \text{Normal}(\text{mu}=\text{mu}_w, \text{sd}=\text{sd}_w)\end{split}\]</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="csrank.discretechoice.MultinomialLogitModel.predict">
+<code class="sig-name descname">predict</code><span class="sig-paren">(</span><em class="sig-param">X</em>, <em class="sig-param">**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/csrank/discretechoice/multinomial_logit_model.html#MultinomialLogitModel.predict"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#csrank.discretechoice.MultinomialLogitModel.predict" title="Permalink to this definition">¶</a></dt>
+<dd><p>Predict preferences in the form of rankings or choices for a given collection of sets of objects called
+a query set using the function <a class="reference internal" href="#csrank.discretechoice.MultinomialLogitModel.predict_for_scores" title="csrank.discretechoice.MultinomialLogitModel.predict_for_scores"><code class="xref py py-meth docutils literal notranslate"><span class="pre">predict_for_scores()</span></code></a>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>X</strong> (<em>dict</em><em> or </em><em>numpy array</em>) – Dictionary with a mapping from the query set size to numpy arrays or a single numpy array of size:
+(n_instances, n_objects, n_features)</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><strong>Y</strong> (<em>dict or numpy array</em>) – Dictionary with a mapping from the query set size to numpy arrays or a single numpy array containing
+predicted preferences of size:
+(n_instances, n_objects)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="csrank.discretechoice.MultinomialLogitModel.predict_for_scores">
+<code class="sig-name descname">predict_for_scores</code><span class="sig-paren">(</span><em class="sig-param">scores</em>, <em class="sig-param">**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/csrank/discretechoice/multinomial_logit_model.html#MultinomialLogitModel.predict_for_scores"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#csrank.discretechoice.MultinomialLogitModel.predict_for_scores" title="Permalink to this definition">¶</a></dt>
+<dd><p>Binary discrete choice vector <span class="math notranslate nohighlight">\(y\)</span> represents the choices amongst the objects in <span class="math notranslate nohighlight">\(Q\)</span>, such that
+<span class="math notranslate nohighlight">\(y(k) = 1\)</span> represents that the object <span class="math notranslate nohighlight">\(x_k\)</span> is chosen and <span class="math notranslate nohighlight">\(y(k) = 0\)</span> represents
+it is not chosen. For choice to be discrete <span class="math notranslate nohighlight">\(\sum_{x_i \in Q} y(i) = 1\)</span>. Predict discrete choices for
+the scores for a given collection of sets of objects (query sets).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>scores</strong> (<em>dict</em><em> or </em><em>numpy array</em>) – Dictionary with a mapping from query set size to numpy arrays
+or a single numpy array of size containing scores of each object of size:
+(n_instances, n_objects)</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><strong>Y</strong> (<em>dict or numpy array</em>) – Dictionary with a mapping from query set size to numpy arrays
+or a single numpy array containing predicted discrete choice vectors of size:
+(n_instances, n_objects)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="csrank.discretechoice.MultinomialLogitModel.predict_scores">
+<code class="sig-name descname">predict_scores</code><span class="sig-paren">(</span><em class="sig-param">X</em>, <em class="sig-param">**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/csrank/discretechoice/multinomial_logit_model.html#MultinomialLogitModel.predict_scores"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#csrank.discretechoice.MultinomialLogitModel.predict_scores" title="Permalink to this definition">¶</a></dt>
+<dd><p>Predict the utility scores for each object in the collection of set of objects called a query set.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>X</strong> (<em>dict</em><em> or </em><em>numpy array</em>) – Dictionary with a mapping from query set size to numpy arrays or a single numpy array of size:
+(n_instances, n_objects, n_features)</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><strong>Y</strong> (<em>dict or numpy array</em>) – Dictionary with a mapping from query set size to numpy arrays or a single numpy array of size:
+(n_instances, n_objects)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="csrank.discretechoice.MultinomialLogitModel.set_tunable_parameters">
+<code class="sig-name descname">set_tunable_parameters</code><span class="sig-paren">(</span><em class="sig-param">loss_function=''</em>, <em class="sig-param">regularization='l1'</em>, <em class="sig-param">**point</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/csrank/discretechoice/multinomial_logit_model.html#MultinomialLogitModel.set_tunable_parameters"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#csrank.discretechoice.MultinomialLogitModel.set_tunable_parameters" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set tunable parameters of the Multinomial Logit model to the values provided.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>loss_function</strong> (<em>string</em><em> , </em><em>{‘categorical_crossentropy’</em><em>, </em><em>‘binary_crossentropy’</em><em>, </em><em>’categorical_hinge’}</em>) – Loss function to be used for the discrete choice decision from the query set</p></li>
+<li><p><strong>regularization</strong> (<em>string</em><em>, </em><em>{‘l1’</em><em>, </em><em>‘l2’}</em><em>, </em><em>string</em>) – Regularizer function (L1 or L2) applied to the <cite>kernel</cite> weights matrix</p></li>
+<li><p><strong>point</strong> (<em>dict</em>) – Dictionary containing parameter values which are not tuned for the network</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="csrank.discretechoice.NestedLogitModel">
+<em class="property">class </em><code class="sig-prename descclassname">csrank.discretechoice.</code><code class="sig-name descname">NestedLogitModel</code><span class="sig-paren">(</span><em class="sig-param">n_object_features</em>, <em class="sig-param">n_objects</em>, <em class="sig-param">n_nests=None</em>, <em class="sig-param">loss_function=''</em>, <em class="sig-param">regularization='l1'</em>, <em class="sig-param">alpha=0.01</em>, <em class="sig-param">random_state=None</em>, <em class="sig-param">**kwd</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/csrank/discretechoice/nested_logit_model.html#NestedLogitModel"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#csrank.discretechoice.NestedLogitModel" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create an instance of the Nested Logit model for learning the discrete choice function. This model divides
+objects into disjoint subsets called nests,such that the objects which are similar to each other are in same
+nest. This model structure is 1-layer of hierarchy and the <span class="math notranslate nohighlight">\(\lambda\)</span> for each nest <span class="math notranslate nohighlight">\(B_k\)</span> signifies
+the degree of independence and  <span class="math notranslate nohighlight">\(1-\lambda\)</span> signifies the correlations between the object in it. We
+learn two weight vectors and the  <span class="math notranslate nohighlight">\(\lambda s\)</span>.</p>
+<p>The probability of choosing an object <span class="math notranslate nohighlight">\(x_i\)</span> from the given query set <span class="math notranslate nohighlight">\(Q\)</span> is defined by product
+of choosing the nest in which <span class="math notranslate nohighlight">\(x_i\)</span> exists and then choosing the the object from the nest.</p>
+<div class="math notranslate nohighlight">
+\[P(x_i \lvert Q) = P_i = P_{i \lvert B_k} P_{B_k} \enspace ,\]</div>
+<p>The discrete choice for the given query set <span class="math notranslate nohighlight">\(Q\)</span> is defined as:</p>
+<div class="math notranslate nohighlight">
+\[dc(Q) := \operatorname{argmax}_{x_i \in Q }  \; P(x_i \lvert Q)\]</div>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>n_object_features</strong> (<em>int</em>) – Number of features of the object space</p></li>
+<li><p><strong>n_objects</strong> (<em>int</em>) – Number of objects in each query set</p></li>
+<li><p><strong>n_nests</strong> (<em>int range :</em><em> [</em><em>2</em><em>,</em><em>n_objects/2</em><em>]</em>) – The number of nests/subsets in which the objects are divided</p></li>
+<li><p><strong>loss_function</strong> (<em>string</em><em> , </em><em>{‘categorical_crossentropy’</em><em>, </em><em>‘binary_crossentropy’</em><em>, </em><em>’categorical_hinge’}</em>) – Loss function to be used for the discrete choice decision from the query set</p></li>
+<li><p><strong>regularization</strong> (<em>string</em><em>, </em><em>{‘l1’</em><em>, </em><em>‘l2’}</em><em>, </em><em>string</em>) – Regularizer function (L1 or L2) applied to the <cite>kernel</cite> weights matrix</p></li>
+<li><p><strong>alpha</strong> (<em>float</em><em> (</em><em>range :</em><em> [</em><em>0</em><em>,</em><em>1</em><em>]</em><em>)</em>) – The lower bound of the correlations between the objects in a nest</p></li>
+<li><p><strong>random_state</strong> (<em>int</em><em> or </em><em>object</em>) – Numpy random state</p></li>
+<li><p><strong>**kwargs</strong> – Keyword arguments for the algorithms</p></li>
+</ul>
+</dd>
+</dl>
+<p class="rubric">References</p>
+<p>[1] Kenneth E Train. „Discrete choice methods with simulation“. In: Cambridge university press, 2009. Chap GEV, pp. 87–111.</p>
+<p>[2] Kenneth Train. Qualitative choice analysis. Cambridge, MA: MIT Press, 1986</p>
+<p>[3] Kenneth Train and Daniel McFadden. „The goods/leisure tradeoff and disaggregate work trip mode choice models“. In: Transportation research 12.5 (1978), pp. 349–353</p>
+<dl class="method">
+<dt id="csrank.discretechoice.NestedLogitModel.construct_model">
+<code class="sig-name descname">construct_model</code><span class="sig-paren">(</span><em class="sig-param">X</em>, <em class="sig-param">Y</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/csrank/discretechoice/nested_logit_model.html#NestedLogitModel.construct_model"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#csrank.discretechoice.NestedLogitModel.construct_model" title="Permalink to this definition">¶</a></dt>
+<dd><p>Constructs the nested logit model by applying priors on weight vectors <strong>weights</strong> and <strong>weights_k</strong> as per
+<a class="reference internal" href="#csrank.discretechoice.NestedLogitModel.model_configuration" title="csrank.discretechoice.NestedLogitModel.model_configuration"><code class="xref py py-meth docutils literal notranslate"><span class="pre">model_configuration()</span></code></a>. Then we apply a uniform prior to the <span class="math notranslate nohighlight">\(\lambda s\)</span>, i.e.
+<span class="math notranslate nohighlight">\(\lambda s \sim Uniform(\text{alpha}, 1.0)\)</span>.The probability of choosing the object <span class="math notranslate nohighlight">\(x_i\)</span> from
+the query set <span class="math notranslate nohighlight">\(Q = \{x_1, \ldots ,x_n\}\)</span> is evaluated in <a class="reference internal" href="#csrank.discretechoice.NestedLogitModel.get_probabilities" title="csrank.discretechoice.NestedLogitModel.get_probabilities"><code class="xref py py-meth docutils literal notranslate"><span class="pre">get_probabilities()</span></code></a>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>X</strong> (<em>numpy array</em>) – (n_instances, n_objects, n_features)
+Feature vectors of the objects</p></li>
+<li><p><strong>Y</strong> (<em>numpy array</em>) – (n_instances, n_objects)
+Preferences in the form of discrete choices for given objects</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><strong>model</strong> (pymc3 Model <code class="xref py py-class docutils literal notranslate"><span class="pre">pm.Model</span></code>)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="csrank.discretechoice.NestedLogitModel.create_nests">
+<code class="sig-name descname">create_nests</code><span class="sig-paren">(</span><em class="sig-param">X</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/csrank/discretechoice/nested_logit_model.html#NestedLogitModel.create_nests"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#csrank.discretechoice.NestedLogitModel.create_nests" title="Permalink to this definition">¶</a></dt>
+<dd><p>For allocating the objects to different nests we use the clustering algorithm with number of clusters
+<span class="math notranslate nohighlight">\(k\)</span> and allocate the similar objects in query set <span class="math notranslate nohighlight">\(Q\)</span>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>X</strong> (<em>numpy array</em>) – (n_instances, n_objects, n_features)
+Feature vectors of the objects in the query sets</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><strong>Yn</strong> (<em>numpy array</em>) – (n_instances, n_objects) Values for each object implying the nest it belongs to. For example for <span class="math notranslate nohighlight">\(2\)</span> nests the value 0 implies that object is allocated to nest 1 and value 1 implies it is allocated to nest 2.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="csrank.discretechoice.NestedLogitModel.fit">
+<code class="sig-name descname">fit</code><span class="sig-paren">(</span><em class="sig-param">X, Y, sampler='variational', tune=500, draws=500, vi_params={'callbacks': [&lt;pymc3.variational.callbacks.CheckParametersConvergence object&gt;], 'method': 'advi', 'n': 20000}, **kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/csrank/discretechoice/nested_logit_model.html#NestedLogitModel.fit"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#csrank.discretechoice.NestedLogitModel.fit" title="Permalink to this definition">¶</a></dt>
+<dd><p>Fit a nested logit model on the provided set of queries X and choices Y of those objects. The provided
+queries and corresponding preferences are of a fixed size (numpy arrays). For learning this network the
+categorical cross entropy loss function for each object <span class="math notranslate nohighlight">\(x_i \in Q\)</span> is defined as:</p>
+<div class="math notranslate nohighlight">
+\[C_{i} =  -y(i)\log(P_i) \enspace,\]</div>
+<p>where <span class="math notranslate nohighlight">\(y\)</span> is ground-truth discrete choice vector of the objects in the given query set <span class="math notranslate nohighlight">\(Q\)</span>.
+The value <span class="math notranslate nohighlight">\(y(i) = 1\)</span> if object <span class="math notranslate nohighlight">\(x_i\)</span> is chosen else <span class="math notranslate nohighlight">\(y(i) = 0\)</span>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>X</strong> (<em>numpy array</em><em> (</em><em>n_instances</em><em>, </em><em>n_objects</em><em>, </em><em>n_features</em><em>)</em>) – Feature vectors of the objects</p></li>
+<li><p><strong>Y</strong> (<em>numpy array</em><em> (</em><em>n_instances</em><em>, </em><em>n_objects</em><em>)</em>) – Choices for given objects in the query</p></li>
+<li><p><strong>sampler</strong> (<em>{‘variational’</em><em>, </em><em>‘metropolis’</em><em>, </em><em>‘nuts’}</em><em>, </em><em>string</em>) – <p>The sampler used to estimate the posterior mean and mass matrix from the trace</p>
+<blockquote>
+<div><ul>
+<li><p><strong>variational</strong> : Run inference methods to estimate posterior mean and diagonal mass matrix</p></li>
+<li><p><strong>metropolis</strong> : Use the MAP as starting point and Metropolis-Hastings sampler</p></li>
+<li><p><strong>nuts</strong> : Use the No-U-Turn sampler</p></li>
+</ul>
+</div></blockquote>
+</p></li>
+<li><p><strong>vi_params</strong> (<em>dict</em>) – The parameters for the <strong>variational</strong> inference method</p></li>
+<li><p><strong>draws</strong> (<em>int</em>) – The number of samples to draw. Defaults to 500. The number of tuned samples are discarded by default</p></li>
+<li><p><strong>tune</strong> (<em>int</em>) – Number of iterations to tune, defaults to 500. Ignored when using ‘SMC’. Samplers adjust
+the step sizes, scalings or similar during tuning. Tuning samples will be drawn in addition
+to the number specified in the <cite>draws</cite> argument, and will be discarded unless
+<cite>discard_tuned_samples</cite> is set to False.</p></li>
+<li><p><strong>**kwargs</strong> – Keyword arguments for the fit function of <code class="xref py py-meth docutils literal notranslate"><span class="pre">pymc3.fit`or</span> <span class="pre">:meth:`pymc3.sample()</span></code></p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="csrank.discretechoice.NestedLogitModel.get_probabilities">
+<code class="sig-name descname">get_probabilities</code><span class="sig-paren">(</span><em class="sig-param">utility</em>, <em class="sig-param">lambda_k</em>, <em class="sig-param">utility_k</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/csrank/discretechoice/nested_logit_model.html#NestedLogitModel.get_probabilities"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#csrank.discretechoice.NestedLogitModel.get_probabilities" title="Permalink to this definition">¶</a></dt>
+<dd><p>This method calculates the probability of choosing an object from the query set using the following parameters of the model which are used:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p><strong>weights</strong> (<span class="math notranslate nohighlight">\(w\)</span>): Weights to get the utility of the object <span class="math notranslate nohighlight">\(Y_i = U(x_i) = w \cdot x_i\)</span></p></li>
+<li><p><strong>weights_k</strong> (<span class="math notranslate nohighlight">\(w_k\)</span>): Weights to get the utility of the next  <span class="math notranslate nohighlight">\(W_k = U_k(x) = w_k \cdot c_k\)</span>, where <span class="math notranslate nohighlight">\(c_k\)</span> is the center of the object space of nest <span class="math notranslate nohighlight">\(B_k\)</span></p></li>
+<li><p><strong>lambda_k</strong> (<span class="math notranslate nohighlight">\(\lambda_k\)</span>): Lambda is the measure of independence amongst the obejcts in the nest <span class="math notranslate nohighlight">\(B_k\)</span></p></li>
+</ul>
+</div></blockquote>
+<p>The probability of choosing the object  <span class="math notranslate nohighlight">\(x_i\)</span> from the query set <span class="math notranslate nohighlight">\(Q\)</span>:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}P_i = \frac{\boldsymbol{e}^{ ^{Y_i} /_{\lambda_k}}}{\sum_{j \in B_k} \boldsymbol{e}^{^{Y_j} /_{\lambda_k}}} \frac {\boldsymbol{e}^{W_k + \lambda_k I_k}} {\sum_{\ell = 1}^{K} \boldsymbol{e}^{ W_{\ell } + \lambda_{\ell} I_{\ell}}} \quad i \in B_k  \enspace , \\
+where,\enspace I_k = \ln \sum_{ j \in B_k} \boldsymbol{e}^{^{Y_j} /_{\lambda_k}}\end{split}\]</div>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>utility</strong> (<em>theano tensor</em>) – (n_instances, n_objects)
+Utility <span class="math notranslate nohighlight">\(Y_i\)</span> of the objects <span class="math notranslate nohighlight">\(x_i \in Q\)</span> in the query sets</p></li>
+<li><p><strong>lambda_k</strong> (<em>theano tensor</em><em> (</em><em>range :</em><em> [</em><em>alpha</em><em>, </em><em>1.0</em><em>]</em><em>)</em>) – (n_nests)
+Measure of independence amongst the obejcts in each nests</p></li>
+<li><p><strong>utility_k</strong> (<em>theano tensor</em>) – (n_instances, n_nests)
+Utilities of the nests <span class="math notranslate nohighlight">\(B_k \in \mathcal{B}\)</span></p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><strong>p</strong> (<em>theano tensor</em>) – (n_instances, n_objects)
+Choice probabilities <span class="math notranslate nohighlight">\(P_i\)</span> of the objects <span class="math notranslate nohighlight">\(x_i \in Q\)</span> in the query sets</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="csrank.discretechoice.NestedLogitModel.model_configuration">
+<em class="property">property </em><code class="sig-name descname">model_configuration</code><a class="headerlink" href="#csrank.discretechoice.NestedLogitModel.model_configuration" title="Permalink to this definition">¶</a></dt>
+<dd><p>Constructs the dictionary containing the priors for the weight vectors for the model according to the
+regularization function. The parameters are:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p><strong>weights</strong> : Weights to evaluates the utility of the objects</p></li>
+<li><p><strong>weights_k</strong> : Weights to evaluates the utility of the nests</p></li>
+</ul>
+</div></blockquote>
+<p>For <code class="docutils literal notranslate"><span class="pre">l1</span></code> regularization the priors are:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\text{mu}_w \sim \text{Normal}(\text{mu}=0, \text{sd}=5.0) \\
+\text{b}_w \sim \text{HalfCauchy}(\beta=1.0) \\
+\text{weights} \sim \text{Laplace}(\text{mu}=\text{mu}_w, \text{b}=\text{b}_w)\end{split}\]</div>
+<p>For <code class="docutils literal notranslate"><span class="pre">l2</span></code> regularization the priors are:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\text{mu}_w \sim \text{Normal}(\text{mu}=0, \text{sd}=5.0) \\
+\text{sd}_w \sim \text{HalfCauchy}(\beta=1.0) \\
+\text{weights} \sim \text{Normal}(\text{mu}=\text{mu}_w, \text{sd}=\text{sd}_w)\end{split}\]</div>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p><strong>configuration</strong> (<em>dict</em>) – Dictionary containing the priors applies on the weights</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="csrank.discretechoice.NestedLogitModel.predict">
+<code class="sig-name descname">predict</code><span class="sig-paren">(</span><em class="sig-param">X</em>, <em class="sig-param">**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/csrank/discretechoice/nested_logit_model.html#NestedLogitModel.predict"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#csrank.discretechoice.NestedLogitModel.predict" title="Permalink to this definition">¶</a></dt>
+<dd><p>Predict preferences in the form of rankings or choices for a given collection of sets of objects called
+a query set using the function <a class="reference internal" href="#csrank.discretechoice.NestedLogitModel.predict_for_scores" title="csrank.discretechoice.NestedLogitModel.predict_for_scores"><code class="xref py py-meth docutils literal notranslate"><span class="pre">predict_for_scores()</span></code></a>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>X</strong> (<em>dict</em><em> or </em><em>numpy array</em>) – Dictionary with a mapping from the query set size to numpy arrays or a single numpy array of size:
+(n_instances, n_objects, n_features)</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><strong>Y</strong> (<em>dict or numpy array</em>) – Dictionary with a mapping from the query set size to numpy arrays or a single numpy array containing
+predicted preferences of size:
+(n_instances, n_objects)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="csrank.discretechoice.NestedLogitModel.predict_for_scores">
+<code class="sig-name descname">predict_for_scores</code><span class="sig-paren">(</span><em class="sig-param">scores</em>, <em class="sig-param">**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/csrank/discretechoice/nested_logit_model.html#NestedLogitModel.predict_for_scores"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#csrank.discretechoice.NestedLogitModel.predict_for_scores" title="Permalink to this definition">¶</a></dt>
+<dd><p>Binary discrete choice vector <span class="math notranslate nohighlight">\(y\)</span> represents the choices amongst the objects in <span class="math notranslate nohighlight">\(Q\)</span>, such that
+<span class="math notranslate nohighlight">\(y(k) = 1\)</span> represents that the object <span class="math notranslate nohighlight">\(x_k\)</span> is chosen and <span class="math notranslate nohighlight">\(y(k) = 0\)</span> represents
+it is not chosen. For choice to be discrete <span class="math notranslate nohighlight">\(\sum_{x_i \in Q} y(i) = 1\)</span>. Predict discrete choices for
+the scores for a given collection of sets of objects (query sets).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>scores</strong> (<em>dict</em><em> or </em><em>numpy array</em>) – Dictionary with a mapping from query set size to numpy arrays
+or a single numpy array of size containing scores of each object of size:
+(n_instances, n_objects)</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><strong>Y</strong> (<em>dict or numpy array</em>) – Dictionary with a mapping from query set size to numpy arrays
+or a single numpy array containing predicted discrete choice vectors of size:
+(n_instances, n_objects)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="csrank.discretechoice.NestedLogitModel.predict_scores">
+<code class="sig-name descname">predict_scores</code><span class="sig-paren">(</span><em class="sig-param">X</em>, <em class="sig-param">**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/csrank/discretechoice/nested_logit_model.html#NestedLogitModel.predict_scores"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#csrank.discretechoice.NestedLogitModel.predict_scores" title="Permalink to this definition">¶</a></dt>
+<dd><p>Predict the utility scores for each object in the collection of set of objects called a query set.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>X</strong> (<em>dict</em><em> or </em><em>numpy array</em>) – Dictionary with a mapping from query set size to numpy arrays or a single numpy array of size:
+(n_instances, n_objects, n_features)</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><strong>Y</strong> (<em>dict or numpy array</em>) – Dictionary with a mapping from query set size to numpy arrays or a single numpy array of size:
+(n_instances, n_objects)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="csrank.discretechoice.NestedLogitModel.set_tunable_parameters">
+<code class="sig-name descname">set_tunable_parameters</code><span class="sig-paren">(</span><em class="sig-param">alpha=None</em>, <em class="sig-param">n_nests=None</em>, <em class="sig-param">loss_function=''</em>, <em class="sig-param">regularization='l1'</em>, <em class="sig-param">**point</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/csrank/discretechoice/nested_logit_model.html#NestedLogitModel.set_tunable_parameters"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#csrank.discretechoice.NestedLogitModel.set_tunable_parameters" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set tunable parameters of the Nested Logit model to the values provided.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>alpha</strong> (<em>float</em><em> (</em><em>range :</em><em> [</em><em>0</em><em>,</em><em>1</em><em>]</em><em>)</em>) – The lower bound of the correlations between the objects in a nest</p></li>
+<li><p><strong>n_nests</strong> (<em>int</em><em> (</em><em>range :</em><em> [</em><em>2</em><em>,</em><em>n_objects</em><em>]</em><em>)</em>) – The number of nests in which the objects are divided</p></li>
+<li><p><strong>loss_function</strong> (<em>string</em><em> , </em><em>{‘categorical_crossentropy’</em><em>, </em><em>‘binary_crossentropy’</em><em>, </em><em>’categorical_hinge’}</em>) – Loss function to be used for the discrete choice decision from the query set</p></li>
+<li><p><strong>regularization</strong> (<em>string</em><em>, </em><em>{‘l1’</em><em>, </em><em>‘l2’}</em><em>, </em><em>string</em>) – Regularizer function (L1 or L2) applied to the <cite>kernel</cite> weights matrix</p></li>
+<li><p><strong>point</strong> (<em>dict</em>) – Dictionary containing parameter values which are not tuned for the network</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="csrank.discretechoice.PairedCombinatorialLogit">
+<em class="property">class </em><code class="sig-prename descclassname">csrank.discretechoice.</code><code class="sig-name descname">PairedCombinatorialLogit</code><span class="sig-paren">(</span><em class="sig-param">n_object_features</em>, <em class="sig-param">n_objects</em>, <em class="sig-param">loss_function=''</em>, <em class="sig-param">regularization='l2'</em>, <em class="sig-param">alpha=0.05</em>, <em class="sig-param">random_state=None</em>, <em class="sig-param">**kwd</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/csrank/discretechoice/paired_combinatorial_logit.html#PairedCombinatorialLogit"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#csrank.discretechoice.PairedCombinatorialLogit" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create an instance of the Paired Combinatorial Logit model for learning the discrete choice function. This
+model considering each pair of objects as a different nest allowing unique covariances for each pair of objects,
+and each object is a member of <span class="math notranslate nohighlight">\(n - 1\)</span> nests. This model structure is 1-layer of hierarchy and the
+<span class="math notranslate nohighlight">\(\lambda\)</span> for each nest <span class="math notranslate nohighlight">\(B_k\)</span> signifies the degree of independence and  <span class="math notranslate nohighlight">\(1-\lambda\)</span> signifies
+the correlations between the object in it. We learn two weight vectors and the  <span class="math notranslate nohighlight">\(\lambda s\)</span>.</p>
+<blockquote>
+<div><ul class="simple">
+<li><p><strong>weights</strong> (<span class="math notranslate nohighlight">\(w\)</span>): Weights to get the utility of the object <span class="math notranslate nohighlight">\(Y_i = U(x_i) = w \cdot x_i\)</span></p></li>
+<li><p><strong>lambda_k</strong> (<span class="math notranslate nohighlight">\(\lambda_k\)</span>): Lambda for nest nest <span class="math notranslate nohighlight">\(B_k\)</span> for correlations between the obejcts.</p></li>
+</ul>
+</div></blockquote>
+<p>The probability of choosing an object <span class="math notranslate nohighlight">\(x_i\)</span> from the given query set <span class="math notranslate nohighlight">\(Q\)</span> is defined by product
+of choosing the nest in which <span class="math notranslate nohighlight">\(x_i\)</span> exists and then choosing the the object from the nest.</p>
+<div class="math notranslate nohighlight">
+\[P(x_i \lvert Q) = P_i = \sum_{\substack{B_k \in \mathcal{B} \ i \in B_k}}P_{i \lvert B_k} P_{B_k} \enspace ,\]</div>
+<p>The discrete choice for the given query set <span class="math notranslate nohighlight">\(Q\)</span> is defined as:</p>
+<div class="math notranslate nohighlight">
+\[dc(Q) := \operatorname{argmax}_{x_i \in Q }  \; P(x_i \lvert Q)\]</div>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>n_object_features</strong> (<em>int</em>) – Number of features of the object space</p></li>
+<li><p><strong>n_objects</strong> (<em>int</em>) – Number of objects in each query set</p></li>
+<li><p><strong>n_nests</strong> (<em>int range :</em><em> [</em><em>2</em><em>,</em><em>n_objects/2</em><em>]</em>) – The number of nests/subsets in which the objects are divided</p></li>
+<li><p><strong>loss_function</strong> (<em>string</em><em> , </em><em>{‘categorical_crossentropy’</em><em>, </em><em>‘binary_crossentropy’</em><em>, </em><em>’categorical_hinge’}</em>) – Loss function to be used for the discrete choice decision from the query set</p></li>
+<li><p><strong>regularization</strong> (<em>string</em><em>, </em><em>{‘l1’</em><em>, </em><em>‘l2’}</em><em>, </em><em>string</em>) – Regularizer function (L1 or L2) applied to the <cite>kernel</cite> weights matrix</p></li>
+<li><p><strong>alpha</strong> (<em>float</em><em> (</em><em>range :</em><em> [</em><em>0</em><em>,</em><em>1</em><em>]</em><em>)</em>) – The lower bound of the correlations between the objects in a nest</p></li>
+<li><p><strong>random_state</strong> (<em>int</em><em> or </em><em>object</em>) – Numpy random state</p></li>
+<li><p><strong>**kwargs</strong> – Keyword arguments for the algorithms</p></li>
+</ul>
+</dd>
+</dl>
+<p class="rubric">References</p>
+<p>[1] Kenneth E Train. „Discrete choice methods with simulation“. In: Cambridge university press, 2009. Chap GEV, pp. 87–111.</p>
+<p>[2] Kenneth Train. Qualitative choice analysis. Cambridge, MA: MIT Press, 1986</p>
+<p>[3] Chaushie Chu. „A paired combinatorial logit model for travel demand analysis“. In: Proceedings of the fifth world conference on transportation research. Vol. 4.1989, pp. 295–309</p>
+<dl class="method">
+<dt id="csrank.discretechoice.PairedCombinatorialLogit.construct_model">
+<code class="sig-name descname">construct_model</code><span class="sig-paren">(</span><em class="sig-param">X</em>, <em class="sig-param">Y</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/csrank/discretechoice/paired_combinatorial_logit.html#PairedCombinatorialLogit.construct_model"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#csrank.discretechoice.PairedCombinatorialLogit.construct_model" title="Permalink to this definition">¶</a></dt>
+<dd><p>Constructs the nested logit model by applying priors on weight vectors <strong>weights</strong> as per <a class="reference internal" href="#csrank.discretechoice.PairedCombinatorialLogit.model_configuration" title="csrank.discretechoice.PairedCombinatorialLogit.model_configuration"><code class="xref py py-meth docutils literal notranslate"><span class="pre">model_configuration()</span></code></a>.
+Then we apply a uniform prior to the <span class="math notranslate nohighlight">\(\lambda s\)</span>, i.e. <span class="math notranslate nohighlight">\(\lambda s \sim Uniform(\text{alpha}, 1.0)\)</span>.
+The probability of choosing the object <span class="math notranslate nohighlight">\(x_i\)</span> from the query set <span class="math notranslate nohighlight">\(Q = \{x_1, \ldots ,x_n\}\)</span> is
+evaluated in <a class="reference internal" href="#csrank.discretechoice.PairedCombinatorialLogit.get_probabilities" title="csrank.discretechoice.PairedCombinatorialLogit.get_probabilities"><code class="xref py py-meth docutils literal notranslate"><span class="pre">get_probabilities()</span></code></a>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>X</strong> (<em>numpy array</em>) – (n_instances, n_objects, n_features)
+Feature vectors of the objects</p></li>
+<li><p><strong>Y</strong> (<em>numpy array</em>) – (n_instances, n_objects)
+Preferences in the form of discrete choices for given objects</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><strong>model</strong> (pymc3 Model <code class="xref py py-class docutils literal notranslate"><span class="pre">pm.Model</span></code>)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="csrank.discretechoice.PairedCombinatorialLogit.fit">
+<code class="sig-name descname">fit</code><span class="sig-paren">(</span><em class="sig-param">X, Y, sampler='variational', tune=500, draws=500, vi_params={'callbacks': [&lt;pymc3.variational.callbacks.CheckParametersConvergence object&gt;], 'method': 'advi', 'n': 20000}, **kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/csrank/discretechoice/paired_combinatorial_logit.html#PairedCombinatorialLogit.fit"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#csrank.discretechoice.PairedCombinatorialLogit.fit" title="Permalink to this definition">¶</a></dt>
+<dd><p>Fit a paired combinatorial logit  model on the provided set of queries X and choices Y of those objects. The
+provided queries and corresponding preferences are of a fixed size (numpy arrays). For learning this network
+the categorical cross entropy loss function for each object <span class="math notranslate nohighlight">\(x_i \in Q\)</span> is defined as:</p>
+<div class="math notranslate nohighlight">
+\[C_{i} =  -y(i)\log(P_i) \enspace,\]</div>
+<p>where <span class="math notranslate nohighlight">\(y\)</span> is ground-truth discrete choice vector of the objects in the given query set <span class="math notranslate nohighlight">\(Q\)</span>.
+The value <span class="math notranslate nohighlight">\(y(i) = 1\)</span> if object <span class="math notranslate nohighlight">\(x_i\)</span> is chosen else <span class="math notranslate nohighlight">\(y(i) = 0\)</span>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>X</strong> (<em>numpy array</em><em> (</em><em>n_instances</em><em>, </em><em>n_objects</em><em>, </em><em>n_features</em><em>)</em>) – Feature vectors of the objects</p></li>
+<li><p><strong>Y</strong> (<em>numpy array</em><em> (</em><em>n_instances</em><em>, </em><em>n_objects</em><em>)</em>) – Choices for given objects in the query</p></li>
+<li><p><strong>sampler</strong> (<em>{‘variational’</em><em>, </em><em>‘metropolis’</em><em>, </em><em>‘nuts’}</em><em>, </em><em>string</em>) – <p>The sampler used to estimate the posterior mean and mass matrix from the trace</p>
+<blockquote>
+<div><ul>
+<li><p><strong>variational</strong> : Run inference methods to estimate posterior mean and diagonal mass matrix</p></li>
+<li><p><strong>metropolis</strong> : Use the MAP as starting point and Metropolis-Hastings sampler</p></li>
+<li><p><strong>nuts</strong> : Use the No-U-Turn sampler</p></li>
+</ul>
+</div></blockquote>
+</p></li>
+<li><p><strong>vi_params</strong> (<em>dict</em>) – The parameters for the <strong>variational</strong> inference method</p></li>
+<li><p><strong>draws</strong> (<em>int</em>) – The number of samples to draw. Defaults to 500. The number of tuned samples are discarded by default</p></li>
+<li><p><strong>tune</strong> (<em>int</em>) – Number of iterations to tune, defaults to 500. Ignored when using ‘SMC’. Samplers adjust
+the step sizes, scalings or similar during tuning. Tuning samples will be drawn in addition
+to the number specified in the <cite>draws</cite> argument, and will be discarded unless
+<cite>discard_tuned_samples</cite> is set to False.</p></li>
+<li><p><strong>**kwargs</strong> – Keyword arguments for the fit function of <code class="xref py py-meth docutils literal notranslate"><span class="pre">pymc3.fit`or</span> <span class="pre">:meth:`pymc3.sample()</span></code></p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="csrank.discretechoice.PairedCombinatorialLogit.get_probabilities">
+<code class="sig-name descname">get_probabilities</code><span class="sig-paren">(</span><em class="sig-param">utility</em>, <em class="sig-param">lambda_k</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/csrank/discretechoice/paired_combinatorial_logit.html#PairedCombinatorialLogit.get_probabilities"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#csrank.discretechoice.PairedCombinatorialLogit.get_probabilities" title="Permalink to this definition">¶</a></dt>
+<dd><p>This method calculates the probability of choosing an object from the query set using the following parameters of the model which are used:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p><strong>weights</strong> (<span class="math notranslate nohighlight">\(w\)</span>): Weights to get the utility of the object <span class="math notranslate nohighlight">\(Y_i = U(x_i) = w \cdot x_i\)</span></p></li>
+<li><p><strong>lambda_k</strong> (<span class="math notranslate nohighlight">\(\lambda_k\)</span>): Lambda is the measure of independence amongst the obejcts in the nest <span class="math notranslate nohighlight">\(B_k\)</span></p></li>
+</ul>
+</div></blockquote>
+<p>The probability of choosing the object  <span class="math notranslate nohighlight">\(x_i\)</span> from the query set <span class="math notranslate nohighlight">\(Q\)</span>:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}P_i = \sum_{j \in I \setminus i} P_{{i} \lvert {ij}} P_{ij} \enspace where, \\
+P_{i \lvert ij} = \frac{\boldsymbol{e}^{^{Y_i} /_{\lambda_{ij}}}}{\boldsymbol{e}^{^{Y_i} /_{\lambda_{ij}}} + \boldsymbol{e}^{^{Y_j} /_{\lambda_{ij}}}} \enspace ,\\
+P_{ij} = \frac{{\left( \boldsymbol{e}^{^{V_i}/{\lambda_{ij}}} + \boldsymbol{e}^{^{V_j}/{\lambda_{ij}}}  \right)}^{\lambda_{ij}}}{\sum_{k=1}^{n-1} \sum_{\ell = k + 1}^{n} {\left( \boldsymbol{e}^{^{V_k}/{\lambda_{k\ell}}} + \boldsymbol{e}^{^{V_{\ell}}/{\lambda_{k\ell}}}  \right)}^{\lambda_{k\ell}}}\end{split}\]</div>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>utility</strong> (<em>theano tensor</em>) – (n_instances, n_objects)
+Utility <span class="math notranslate nohighlight">\(Y_i\)</span> of the objects <span class="math notranslate nohighlight">\(x_i \in Q\)</span> in the query sets</p></li>
+<li><p><strong>lambda_k</strong> (<em>theano tensor</em><em> (</em><em>range :</em><em> [</em><em>alpha</em><em>, </em><em>1.0</em><em>]</em><em>)</em>) – (n_nests)
+Measure of independence amongst the obejcts in each nests</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><strong>p</strong> (<em>theano tensor</em>) – (n_instances, n_objects)
+Choice probabilities <span class="math notranslate nohighlight">\(P_i\)</span> of the objects <span class="math notranslate nohighlight">\(x_i \in Q\)</span> in the query sets</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="csrank.discretechoice.PairedCombinatorialLogit.model_configuration">
+<em class="property">property </em><code class="sig-name descname">model_configuration</code><a class="headerlink" href="#csrank.discretechoice.PairedCombinatorialLogit.model_configuration" title="Permalink to this definition">¶</a></dt>
+<dd><p>Constructs the dictionary containing the priors for the weight vectors for the model according to the
+regularization function. The parameters are:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p><strong>weights</strong> : Weights to evaluates the utility of the objects</p></li>
+</ul>
+</div></blockquote>
+<p>For <code class="docutils literal notranslate"><span class="pre">l1</span></code> regularization the priors are:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\text{mu}_w \sim \text{Normal}(\text{mu}=0, \text{sd}=5.0) \\
+\text{b}_w \sim \text{HalfCauchy}(\beta=1.0) \\
+\text{weights} \sim \text{Laplace}(\text{mu}=\text{mu}_w, \text{b}=\text{b}_w)\end{split}\]</div>
+<p>For <code class="docutils literal notranslate"><span class="pre">l2</span></code> regularization the priors are:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\text{mu}_w \sim \text{Normal}(\text{mu}=0, \text{sd}=5.0) \\
+\text{sd}_w \sim \text{HalfCauchy}(\beta=1.0) \\
+\text{weights} \sim \text{Normal}(\text{mu}=\text{mu}_w, \text{sd}=\text{sd}_w)\end{split}\]</div>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p><strong>configuration</strong> (<em>dict</em>) – Dictionary containing the priors applies on the weights</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="csrank.discretechoice.PairedCombinatorialLogit.predict">
+<code class="sig-name descname">predict</code><span class="sig-paren">(</span><em class="sig-param">X</em>, <em class="sig-param">**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/csrank/discretechoice/paired_combinatorial_logit.html#PairedCombinatorialLogit.predict"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#csrank.discretechoice.PairedCombinatorialLogit.predict" title="Permalink to this definition">¶</a></dt>
+<dd><p>Predict preferences in the form of rankings or choices for a given collection of sets of objects called
+a query set using the function <a class="reference internal" href="#csrank.discretechoice.PairedCombinatorialLogit.predict_for_scores" title="csrank.discretechoice.PairedCombinatorialLogit.predict_for_scores"><code class="xref py py-meth docutils literal notranslate"><span class="pre">predict_for_scores()</span></code></a>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>X</strong> (<em>dict</em><em> or </em><em>numpy array</em>) – Dictionary with a mapping from the query set size to numpy arrays or a single numpy array of size:
+(n_instances, n_objects, n_features)</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><strong>Y</strong> (<em>dict or numpy array</em>) – Dictionary with a mapping from the query set size to numpy arrays or a single numpy array containing
+predicted preferences of size:
+(n_instances, n_objects)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="csrank.discretechoice.PairedCombinatorialLogit.predict_for_scores">
+<code class="sig-name descname">predict_for_scores</code><span class="sig-paren">(</span><em class="sig-param">scores</em>, <em class="sig-param">**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/csrank/discretechoice/paired_combinatorial_logit.html#PairedCombinatorialLogit.predict_for_scores"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#csrank.discretechoice.PairedCombinatorialLogit.predict_for_scores" title="Permalink to this definition">¶</a></dt>
+<dd><p>Binary discrete choice vector <span class="math notranslate nohighlight">\(y\)</span> represents the choices amongst the objects in <span class="math notranslate nohighlight">\(Q\)</span>, such that
+<span class="math notranslate nohighlight">\(y(k) = 1\)</span> represents that the object <span class="math notranslate nohighlight">\(x_k\)</span> is chosen and <span class="math notranslate nohighlight">\(y(k) = 0\)</span> represents
+it is not chosen. For choice to be discrete <span class="math notranslate nohighlight">\(\sum_{x_i \in Q} y(i) = 1\)</span>. Predict discrete choices for
+the scores for a given collection of sets of objects (query sets).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>scores</strong> (<em>dict</em><em> or </em><em>numpy array</em>) – Dictionary with a mapping from query set size to numpy arrays
+or a single numpy array of size containing scores of each object of size:
+(n_instances, n_objects)</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><strong>Y</strong> (<em>dict or numpy array</em>) – Dictionary with a mapping from query set size to numpy arrays
+or a single numpy array containing predicted discrete choice vectors of size:
+(n_instances, n_objects)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="csrank.discretechoice.PairedCombinatorialLogit.predict_scores">
+<code class="sig-name descname">predict_scores</code><span class="sig-paren">(</span><em class="sig-param">X</em>, <em class="sig-param">**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/csrank/discretechoice/paired_combinatorial_logit.html#PairedCombinatorialLogit.predict_scores"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#csrank.discretechoice.PairedCombinatorialLogit.predict_scores" title="Permalink to this definition">¶</a></dt>
+<dd><p>Predict the utility scores for each object in the collection of set of objects called a query set.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>X</strong> (<em>dict</em><em> or </em><em>numpy array</em>) – Dictionary with a mapping from query set size to numpy arrays or a single numpy array of size:
+(n_instances, n_objects, n_features)</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><strong>Y</strong> (<em>dict or numpy array</em>) – Dictionary with a mapping from query set size to numpy arrays or a single numpy array of size:
+(n_instances, n_objects)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="csrank.discretechoice.PairedCombinatorialLogit.set_tunable_parameters">
+<code class="sig-name descname">set_tunable_parameters</code><span class="sig-paren">(</span><em class="sig-param">alpha=0.05</em>, <em class="sig-param">loss_function=''</em>, <em class="sig-param">regularization='l2'</em>, <em class="sig-param">**point</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/csrank/discretechoice/paired_combinatorial_logit.html#PairedCombinatorialLogit.set_tunable_parameters"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#csrank.discretechoice.PairedCombinatorialLogit.set_tunable_parameters" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set tunable parameters of the Paired Combinatorial logit model to the values provided.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>alpha</strong> (<em>float</em><em> (</em><em>range :</em><em> [</em><em>0</em><em>,</em><em>1</em><em>]</em><em>)</em>) – The lower bound of the correlations between the objects in a nest</p></li>
+<li><p><strong>loss_function</strong> (<em>string</em><em> , </em><em>{‘categorical_crossentropy’</em><em>, </em><em>‘binary_crossentropy’</em><em>, </em><em>’categorical_hinge’}</em>) – Loss function to be used for the discrete choice decision from the query set</p></li>
+<li><p><strong>regularization</strong> (<em>string</em><em>, </em><em>{‘l1’</em><em>, </em><em>‘l2’}</em><em>, </em><em>string</em>) – Regularizer function (L1 or L2) applied to the <cite>kernel</cite> weights matrix</p></li>
+<li><p><strong>point</strong> (<em>dict</em>) – Dictionary containing parameter values which are not tuned for the network</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+      
+        <a href="choicefunction.html" class="btn btn-neutral float-left" title="Choice Functions" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2018, Karlson Pfannschmidt, Pritha Gupta, Eyke Hüllermeier
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>
