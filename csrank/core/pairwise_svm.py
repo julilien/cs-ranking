@@ -62,7 +62,11 @@ class PairwiseSVM(Learner):
                 Keyword arguments for the fit function
 
         """
-        x_train, y_single = self._convert_instances_(X, Y)
+        # JL: Changed this
+        # x_train, y_single = self._convert_instances_(X, Y)
+        x_train = X
+        y_single = Y
+
         if x_train.shape[0] > self.threshold_instances:
             self.model = LogisticRegression(C=self.C, tol=self.tol, fit_intercept=self.fit_intercept,
                                             random_state=self.random_state)
